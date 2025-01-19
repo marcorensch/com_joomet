@@ -1,0 +1,17 @@
+<updates>
+    <update>
+        <name>Joomet</name>
+        <description>Initial Release</description>
+        <element>com_joomet</element>
+        <type>component</type>
+        <version>1.0.0</version>
+        <downloads>
+            <downloadurl type="full" format="zip">http://www.example.com/com_joomet_101.zip</downloadurl>
+        </downloads>
+        <maintainer>Marco Rensch - NXD | nx-designs</maintainer>
+        <maintainerurl>https://www.nx-designs.ch</maintainerurl>
+        <targetplatform name="joomla" version="4.0"/>
+        <client>site</client>
+		<php_minimum>8.3</php_minimum>
+    </update>
+</updates>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<form
+        addruleprefix="NXD\Component\Joomet\Administrator\Rule"
+        addformprefix="NXD\Component\Joomet\Administrator\Form"
+        addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+>
+    <fieldset name="upload">
+        <field
+                name="upload_file"
+                type="file"
+                label="COM_JOOMET_FIELD_UPLOAD_LABEL"
+                description="COM_JOOMET_FIELD_UPLOAD_DESC"
+                accept=".ini"
+                size="20"
+                required="true"
+        />
+    </fieldset>
+</form>

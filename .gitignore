@@ -1,0 +1,29 @@
+.idea
+.gitignore
+
+# macOS spezifisch
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon Dateien
+Icon?
+._*
+
+# Thumbnails von Datei-Attributen
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.TemporaryItems
+.fseventsd
+
+# Cache Dateien von macOS
+.DS_Store?
+.Trash-
+
+# Netzwerkspeicher-Dateien
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk

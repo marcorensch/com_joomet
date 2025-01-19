@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<inlinehelp button="show"/>
+	<help button="hide"/>
+	<fieldset
+		name="joomet"
+		label="COM_JOOMETS_FIELD_CONFIG_JOOMET_PREFERENCES"
+		addruleprefix="NXD\Component\Joomet\Administrator\Rule"
+		addformprefix="NXD\Component\Joomet\Administrator\Form"
+		addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+		>
+
+		<fieldset name="check" label="COM_JOOMET_PARAMS_CHECKER_LABEL">
+			<field name="max_execution_time"
+				   type="number"
+				   default="60"
+				   label="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_LABEL"
+				   description="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_DESCRIPTION"
+			/>
+		</fieldset>
+
+	</fieldset>
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			validate="rules"
+			filter="rules"
+			component="com_joomet"
+			section="component"
+		/>
+	</fieldset>
+</config>

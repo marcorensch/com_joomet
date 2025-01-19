@@ -1,0 +1,42 @@
+div#toolbar > joomla-toolbar-button > a.nxd-ext-btn::before {
+    display: none;
+    content: "";
+}
+
+#checks-table {
+    td > div > a.rounded-pill {
+        border-radius: 4px !important;
+        padding: 10px;
+        font-weight: 400;
+    }
+
+    td > div:nth-of-type(n+2) > a.rounded-pill{
+        margin-top:4px;
+    }
+
+    th.status-col, td.status-col{
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    td.nxd-marked-danger{
+        background-color: #c52827;
+    }
+}
+
+.joomet-offcanvas {
+    code {
+        display: block;
+        margin-top:5px;
+        margin-bottom:5px;
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        color: #333;
+
+        pre {
+            padding: 4px;
+            margin: 0;
+            color: #333;
+        }
+    }
+}

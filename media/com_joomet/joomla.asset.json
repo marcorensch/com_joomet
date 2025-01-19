@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_joomet",
+  "version": "1.0.0",
+  "description": "Joomet Language File Checker - Translator",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_joomet.admin.help.btn",
+      "type": "script",
+      "uri": "com_joomet/admin-joomet-help-btn.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_joomet.admin.css",
+      "type": "style",
+      "uri": "com_joomet/admin.css"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="component" method="upgrade">
+	<name>COM_JOOMET</name>
+	<creationDate>10.01.2025</creationDate>
+	<author>Marco Rensch</author>
+	<authorEmail>marco.rensch@nx-designs.ch</authorEmail>
+	<authorUrl>https://nx-designs.ch</authorUrl>
+	<copyright>Copyright ©2025 by NXD | nx-designs</copyright>
+	<license>GNU General Public License version 2 or later;</license>
+	<version>1.0.0</version>
+	<description>COM_JOOMET_XML_DESCRIPTION</description>
+	<namespace path="src">NXD\Component\Joomet</namespace>
+	<scriptfile>script.php</scriptfile>
+	<install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall> <!-- Runs on uninstall -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update>  <!-- Runs on update -->
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
+    <media folder="media/com_joomet" destination="com_joomet">
+		<filename>joomla.asset.json</filename>
+		<folder>css</folder>
+		<folder>js</folder>
+    </media>
+	<!-- Back-end files -->
+	<administration>
+		<!-- Menu entries -->
+		<menu view="joomet" img="class:language">COM_JOOMET_MENU_JOOMET</menu>
+		<submenu>
+			<menu link="option=com_joomet&amp;view=dashboard">COM_JOOMET_MENU_DASHBOARD</menu>
+			<menu link="option=com_joomet&amp;view=source&amp;target=check">COM_JOOMET_MENU_CHECK</menu>
+			<menu link="option=com_joomet&amp;view=source&amp;target=translate">COM_JOOMET_MENU_TRANSLATE</menu>
+			<submenu>
+			<menu link="option=com_categories&amp;extension=com_joomet"
+				view="joomet" img="class:joomet-cat" alt="Joomet/Categories">JCATEGORY</menu>
+			</submenu>
+		</submenu>
+		<files folder="administrator/components/com_joomet">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>forms</folder>
+			<folder>language</folder>
+			<folder>services</folder>
+			<folder>sql</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+		</files>
+	</administration>
+	<changelogurl>https://raw.githubusercontent.com/astridx/boilerplate/tutorial/changelog.xml</changelogurl>
+	<updateservers>
+		<server type="extension" name="Joomet Updates">https://raw.githubusercontent.com/astridx/boilerplate/tutorial/joomet_update.xml</server>
+	</updateservers>
+</extension>
