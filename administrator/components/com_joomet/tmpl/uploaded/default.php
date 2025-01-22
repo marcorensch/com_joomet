@@ -68,7 +68,15 @@ $wa->addInlineScript('
                 <td class="text-center">
 					<?php echo HTMLHelper::_('grid.id', $i, $file['original_name']); ?>
                 </td>
-                <th><?php echo $file['name']; ?></th>
+                <th><?php
+                    if($this->targetView === 'check' && $user->authorise("com_joomet.check", "com_joomet")){
+                        echo '<a href="'. Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . $file['original_name']).'">' . $file['name'] . "</a>";
+                    }elseif ($this->targetView === 'translate' && $user->authorise("com_joomet.translate", "com_joomet")){
+	                    echo '<a href="'. Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&file=' . $file['original_name']).'">' . $file['name'] . "</a>";
+                    }else{
+                        echo $file['name'];
+                    }
+                    ?></th>
                 <td>
 					<?php
 					if ($file['uploaded'])
@@ -79,43 +87,58 @@ $wa->addInlineScript('
                 </td>
                 <td>
                     <div class="hstack gap-3">
-						<?php if (!$this->targetView): ?>
-                            <div class="btn-group">
-                                <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . $file['original_name']); ?>"
-                                   title="<?php echo Text::_("COM_JOOMET_CHECK_FILE_TXT"); ?>"
-                                   class="btn btn-light">
-                                    <i class="fa fa-file-circle-check"></i>
-                                </a>
-                                <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&id=' . $file['original_name']); ?>"
-                                   title="<?php echo Text::_("COM_JOOMET_TRANSLATE_FILE_TXT"); ?>"
-                                   class="btn btn-light">
-                                    <i class="fa fa-language"></i>
-                                </a>
-                            </div>
+                        <div class="ms-auto">
+							<?php if ($user->authorise("com_joomet.check", "com_joomet") || $user->authorise("com_joomet.translate", "com_joomet")): ?>
+                                <div class="btn-group">
+									<?php if ($user->authorise("com_joomet.check", "com_joomet")): ?>
+                                        <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . $file['original_name']); ?>"
+                                           title="<?php echo Text::_("COM_JOOMET_CHECK_FILE_TXT"); ?>"
+                                           class="btn btn-light">
+                                            <i class="fa fa-file-circle-check"></i>
+                                        </a>
+									<?php endif; ?>
+									<?php if ($user->authorise("com_joomet.translate", "com_joomet")): ?>
+                                        <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&id=' . $file['original_name']); ?>"
+                                           title="<?php echo Text::_("COM_JOOMET_TRANSLATE_FILE_TXT"); ?>"
+                                           class="btn btn-light">
+                                            <i class="fa fa-language"></i>
+                                        </a>
+									<?php endif; ?>
+                                </div>
 
-                            <div class="vr"></div>
-						<?php endif; ?>
-                        <div class="btn-group">
-                            <a target="_blank" href="<?php echo $file['url']; ?>"
-                               title="<?php echo Text::_("COM_JOOMET_VIEW_FILE_TXT"); ?>"
-                               class="btn btn-primary nxd-ext-btn">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <button
-                                    title="<?php echo Text::_("COM_JOOMET_EDIT_FILE_TXT"); ?>"
-                                    class="btn btn-primary"
-                                    onclick="handleEditFileClicked(event, '<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleEditFileClicked&file=' . $file['original_name']); ?>')"
-                            >
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                            <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.delete&id=' . $file['original_name']); ?>"
-                               title="<?php echo Text::_("COM_JOOMET_DELETE_FILE_TXT"); ?>"
-                               data-bs-toggle="modal"
-                               data-bs-target="#deleteConfirmationModal"
-                               onclick="handleDeleteFileClicked('<?php echo $file['original_name']; ?>', '<?php echo $file['name']; ?>')"
-                               class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </a>
+
+                                <div class="vr"></div>
+
+							<?php endif; ?>
+
+                            <div class="btn-group">
+                                <a target="_blank" href="<?php echo $file['url']; ?>"
+                                   title="<?php echo Text::_("COM_JOOMET_VIEW_FILE_TXT"); ?>"
+                                   class="btn btn-primary nxd-ext-btn">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+
+								<?php if ($user->authorise("core.edit", "com_joomet")): ?>
+                                    <button
+                                            title="<?php echo Text::_("COM_JOOMET_EDIT_FILE_TXT"); ?>"
+                                            class="btn btn-primary"
+                                            onclick="handleEditFileClicked(event, '<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleEditFileClicked&file=' . $file['original_name']); ?>')"
+                                    >
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+								<?php endif; ?>
+
+								<?php if ($user->authorise("core.delete", "com_joomet")): ?>
+                                    <a href="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.delete&id=' . $file['original_name']); ?>"
+                                       title="<?php echo Text::_("COM_JOOMET_DELETE_FILE_TXT"); ?>"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#deleteConfirmationModal"
+                                       onclick="handleDeleteFileClicked('<?php echo $file['original_name']; ?>', '<?php echo $file['name']; ?>')"
+                                       class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+								<?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </td>

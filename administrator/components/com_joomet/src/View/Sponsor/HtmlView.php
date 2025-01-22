@@ -66,13 +66,17 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::back();
 
+		$hasMsAutoSet = false;
+
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
+			$hasMsAutoSet = true;
 		}
 
 		$alt = "Joomet Help";
-		$dhtml = (new NxdCustomToolbarButton())->getHtml();
+		$classes = (!$hasMsAutoSet ? 'ms-auto ' : '') . "btn-primary nxd-ext-btn nxd-help-btn";
+		$dhtml = (new NxdCustomToolbarButton("","","_blank", $classes))->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_SPONSOR'), 'fas fa-heart');

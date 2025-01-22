@@ -110,21 +110,33 @@ class HtmlView extends BaseHtmlView
 		);
 		$toolbar->appendButton('Custom', $reUploadBtnHtml->getHtml(), 'upload');
 
-		ToolbarHelper::divider();
+		if($user->authorise("com_joomet.export_report", "com_joomet"))
+		{
+			$exportBtn = new NxdCustomToolbarButton(
+				"COM_JOOMET_DOWNLOAD_REPORT_BTN_TXT",
+				"/administrator/index.php?option=com_joomet&task=check.downloadReport",
+				"_self",
+				"btn-primary",
+				"fas fa-file-lines"
+			);
+			$toolbar->appendButton('Custom', $exportBtn->getHtml(), Text::_('COM_JOOMET_DASHBOARD_BTN_TXT'));
+		}
+
+		$hasMSAutoSet = false;
 
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
+			$hasMSAutoSet = true;
 		}
 
-		ToolbarHelper::divider();
-
 		$alt = "Support Joomet";
+		$classes = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
 			"_self",
-			"btn-success nxd-support-btn",
+			$classes,
 			"fas fa-heart"
 		);
 

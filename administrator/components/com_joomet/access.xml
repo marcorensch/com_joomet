@@ -7,29 +7,30 @@
 		<action name="core.create" title="JACTION_CREATE" />
 		<action name="core.delete" title="JACTION_DELETE" />
 		<action name="core.edit" title="JACTION_EDIT" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" />
-		<action name="core.edit.value" title="JACTION_EDITVALUE" />
+		<action name="com_joomet.export_report" title="COM_JOOMET_EXPORT_REPORT" />
+		<action name="com_joomet.check" title="COM_JOOMET_ACTION_CHECK" />
+		<action name="com_joomet.translate" title="COM_JOOMET_ACTION_TRANSLATE" />
+
 	</section>
-	<section name="category">
-		<action name="core.create" title="JACTION_CREATE" />
-		<action name="core.delete" title="JACTION_DELETE" />
-		<action name="core.edit" title="JACTION_EDIT" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" />
-	</section>
-	<section name="fieldgroup">
-		<action name="core.create" title="JACTION_CREATE" />
-		<action name="core.delete" title="JACTION_DELETE" />
-		<action name="core.edit" title="JACTION_EDIT" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" />
-		<action name="core.edit.value" title="JACTION_EDITVALUE" />
-	</section>
-	<section name="field">
-		<action name="core.delete" title="JACTION_DELETE" />
-		<action name="core.edit" title="JACTION_EDIT" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" />
-		<action name="core.edit.value" title="JACTION_EDITVALUE" />
-	</section>
+<!--	<section name="category">-->
+<!--		<action name="core.create" title="JACTION_CREATE" />-->
+<!--		<action name="core.delete" title="JACTION_DELETE" />-->
+<!--		<action name="core.edit" title="JACTION_EDIT" />-->
+<!--		<action name="core.edit.state" title="JACTION_EDITSTATE" />-->
+<!--		<action name="core.edit.own" title="JACTION_EDITOWN" />-->
+<!--	</section>-->
+<!--	<section name="fieldgroup">-->
+<!--		<action name="core.create" title="JACTION_CREATE" />-->
+<!--		<action name="core.delete" title="JACTION_DELETE" />-->
+<!--		<action name="core.edit" title="JACTION_EDIT" />-->
+<!--		<action name="core.edit.state" title="JACTION_EDITSTATE" />-->
+<!--		<action name="core.edit.own" title="JACTION_EDITOWN" />-->
+<!--		<action name="core.edit.value" title="JACTION_EDITVALUE" />-->
+<!--	</section>-->
+<!--	<section name="field">-->
+<!--		<action name="core.delete" title="JACTION_DELETE" />-->
+<!--		<action name="core.edit" title="JACTION_EDIT" />-->
+<!--		<action name="core.edit.state" title="JACTION_EDITSTATE" />-->
+<!--		<action name="core.edit.value" title="JACTION_EDITVALUE" />-->
+<!--	</section>-->
 </access>

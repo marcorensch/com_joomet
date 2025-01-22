@@ -89,34 +89,39 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->appendButton('Custom', $dashboardBtn->getHtml(), Text::_('COM_JOOMET_DASHBOARD_BTN_TXT'));
 
-		$reUploadBtnHtml = new NxdCustomToolbarButton(
-			"COM_JOOMET_UPLOAD_BTN_TXT",
-			"/administrator/index.php?option=com_joomet&view=upload&target=uploaded",
-			"_self",
-			"btn-primary",
-			"fas fa-file-upload"
-		);
-		$toolbar->appendButton('Custom', $reUploadBtnHtml->getHtml(), 'upload');
+		if($user->authorise("core.create", "com_joomet"))
+		{
+			$reUploadBtnHtml = new NxdCustomToolbarButton(
+				"COM_JOOMET_UPLOAD_BTN_TXT",
+				"/administrator/index.php?option=com_joomet&view=upload&target=uploaded",
+				"_self",
+				"btn-primary",
+				"fas fa-file-upload"
+			);
+			$toolbar->appendButton('Custom', $reUploadBtnHtml->getHtml(), 'upload');
+		}
 
-		// The old fashioned way:
-//		$toolbar->trash('uploaded.handleTrashClicked')->listCheck(true);
+		if($user->authorise("core.delete", "com_joomet"))
+		{
+			ToolbarHelper::deleteList(Text::_('COM_JOOMET_DELETE_ITEMS_TXT'), 'uploaded.handleTrashClicked', 'JTOOLBAR_DELETE');
+		}
 
-		ToolbarHelper::deleteList(Text::_('COM_JOOMET_DELETE_ITEMS_TXT'), 'uploaded.handleTrashClicked', 'JTOOLBAR_DELETE');
-
+		$hasMSAutoSet = false;
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
+			$hasMSAutoSet = true;
 		}
 
 		$alt        = "Support Joomet";
+		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
 			"_self",
-			"btn-success nxd-support-btn",
+			$classes,
 			"fas fa-heart"
 		);
-
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
 		$alt   = "Joomet Help";

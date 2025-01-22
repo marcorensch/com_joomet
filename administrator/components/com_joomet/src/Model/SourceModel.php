@@ -54,9 +54,13 @@ class SourceModel extends ListModel
 	public function getSources():array
 	{
 		$target = $this->getTargetView();
+		$user = Factory::getApplication()->getIdentity();
 
 		$sources = array();
-		$sources[] = new SourceItem(Text::_("COM_JOOMET_SOURCE_UPLOAD_TXT"), "fas fa-file-upload", "index.php?option=com_joomet&view=upload&target={$target}");
+		if($user->authorise("core.create", "com_joomet"))
+		{
+			$sources[] = new SourceItem(Text::_("COM_JOOMET_SOURCE_UPLOAD_TXT"), "fas fa-file-upload", "index.php?option=com_joomet&view=upload&target={$target}");
+		}
 		$sources[] = new SourceItem(Text::_("COM_JOOMET_SOURCE_UPLOADED_TXT"), "fas fa-folder-open", "index.php?option=com_joomet&view=uploaded&target={$target}");
 		$sources[] = new SourceItem(Text::_("COM_JOOMET_SOURCE_LOCAL_TXT"), "fas fa-file-import", "index.php?option=com_joomet&view=local&target={$target}");
 

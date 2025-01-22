@@ -139,9 +139,20 @@ class CheckModel extends ListModel
 		// Reset Max Execution Time
 		ini_set('max_execution_time', $previousMaxExecutionTime);
 
-		// Call the Checks one by one
+		// Prepare Report Data
+		$this->prepareReportData($checkedRows, $this->statistics, $filenameChecks);
 
 		return array("statistics" => $this->statistics, "data" => $checkedRows, "filenameChecks" => $filenameChecks);
+	}
+
+	private function prepareReportData($rows, $statistics, $fileNameChecks):void
+	{
+		$app = Factory::getApplication();
+
+		// Session speichern
+		$app->getSession()->set('rowsReportData', $rows);
+		$app->getSession()->set('fileStatsData', $statistics);
+		$app->getSession()->set('fileNameChecksData', $fileNameChecks);
 	}
 
 	public function getErrors(): array

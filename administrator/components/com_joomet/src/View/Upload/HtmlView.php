@@ -79,20 +79,23 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::back('JTOOLBAR_BACK');
 
+		$hasMSAutoSet = false;
+
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
+			$hasMSAutoSet = true;
 		}
 
-		$alt = "Support Joomet";
+		$alt        = "Support Joomet";
+		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
 			"_self",
-			"btn-success nxd-support-btn",
+			$classes,
 			"fas fa-heart"
 		);
-
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
 		$alt = "Joomet Help";

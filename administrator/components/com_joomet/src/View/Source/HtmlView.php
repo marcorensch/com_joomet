@@ -59,26 +59,29 @@ class HtmlView extends BaseHtmlView
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
 		$languageString = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE');
-		if($this->target === "check"){
+		if ($this->target === "check")
+		{
 			$languageString = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_CHECKER');
-			$switchButton = new NxdCustomToolbarButton(
+			$switchButton   = new NxdCustomToolbarButton(
 				"COM_JOOMET_SOURCE_SWITCH_TO_TRANSLATION",
 				"/administrator/index.php?option=com_joomet&view=source&target=translate",
 				"_self",
 				"btn-primary",
 				"fas fa-shuffle"
 			);
-			$switchAlt = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_TRANSLATION');
-		}elseif ($this->target === "translate"){
+			$switchAlt      = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_TRANSLATION');
+		}
+		elseif ($this->target === "translate")
+		{
 			$languageString = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_TRANSLATION');
-			$switchButton = new NxdCustomToolbarButton(
+			$switchButton   = new NxdCustomToolbarButton(
 				"COM_JOOMET_SOURCE_SWITCH_TO_CHECKER",
 				"/administrator/index.php?option=com_joomet&view=source&target=check",
 				"_self",
 				"btn-primary",
 				"fas fa-shuffle"
 			);
-			$switchAlt = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_CHECKER');
+			$switchAlt      = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_CHECKER');
 		}
 
 		$user    = Factory::getApplication()->getIdentity();
@@ -95,17 +98,21 @@ class HtmlView extends BaseHtmlView
 		$toolbar->appendButton('Custom', $dashboardBtn->getHtml(), Text::_('COM_JOOMET_DASHBOARD_BTN_TXT'));
 		$toolbar->appendButton('Custom', $switchButton->getHtml(), $switchAlt);
 
+		$hasMSAutoSet = false;
+
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
+			$hasMSAutoSet = true;
 		}
 
-		$alt = "Support Joomet";
+		$alt        = "Support Joomet";
+		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
 			"_self",
-			"btn-success nxd-support-btn",
+			$classes,
 			"fas fa-heart"
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);

@@ -43,6 +43,11 @@ a.bmc-btn::before {
     }
 }
 
+.nxd-float-right {
+    float: right;
+    margin-left: auto; /* Platz zwischen linken Elementen und dem Button */
+}
+
 /* Joomla! Error */
 .modal .btn.btn-danger {
     background: #c52827;

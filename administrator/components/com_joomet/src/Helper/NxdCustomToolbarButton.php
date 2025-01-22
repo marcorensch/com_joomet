@@ -26,11 +26,13 @@ class NxdCustomToolbarButton
 	private string $classes;
 	private string $iconClasses;
 
+	private string $toolbarBtnMsCls;
+
 	public function __construct(
-		string $text="",
+		string $text= "",
 		string $url = "",
-		$target = "_blank",
-		$classes="btn-primary nxd-ext-btn nxd-help-btn",
+		string $target = "_blank",
+		string $classes="btn-primary nxd-ext-btn nxd-help-btn",
 		string $iconClasses = "fas fa-question"
 	)
 	{
@@ -39,11 +41,12 @@ class NxdCustomToolbarButton
 		$this->target = $target;
 		$this->classes = $classes;
 		$this->iconClasses = $iconClasses;
+		$this->toolbarBtnMsCls = str_contains( $classes, "ms-auto") ? "ms-auto" : "";
 	}
 
 	public function getHtml(): string
 	{
-		return '<joomla-toolbar-button><a title="'.$this->text.'" href="' . $this->url . '" class="btn '.$this->classes.'" target="' . $this->target . '"><span class="'.$this->iconClasses.'"></span>' . $this->text . '</a></joomla-toolbar-button>';
+		return '<joomla-toolbar-button class="'.$this->toolbarBtnMsCls.'"><a title="'.$this->text.'" href="' . $this->url . '" class="btn '.$this->classes.'" target="' . $this->target . '"><span class="'.$this->iconClasses.'"></span>' . $this->text . '</a></joomla-toolbar-button>';
 	}
 
 }

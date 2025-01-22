@@ -22,7 +22,6 @@ $userId    = $user->id;
 
 ?>
 
-<?php echo $this->targetView;?>
 <form action="<?php echo Route::_('index.php?option=com_joomet'); ?>" enctype="multipart/form-data" class="form-vertical" method="post" name="adminForm" id="adminForm">
 	<div class="row">
 		<div class="col-md-12">
@@ -42,8 +41,8 @@ $userId    = $user->id;
                     </div>
                 </div>
 
-                <input type="text" name="target_view" value="<?php echo $this->targetView;?>">
-                <input type="text" name="task" value="upload.handleFileUpload">
+                <input type="hidden" name="target_view" value="<?php echo $this->targetView;?>">
+                <input type="hidden" name="task" value="upload.handleFileUpload">
 				<input type="hidden" name="boxchecked" value="0">
 				<?php echo HTMLHelper::_('form.token'); ?>
 			</div>
