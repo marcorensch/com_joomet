@@ -16,6 +16,6 @@
 | Select uploaded language files          | done    | :white_check_mark: |
 | Manage uploaded language files          | done    | :white_check_mark: |
 | Checker Service                         | done    | :white_check_mark: |
-| Checker Report                          | in work | :pencil_2:         |
+| Checker Report                          | in work | :pencil2:          |
 | Select locally installed language files | to do   | :baby_bottle:      |
 | Translation Service                     | to do   | :baby_bottle:      |
