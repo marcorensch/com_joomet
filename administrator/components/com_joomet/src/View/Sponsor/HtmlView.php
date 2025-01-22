@@ -7,29 +7,26 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace NXD\Component\Joomet\Administrator\View\Upload;
+namespace NXD\Component\Joomet\Administrator\View\Sponsor;
 
 defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
-use NXD\Component\Joomet\Administrator\Model\UploadModel;
+use NXD\Component\Joomet\Administrator\Model\SponsorModel;
 
 /**
- * View class Joomet Check.
+ * View class Joomet Dashboard.
  *
  * @since  1.0.0
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $form;
-	protected string $task;
 
 	/**
 	 * Method to display the view.
@@ -38,16 +35,14 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   1.0.0
+	 * @throws  Exception
 	 */
 	public function display($tpl = null): void
 	{
-		/** @var UploadModel $model */
-		$model  = $this->getModel();
-		$this->form = $this->get('Form');
-		$this->targetView = $this->get('TargetView');
-		$errors = $this->get('Errors');
+		/** @var SponsorModel $model */
+		$model                  = $this->getModel();
+		$errors                 = $this->get('Errors');
 
 		if (count($errors))
 		{
@@ -62,14 +57,6 @@ class HtmlView extends BaseHtmlView
 		parent::display($tpl);
 	}
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   1.0.0
-	 */
 	protected function addToolbar()
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
@@ -77,31 +64,19 @@ class HtmlView extends BaseHtmlView
 		$user = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
-		ToolbarHelper::back('JTOOLBAR_BACK');
+		ToolbarHelper::back();
 
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
 		}
 
-		$alt = "Support Joomet";
-		$supportBtn = new NxdCustomToolbarButton(
-			"COM_JOOMET_SUPPORT_US_BTN_TXT",
-			"/administrator/index.php?option=com_joomet&view=sponsor",
-			"_self",
-			"btn-success nxd-support-btn",
-			"fas fa-heart"
-		);
-
-		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
-
 		$alt = "Joomet Help";
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
-		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_UPLOAD'), 'fas fa-file-upload');
+		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_SPONSOR'), 'fas fa-heart');
 
 
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_joomet');
 	}
 }

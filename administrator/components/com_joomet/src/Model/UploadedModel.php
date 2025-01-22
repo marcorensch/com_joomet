@@ -1,0 +1,53 @@
+<?php
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_joomet
+ *
+ * @copyright   Copyright (C) 2025 NXD nx-designs, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+namespace NXD\Component\Joomet\Administrator\Model;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\MVC\Model\AdminModel;
+use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
+
+class UploadedModel extends AdminModel
+{
+	public $typeAlias = 'com_joomet.uploaded';
+
+	protected string $sourceFolder = JPATH_ROOT . '/media/com_joomet/uploads/';
+
+
+	public function getForm($data = [], $loadData = true): false | Form
+	{
+		$form = $this->loadForm($this->typeAlias, 'uploaded', ['control' => 'jform', 'load_data' => $loadData]);
+
+		if(empty($form)){
+			return false;
+		}
+
+		return $form;
+	}
+
+	public function getTargetView():string
+	{
+		// Get the URL Parameter for the task
+		$vt = trim(Factory::getApplication()->input->get('target', '', 'string'));
+		return $vt;
+	}
+
+	public function getItems():array
+	{
+		$items = array();
+		$files = scandir($this->sourceFolder);
+		foreach($files as $file){
+			if(is_file($this->sourceFolder . $file)){
+				$items[] = JoometHelper::processFileName($file);
+			}
+		}
+		return $items;
+	}
+}

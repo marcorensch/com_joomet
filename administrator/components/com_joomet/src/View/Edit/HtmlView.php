@@ -7,29 +7,27 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace NXD\Component\Joomet\Administrator\View\Upload;
+namespace NXD\Component\Joomet\Administrator\View\Edit;
 
 defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
-use NXD\Component\Joomet\Administrator\Model\UploadModel;
+use NXD\Component\Joomet\Administrator\Model\EditModel;
+use NXD\Component\Joomet\Administrator\Model\SponsorModel;
 
 /**
- * View class Joomet Check.
+ * View class Joomet Dashboard.
  *
  * @since  1.0.0
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $form;
-	protected string $task;
 
 	/**
 	 * Method to display the view.
@@ -43,48 +41,62 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		/** @var UploadModel $model */
-		$model  = $this->getModel();
-		$this->form = $this->get('Form');
-		$this->targetView = $this->get('TargetView');
-		$errors = $this->get('Errors');
+		/** @var EditModel $model */
+		$model      = $this->getModel();
+		$errors     = $this->get('Errors');
+		$this->file = $this->get('File');
 
 		if (count($errors))
 		{
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
+		if (!is_readable($this->file['full_path']))
+		{
+			throw new Exception('Die Datei ist nicht lesbar: ' . $this->file['full_path']);
+		}
+
+		// Dateiinhalt sicher laden
+		$this->fileContent = @file_get_contents($this->file['full_path']);
+
+		if ($this->fileContent === false)
+		{
+			throw new Exception(Text::sprintf('COM_JOOMET_FILE_NOT_READABLE', $this->file['full_path']));
+		}
+
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
+		$wa->useScript('com_joomet.admin.editor.util');
 
 		$this->addToolbar();
 
 		parent::display($tpl);
 	}
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   1.0.0
-	 */
 	protected function addToolbar()
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user = Factory::getApplication()->getIdentity();
+		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
-		ToolbarHelper::back('JTOOLBAR_BACK');
+		ToolbarHelper::back();
+
+		// Spacer
+		ToolbarHelper::divider();
+
+		// Save
+		ToolbarHelper::apply("edit.apply");
+		ToolbarHelper::save("edit.save");
+		ToolbarHelper::cancel("edit.cancel");
+
 
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
 		}
 
-		$alt = "Support Joomet";
+		$alt        = "Support Joomet";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
@@ -95,13 +107,12 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt = "Joomet Help";
+		$alt   = "Joomet Help";
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
-		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_UPLOAD'), 'fas fa-file-upload');
+		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_EDIT'), 'fas fa-file-edit');
 
 
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_joomet');
 	}
 }

@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
-use NXD\Component\Joomet\Administrator\View\Joomet\HtmlView;
+use NXD\Component\Joomet\Administrator\View\Check\HtmlView;
 
 /** @var HtmlView $this */
 

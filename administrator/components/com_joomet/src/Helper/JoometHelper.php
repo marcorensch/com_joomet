@@ -16,6 +16,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use JUri;
 
 class JoometHelper extends ComponentHelper
 {
@@ -28,14 +30,15 @@ class JoometHelper extends ComponentHelper
 		return $manifest['version'];
 	}
 
-	public static function checkIfLocalFileExists(string $fileName): bool | string
+	public static function checkIfLocalFileExists(string $fileName): bool|string
 	{
-		$app  = Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// cancel if there is no file info
 		if (empty($fileName))
 		{
 			$app->enqueueMessage(Text::_('COM_JOOMET_MSG_NO_FILE_DATA'), 'error');
+
 			return false;
 		}
 
@@ -44,6 +47,7 @@ class JoometHelper extends ComponentHelper
 		if (!file_exists($path))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_JOOMET_MSG_FILE_NOT_FOUND', $fileName), 'error');
+
 			return false;
 		}
 
@@ -60,17 +64,19 @@ class JoometHelper extends ComponentHelper
 	 *
 	 * @since 1.0.0
 	 */
-	public static function getFileContents(string $path):array
+	public static function getFileContents(string $path): array
 	{
 		$file = fopen($path, 'r');
-		if ($file === false) {
+		if ($file === false)
+		{
 			throw new \RuntimeException("Die Datei konnte nicht geöffnet werden.");
 		}
 
 		$lines = [];
 
 		// Datei Zeile für Zeile lesen
-		while (($line = fgets($file)) !== false) {
+		while (($line = fgets($file)) !== false)
+		{
 			$line = trim($line); // Leerzeichen und Zeilenumbrüche entfernen
 
 //			// Leere Zeilen und Kommentare ignorieren
@@ -82,8 +88,23 @@ class JoometHelper extends ComponentHelper
 		}
 
 		fclose($file); // Datei schließen
+
 		return $lines;
 
+	}
+
+	public static function processFileName($fileName): array
+	{
+		$parts     = explode('.', $fileName);
+		$timestamp = $parts[0];
+		$name      = implode('.', array_slice($parts, 1));
+
+		return ["uploaded"      => $timestamp,
+		        "name"          => $name,
+		        "original_name" => $fileName,
+		        "full_path"     => JPATH_ROOT . '/media/com_joomet/uploads/' . $fileName,
+		        "url"           => URI::root() . 'media/com_joomet/uploads/' . $fileName,
+		];
 	}
 
 }

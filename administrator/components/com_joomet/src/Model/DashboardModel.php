@@ -24,6 +24,8 @@ class DashboardModel extends BaseModel
 
 		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_CHECK"), "fas fa-file-circle-check", "index.php?option=com_joomet&view=source&target=check");
 		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_TRANSLATE"), "fas fa-file", "index.php?option=com_joomet&view=source&target=translate");
+		$items[] = new DashboardItem(Text::_("COM_JOOMET_SOURCE_UPLOADED_TXT"), "fas fa-folder-open", "index.php?option=com_joomet&view=uploaded");
+		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_SPONSOR"), "fas fa-heart", "index.php?option=com_joomet&view=sponsor");
 
 		return $items;
 

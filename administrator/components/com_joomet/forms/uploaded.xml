@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<form
+        addruleprefix="NXD\Component\Joomet\Administrator\Rule"
+        addformprefix="NXD\Component\Joomet\Administrator\Form"
+        addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+>
+    <fieldset name="uploaded">
+
+    </fieldset>
+</form>

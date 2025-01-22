@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace NXD\Component\Joomet\Administrator\View\Upload;
+namespace NXD\Component\Joomet\Administrator\View\Uploaded;
 
 defined('_JEXEC') or die;
 
@@ -18,8 +18,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use NXD\Component\Joomet\Administrator\Model\CheckModel;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
-use NXD\Component\Joomet\Administrator\Model\UploadModel;
+use NXD\Component\Joomet\Administrator\Model\UploadedModel;
 
 /**
  * View class Joomet Check.
@@ -43,11 +44,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		/** @var UploadModel $model */
-		$model  = $this->getModel();
-		$this->form = $this->get('Form');
+		/** @var UploadedModel $model */
+		$model            = $this->getModel();
+		$this->form       = $this->get('Form');
 		$this->targetView = $this->get('TargetView');
-		$errors = $this->get('Errors');
+		$errors           = $this->get('Errors');
+		$this->items      = $model->getItems();
 
 		if (count($errors))
 		{
@@ -74,17 +76,39 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user = Factory::getApplication()->getIdentity();
+		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
-		ToolbarHelper::back('JTOOLBAR_BACK');
+		$dashboardBtn = new NxdCustomToolbarButton(
+			"COM_JOOMET_DASHBOARD_BTN_TXT",
+			"/administrator/index.php?option=com_joomet&view=dashboard",
+			"_self",
+			"btn-primary",
+			"fas fa-grip-horizontal"
+		);
+
+		$toolbar->appendButton('Custom', $dashboardBtn->getHtml(), Text::_('COM_JOOMET_DASHBOARD_BTN_TXT'));
+
+		$reUploadBtnHtml = new NxdCustomToolbarButton(
+			"COM_JOOMET_UPLOAD_BTN_TXT",
+			"/administrator/index.php?option=com_joomet&view=upload&target=uploaded",
+			"_self",
+			"btn-primary",
+			"fas fa-file-upload"
+		);
+		$toolbar->appendButton('Custom', $reUploadBtnHtml->getHtml(), 'upload');
+
+		// The old fashioned way:
+//		$toolbar->trash('uploaded.handleTrashClicked')->listCheck(true);
+
+		ToolbarHelper::deleteList(Text::_('COM_JOOMET_DELETE_ITEMS_TXT'), 'uploaded.handleTrashClicked', 'JTOOLBAR_DELETE');
 
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
 		}
 
-		$alt = "Support Joomet";
+		$alt        = "Support Joomet";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
@@ -95,11 +119,11 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt = "Joomet Help";
+		$alt   = "Joomet Help";
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
-		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_UPLOAD'), 'fas fa-file-upload');
+		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_UPLOADED'), 'fas fa-language');
 
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_joomet');

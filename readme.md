@@ -13,7 +13,9 @@
 |-----------------------------------------|---------|--------------------|
 | Component structure                     | done    | :white_check_mark: |
 | Upload language files                   | done    | :white_check_mark: |
-| Select uploaded language files          | in work | :pencil2:          |
-| Manage uploaded language files          | in work | :pencil2:          |
+| Select uploaded language files          | done    | :white_check_mark: |
+| Manage uploaded language files          | done    | :white_check_mark: |
+| Checker Service                         | done    | :white_check_mark: |
+| Checker Report                          | in work | :pencil_2:         |
 | Select locally installed language files | to do   | :baby_bottle:      |
 | Translation Service                     | to do   | :baby_bottle:      |

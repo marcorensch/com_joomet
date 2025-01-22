@@ -9,7 +9,9 @@
 
 defined('_JEXEC') or die;
 
+use NXD\Component\Joomet\Administrator\View\Source\HtmlView;
 
+/** @var HtmlView $this */
 ?>
 
 

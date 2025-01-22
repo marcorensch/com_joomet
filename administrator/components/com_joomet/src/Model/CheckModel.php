@@ -80,7 +80,10 @@ class CheckModel extends ListModel
 		$fileRows    = JoometHelper::getFileContents($path);
 		$checkedRows = array();
 		$rowNum      = 1;
-		[$this->statistics['uploaded'], $this->statistics['file_name']] = $this->processFileName($fileName);
+
+		$fileNameArr = JoometHelper::processFileName($fileName);
+		$this->statistics['uploaded'] = $fileNameArr['uploaded'];
+		$this->statistics['file_name'] = $fileNameArr['name'];
 		$this->statistics['total']       = count($fileRows);
 		$this->statistics['empty']       = 0;
 		$this->statistics['translation'] = 0;
@@ -144,15 +147,6 @@ class CheckModel extends ListModel
 	public function getErrors(): array
 	{
 		return $this->errors;
-	}
-
-	private function processFileName($fileName): array
-	{
-		$parts     = explode('.', $fileName);
-		$timestamp = $parts[0];
-		$name      = implode('.', array_slice($parts, 1));
-
-		return [$timestamp, $name];
 	}
 
 	// Checks

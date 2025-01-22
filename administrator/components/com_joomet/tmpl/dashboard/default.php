@@ -10,6 +10,9 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use NXD\Component\Joomet\Administrator\View\Dashboard\HtmlView;
+
+/** @var HtmlView $this */
 
 ?>
 

@@ -1,4 +1,6 @@
-div#toolbar > joomla-toolbar-button > a.nxd-ext-btn::before {
+div#toolbar > joomla-toolbar-button > a.nxd-ext-btn::before,
+.nxd-ext-btn::before,
+a.bmc-btn::before {
     display: none;
     content: "";
 }
@@ -38,5 +40,21 @@ div#toolbar > joomla-toolbar-button > a.nxd-ext-btn::before {
             margin: 0;
             color: #333;
         }
+    }
+}
+
+/* Joomla! Error */
+.modal .btn.btn-danger {
+    background: #c52827;
+    color: white;
+    border-color: var(--btn-border-color);
+
+    &:hover{
+        background: #a72221;
+        border-color: var(--btn-hover-border-color);
+    }
+    &:active{
+        background: #9e201f;
+        border-color: var(--btn-active-border-color);
     }
 }

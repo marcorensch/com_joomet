@@ -103,9 +103,9 @@ class HtmlView extends BaseHtmlView
 		$alt = "Support Joomet";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
-			"https://buymeacoffee.com/nxdesigns",
-			"_blank",
-			"btn-success nxd-ext-btn nxd-support-btn",
+			"/administrator/index.php?option=com_joomet&view=sponsor",
+			"_self",
+			"btn-success nxd-support-btn",
 			"fas fa-heart"
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
