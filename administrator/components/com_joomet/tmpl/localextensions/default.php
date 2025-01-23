@@ -26,6 +26,7 @@ $wa  = $doc->getWebAssetManager();
 $this->useCoreUI = true;
 
 $input  = $app->input;
+$target = $input->get('target', '', 'string');
 $layout = 'default';
 $tmpl   = $input->get('tmpl', '', 'CMD') === 'component' ? '&tmpl=component' : '';
 $view   = $input->get('view', '', 'CMD');
@@ -60,7 +61,10 @@ $listDirn = $this->escape($this->state->get('list.direction'));
 					<?php foreach ($this->extensions as $ext) : ?>
                         <tr>
                             <td><?php echo $ext->extension_id; ?></td>
-                            <td><?php echo Text::_($ext->name); ?></td>
+                            <td><?php
+                                echo '<a href="' . Route::_('index.php?option=com_joomet&view=localextension&ext=' . $ext->element) . '&target="'.$target.'">' . $ext->name . '</a>'
+                                ?>
+                            </td>
                             <td><?php echo $ext->element; ?></td>
                             <td><?php echo $ext->type; ?></td>
                             <td><?php echo $ext->folder; ?></td>
