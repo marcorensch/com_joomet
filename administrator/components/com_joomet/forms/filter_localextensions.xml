@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<form
+        addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+>
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                inputmode="search"
+                description="COM_JOOMET_SEARCH_DESC"
+                hint="JSEARCH_FILTER"
+        />
+        <field
+                name="type"
+                type="list"
+                onchange="this.form.submit();"
+        >
+            <option value="">COM_JOOMET_FILTER_SELECT_TYPE</option>
+            <option value="component">COM_JOOMET_FILTER_SELECT_TYPE_OPT_COM</option>
+            <option value="module">COM_JOOMET_FILTER_SELECT_TYPE_OPT_MOD</option>
+            <option value="plugin">COM_JOOMET_FILTER_SELECT_TYPE_OPT_PLG</option>
+            <option value="template">COM_JOOMET_FILTER_SELECT_TYPE_OPT_TPL</option>
+        </field>
+        <field
+                name="client_id"
+                type="list"
+                onchange="this.form.submit();"
+        >
+            <option value="">COM_JOOMET_FILTER_SELECT_CLIENT</option>
+            <option value="0">COM_JOOMET_FILTER_SELECT_CLIENT_OPT_FRONTEND</option>
+            <option value="1">COM_JOOMET_FILTER_SELECT_CLIENT_OPT_BACKEND</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field
+                name="fullordering"
+                type="list"
+                label="JGLOBAL_SORT_BY"
+                default="a.extension_id ASC"
+                onchange="this.form.submit();"
+        >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+            <option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+            <option value="a.extension_id ASC">COM_JOOMET_ORDERING_ID_ASC</option>
+            <option value="a.extension_id DESC">COM_JOOMET_ORDERING_ID_DESC</option>
+            <option value="a.name ASC">COM_JOOMET_ORDERING_NAME_ASC</option>
+            <option value="a.name DESC">COM_JOOMET_ORDERING_NAME_DESC</option>
+        </field>
+
+        <field
+                name="limit"
+                type="limitbox"
+                label="JGLOBAL_LIST_LIMIT"
+                default="25"
+                onchange="this.form.submit();"
+        />
+    </fields>
+</form>
