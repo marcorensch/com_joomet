@@ -13,12 +13,23 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
+use Joomla\Filesystem\Folder;
+
 
 class UploadedModel extends AdminModel
 {
 	public $typeAlias = 'com_joomet.uploaded';
 
 	protected string $sourceFolder = JPATH_ROOT . '/media/com_joomet/uploads/';
+
+	public function __construct()
+	{
+		// Check if the $sourceFolder exists create if not
+		if(!Folder::exists($this->sourceFolder)){
+			Folder::create($this->sourceFolder, 0755);
+		}
+		parent::__construct();
+	}
 
 
 	public function getForm($data = [], $loadData = true): false | Form
