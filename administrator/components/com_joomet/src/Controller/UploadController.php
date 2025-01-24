@@ -12,9 +12,10 @@ namespace NXD\Component\Joomet\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;     // @ToDo: Check Compatibilty 6.0
+use Joomla\CMS\Filesystem\Folder;   // @ToDo: Check Compatibilty 6.0
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 
 /**
  * Joomet Check controller class.
@@ -90,6 +91,29 @@ class UploadController extends AdminController
 	}
 
 	private function storeFile(array $file): bool
+	{
+		// Überprüfen, ob das Zielverzeichnis existiert, andernfalls erstellen
+		if (!Folder::exists($this->destination)) {
+			if (!Folder::create($this->destination)) {
+				Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_COULD_NOT_CREATE_DESTINATION_PATH'), 'error');
+				return false;
+			}
+		}
+
+		// Bestimme den Zielpfad für die Datei
+		$targetPath = $this->destination . $file['storedName'];
+
+		// Datei verschieben
+		if (!File::upload($file['tmp_name'], $targetPath)) {
+			Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_FILE_UPLOAD_FAILED'), 'error');
+			return false;
+		}
+
+		// Datei erfolgreich gespeichert
+		return true;
+	}
+
+	private function storeFileOld(array $file): bool
 	{
 		// store the file locally and return path to file
 		if (!is_dir($this->destination)) {
