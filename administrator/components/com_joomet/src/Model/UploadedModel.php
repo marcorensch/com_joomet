@@ -13,7 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Folder; //@ToDo Compatibility 6.0
 
 
 class UploadedModel extends AdminModel
