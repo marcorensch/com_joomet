@@ -12,8 +12,8 @@ namespace NXD\Component\Joomet\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;     // @ToDo Check Compatibility 6.0
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
@@ -85,9 +85,9 @@ class UploadedController extends BaseController
 		foreach ($files as $fileName)
 		{
 			$pathToFile = $this->getFullPath($fileName);
-			if (file_exists($pathToFile))
+			if (File::exists($pathToFile))
 			{
-				if(!unlink($pathToFile))
+				if(!File::delete($pathToFile))
 				{
 					$app->enqueueMessage(Text::sprintf('COM_JOOMET_FILE_NOT_DELETED', $fileName), 'error');
 				}
@@ -117,9 +117,9 @@ class UploadedController extends BaseController
 
 		if($fileName){
 			$pathToFile = $this->getFullPath($fileName);
-			if (file_exists($pathToFile))
+			if (File::exists($pathToFile))
 			{
-				if(!unlink($pathToFile))
+				if(!File::delete($pathToFile))
 				{
 					$app->enqueueMessage(Text::sprintf('COM_JOOMET_FILE_NOT_DELETED', $fileName), 'error');
 				}
