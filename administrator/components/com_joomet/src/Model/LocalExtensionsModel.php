@@ -37,7 +37,7 @@ class LocalExtensionsModel extends ListModel
 
 	protected function getListQuery(): QueryInterface|DatabaseQuery
 	{
-		$db = $this->getDatabase();
+		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 		$query->select(
 			$db->quoteName(['a.extension_id', 'a.name', 'a.type', 'a.element', 'a.folder', 'a.client_id', 'a.locked', 'a.protected'])
@@ -45,26 +45,33 @@ class LocalExtensionsModel extends ListModel
 		$query->from($db->quoteName('#__extensions', 'a'));
 
 		// ##### Filters
+		$conditions  = array();
 		$filter_type = $this->getState('filter.type');
-		if (!empty($filter_type)){
-			$query->where('a.type = ' . $db->quote($filter_type));
-		}else{
-			$query->where('a.type IN ("component", "module", "plugin", "template")');
+		if (!empty($filter_type))
+		{
+			$conditions[] = $db->quoteName('a.type') . " = " . $db->quote($filter_type);
+		}
+		else
+		{
+			$conditions[] = $db->quoteName('a.type') . ' IN ("component", "module", "plugin", "template")';
 		}
 
 		$filter_protected = $this->getState('filter.protected');
-		if ($filter_protected !== ""){
-			$query->where('a.protected = ' . $db->quote($filter_protected));
+		if ($filter_protected !== "")
+		{
+			$conditions[] = $db->quoteName('a.protected') . " = " . $db->quote($filter_protected);
 		}
 
 		$filter_locked = $this->getState('filter.locked');
-		if ($filter_locked !== ""){
-			$query->where('a.locked = ' . $db->quote($filter_locked));
+		if ($filter_locked !== "")
+		{
+			$conditions[] = $db->quoteName('a.locked') . " = " . $db->quote($filter_locked);
 		}
 
 		$filter_client_id = $this->getState('filter.client_id');
-		if ($filter_client_id !== ""){
-			$query->where('a.client_id = ' . $db->quote($filter_client_id));
+		if ($filter_client_id !== "")
+		{
+			$conditions[] = $db->quoteName('a.client_id') . " = " . $db->quote($filter_client_id);
 		}
 
 		$search = $this->getState('filter.search');
@@ -72,14 +79,23 @@ class LocalExtensionsModel extends ListModel
 		{
 			if (stripos($search, 'id:') === 0)
 			{
-				$query->where($db->quoteName('a.extension_id') . ' = ' . (int) substr($search, 3));
+				$conditions[] = $db->quoteName('a.extension_id') . ' = ' . (int) substr($search, 3);
 			}
 			else
 			{
-				$search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
-				$query->where('(' . $db->quoteName('a.name') . ' LIKE ' . $search . ')');
-				$query->orWhere('(' . $db->quoteName('a.element') . ' LIKE ' . $search . ')');
+				$search           = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
+				$searchConditions = [
+					$db->quoteName('a.name') . ' LIKE ' . $search,
+					$db->quoteName('a.element') . ' LIKE ' . $search,
+				];
+
+				$conditions[] = '(' . implode(' OR ', $searchConditions) . ')';
 			}
+		}
+
+		if(!empty($conditions))
+		{
+			$query->where(implode(' AND ', $conditions));
 		}
 
 //		$query->order($db->quoteName('a.extension_id') . ' ASC');
@@ -91,13 +107,13 @@ class LocalExtensionsModel extends ListModel
 		return $query;
 	}
 
-	public function getTargetView():string
+	public function getTargetView(): string
 	{
 		// Get the URL Parameter for the task
 		return trim(Factory::getApplication()->input->get('target', '', 'string'));
 	}
 
-	public function getItems():array
+	public function getItems(): array
 	{
 		return parent::getItems();
 	}
