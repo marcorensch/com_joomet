@@ -40,7 +40,7 @@ class LocalExtensionsModel extends ListModel
 		$db = $this->getDatabase();
 		$query = $db->getQuery(true);
 		$query->select(
-			$db->quoteName(['a.extension_id', 'a.name', 'a.type', 'a.element', 'a.folder', 'a.client_id'])
+			$db->quoteName(['a.extension_id', 'a.name', 'a.type', 'a.element', 'a.folder', 'a.client_id', 'a.locked', 'a.protected'])
 		);
 		$query->from($db->quoteName('#__extensions', 'a'));
 
@@ -50,6 +50,16 @@ class LocalExtensionsModel extends ListModel
 			$query->where('a.type = ' . $db->quote($filter_type));
 		}else{
 			$query->where('a.type IN ("component", "module", "plugin", "template")');
+		}
+
+		$filter_protected = $this->getState('filter.protected');
+		if ($filter_protected !== ""){
+			$query->where('a.protected = ' . $db->quote($filter_protected));
+		}
+
+		$filter_locked = $this->getState('filter.locked');
+		if ($filter_locked !== ""){
+			$query->where('a.locked = ' . $db->quote($filter_locked));
 		}
 
 		$filter_client_id = $this->getState('filter.client_id');

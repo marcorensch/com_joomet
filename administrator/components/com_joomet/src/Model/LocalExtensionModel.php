@@ -27,4 +27,41 @@ class LocalExtensionModel extends BaseModel
 		return trim(Factory::getApplication()->input->get('target', '', 'string'));
 	}
 
+	public function getLanguageFilesForExtension(string $extension):array
+	{
+		$files = array();
+		$files['frontend'] = $this->getLanguageFilesFrontend($extension);
+		$files['backend'] = $this->getLanguageFilesBackend($extension);
+		return $files;
+	}
+
+
+
+	private function getLanguageFilesFrontend(string $extension):array
+	{
+		$path = JPATH_ROOT . '/language/';
+		return $this->scanLanguageFolder($path, $extension);
+	}
+
+	private function getLanguageFilesBackend(string $extension):array
+	{
+		$path = JPATH_ROOT . '/language/';
+		return $this->scanLanguageFolder($path, $extension);
+	}
+
+	private function scanLanguageFolder(string $path, string $extension):array
+	{
+		$folders = scandir($path);
+		$files = [];
+		foreach ($folders as $folder)
+		{
+			if ($folder === '.' || $folder === '..')
+			{
+				continue;
+			}
+			$files = array_merge($files, glob($path . $folder . '/'.$extension.'*.ini'));
+		}
+		return $files;
+	}
+
 }

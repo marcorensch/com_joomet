@@ -25,3 +25,5 @@ $wa  = $doc->getWebAssetManager();
 ?>
 
 <h1>Extension</h1>
+
+<?php echo '<pre>' . var_export($this->languageFiles, 1) . '</pre>'; ?>

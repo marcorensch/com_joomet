@@ -43,11 +43,11 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null): void
 	{
 		/** @var LocalExtensionModel $model */
-		$model               = $this->getModel();
-		$this->targetView    = $this->get('TargetView');
-		$this->languageFiles = $this->get("LanguageFiles");
+		$model            = $this->getModel();
+		$this->targetView = $this->get('TargetView');
+		$this->ext        = Factory::getApplication()->input->get('ext');
 
-		$this->ext = Factory::getApplication()->input->get('ext');
+		$this->languageFiles = $model->getLanguageFilesForExtension($this->ext);
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');

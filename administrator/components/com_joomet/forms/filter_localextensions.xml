@@ -30,6 +30,24 @@
             <option value="0">COM_JOOMET_FILTER_SELECT_CLIENT_OPT_FRONTEND</option>
             <option value="1">COM_JOOMET_FILTER_SELECT_CLIENT_OPT_BACKEND</option>
         </field>
+        <field
+                name="protected"
+                type="list"
+                onchange="this.form.submit();"
+        >
+            <option value="">COM_JOOMET_FILTER_SELECT_PROTECTED</option>
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field
+                name="locked"
+                type="list"
+                onchange="this.form.submit();"
+        >
+            <option value="">COM_JOOMET_FILTER_SELECT_LOCKED</option>
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fields>
     <fields name="list">
         <field
