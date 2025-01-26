@@ -22,6 +22,8 @@ class LocalExtensionLanguageFileItem
 	public string $url;
 	public string $src;
 
+	public string $languageTag;
+
 	public function __construct(string $path, string $src)
 	{
 		$this->name = $this->setName($path);
@@ -29,6 +31,7 @@ class LocalExtensionLanguageFileItem
 		$this->relative_path = $this->setRelativePath($path);
 		$this->url = $this->setUrl($path);
 		$this->src = $src;
+		$this->languageTag = $this->setLanguageTag($path);
 	}
 
 	private function setName(string $path):string
@@ -48,5 +51,12 @@ class LocalExtensionLanguageFileItem
 	private function setRelativePath(string $path):string
 	{
 		return str_replace(JPATH_ROOT, "", $path);
+	}
+
+	private function setLanguageTag(string $path)
+	{
+		$pathElements = explode("/", $path);
+		$languageTag = $pathElements[count($pathElements) - 2];
+		return $languageTag;
 	}
 }

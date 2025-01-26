@@ -22,6 +22,7 @@ $file     = $displayData['file'];
 $location = $displayData['location'];
 $extension = $displayData['extension'];
 
+
 $user = Factory::getApplication()->getIdentity();
 
 ?>

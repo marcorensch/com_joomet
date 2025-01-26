@@ -107,4 +107,21 @@ class JoometHelper extends ComponentHelper
 		];
 	}
 
+	public static function prepareExtensionData($element)
+	{
+		$element->ini_name = strtolower($element->name);
+
+		$requiredPrefixes = ['component' => 'com_', 'module' => 'mod_', 'plugin' => 'plg_', 'template' => 'tpl_', 'library' => 'lib_'];
+		foreach ($requiredPrefixes as $prefix){
+			if (str_starts_with($element->ini_name, $prefix)) {
+				return $element;
+			}
+		}
+
+		// Does not start with a prefix - set prefix manually
+		$element->ini_name = $requiredPrefixes[$element->type] . $element->name;
+
+		return $element;
+	}
+
 }

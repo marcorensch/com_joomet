@@ -43,18 +43,18 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null): void
 	{
 		/** @var LocalExtensionModel $model */
-		$model            = $this->getModel();
-		$this->targetView = $this->get('TargetView');
-		$element          = Factory::getApplication()->input->get('element', '', 'string');
-		$this->extension  = $model->getExtension($element);
+		$model               = $this->getModel();
+		$this->targetView    = $this->get('TargetView');
+		$element             = Factory::getApplication()->input->get('element', '', 'string');
+		$this->extension     = $model->getExtension($element);
 		$this->languageFiles = array();
 
-		if (!$this->extension) {
+		if (!$this->extension)
+		{
 			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_JOOMET_EXTENSION_NOT_FOUND_IN_DB', $element), 'error');
+
 			return;
 		}
-
-		echo print_r($this->extension, true);
 
 		$this->languageFiles = $model->getLanguageFilesForExtension($this->extension);
 

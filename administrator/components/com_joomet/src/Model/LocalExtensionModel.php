@@ -12,7 +12,9 @@ namespace NXD\Component\Joomet\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
-use Joomla\CMS\Filesystem\Folder; //@ToDo Check Compatibility 6.0
+use Joomla\CMS\Filesystem\Folder;
+
+//@ToDo Check Compatibility 6.0
 use Joomla\Filesystem\Path;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
@@ -29,9 +31,9 @@ class LocalExtensionModel extends BaseModel
 
 	public function getLanguageFilesForExtension(\stdClass $extension): array
 	{
-		$files             = array();
-		$files['site'] = $this->getLanguageFilesFrontend($extension);
-		$files['administration']  = $this->getLanguageFilesBackend($extension);
+		$files                   = array();
+		$files['site']           = $this->getLanguageFilesFrontend($extension);
+		$files['administration'] = $this->getLanguageFilesBackend($extension);
 
 		return $files;
 	}
@@ -39,18 +41,20 @@ class LocalExtensionModel extends BaseModel
 
 	private function getLanguageFilesFrontend(\stdClass $extension): array
 	{
-		$extensionPath      = $this->buildPathToExtension($extension);
-		$files    =  $this->scanLanguageFolders(JPATH_ROOT, $extension, 'joomla');
-		$files =  array_merge($files, $this->scanLanguageFolders($extensionPath, $extension, 'extension'));
+		$extensionPath          = $this->buildPathToExtension(JPATH_ROOT, $extension);
+		$joomlaLocationFiles    = $this->scanLanguageFolders(JPATH_ROOT, $extension, 'joomla');
+		$extensionLocationFiles = $this->scanLanguageFolders($extensionPath, $extension, 'extension');
+		$files                  = array_merge($joomlaLocationFiles, $extensionLocationFiles);
 
 		return $files;
 	}
 
 	private function getLanguageFilesBackend(\stdClass $extension): array
 	{
-		$extensionPath      = $this->buildPathToExtension($extension);
-		$files    =  $this->scanLanguageFolders(JPATH_ADMINISTRATOR, $extension, 'joomla');
-		$files =  array_merge($files, $this->scanLanguageFolders($extensionPath, $extension, 'extension'));
+		$extensionPath          = $this->buildPathToExtension(JPATH_ADMINISTRATOR, $extension);
+		$joomlaLocationFiles    = $this->scanLanguageFolders(JPATH_ADMINISTRATOR, $extension, 'joomla');
+		$extensionLocationFiles = $this->scanLanguageFolders($extensionPath, $extension, 'extension');
+		$files                  = array_merge($joomlaLocationFiles, $extensionLocationFiles);
 
 		return $files;
 	}
@@ -58,10 +62,11 @@ class LocalExtensionModel extends BaseModel
 	private function scanLanguageFolders(string $path, \stdClass $extension, string $src): array
 	{
 		$languageSubDirs = array("language", "languages", "lang", "langs");
-		$files   = [];
+		$files           = [];
 		foreach ($languageSubDirs as $languageSubDir)
 		{
 			$subPath = Path::clean($path . '/' . $languageSubDir);
+
 			if (!Folder::exists($subPath))
 			{
 				continue;
@@ -69,10 +74,11 @@ class LocalExtensionModel extends BaseModel
 			$folders = Folder::folders($subPath);
 			foreach ($folders as $folder)
 			{
-				$folderPath = Folder::makeSafe($subPath . '/' . $folder);
-				$iniFiles   = Folder::files($folderPath, '^' . preg_quote($extension->element, '/') . '.*\.ini$', false, true);
+				$folderPath           = Folder::makeSafe($subPath . '/' . $folder);
+				$iniFiles             = Folder::files($folderPath, '^' . preg_quote($extension->ini_name, '/') . '.*\.ini$', false, true);
 				$preparedFileElements = array();
-				foreach ($iniFiles as $iniFile){
+				foreach ($iniFiles as $iniFile)
+				{
 					$preparedFileElements[] = new LocalExtensionLanguageFileItem($iniFile, $src);
 				}
 
@@ -92,28 +98,31 @@ class LocalExtensionModel extends BaseModel
 			->where('element = ' . $db->quote($element));
 		$db->setQuery($query);
 
-		return $db->loadObject();
+		$element = $db->loadObject();
+		return JoometHelper::prepareExtensionData($element);
 	}
 
-	private function buildPathToExtension(\stdClass $extension): string
+	private function buildPathToExtension(string $basePath, \stdClass $extension): string
 	{
 		$pathPartType = "";
-		if( $extension->type === "component"){
+		if ($extension->type === "component")
+		{
 			$pathPartType = "components/";
-		}elseif ( $extension->type === "module"){
+		}
+		elseif ($extension->type === "module")
+		{
 			$pathPartType = "modules/";
-		}elseif ( $extension->type === "plugin"){
+		}
+		elseif ($extension->type === "plugin")
+		{
 			$pathPartType = "plugins/";
-		}elseif ( $extension->type === "template"){
+		}
+		elseif ($extension->type === "template")
+		{
 			$pathPartType = "templates/";
 		}
-		if( $extension->client_id === 0){
-			$pathPartClient = JPATH_ADMINISTRATOR;
-		}else{
-			$pathPartClient = JPATH_ROOT;
-		}
 
-		return Path::clean($pathPartClient . "/" . $pathPartType . $extension->folder . "/" . $extension->element);
+		return Path::clean($basePath . "/" . $pathPartType . $extension->folder . "/" . $extension->element);
 	}
 
 }
