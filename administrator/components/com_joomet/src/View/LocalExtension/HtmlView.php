@@ -45,9 +45,18 @@ class HtmlView extends BaseHtmlView
 		/** @var LocalExtensionModel $model */
 		$model            = $this->getModel();
 		$this->targetView = $this->get('TargetView');
-		$this->ext        = Factory::getApplication()->input->get('ext');
+		$element          = Factory::getApplication()->input->get('element', '', 'string');
+		$this->extension  = $model->getExtension($element);
+		$this->languageFiles = array();
 
-		$this->languageFiles = $model->getLanguageFilesForExtension($this->ext);
+		if (!$this->extension) {
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_JOOMET_EXTENSION_NOT_FOUND_IN_DB', $element), 'error');
+			return;
+		}
+
+		echo print_r($this->extension, true);
+
+		$this->languageFiles = $model->getLanguageFilesForExtension($this->extension);
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
@@ -72,7 +81,15 @@ class HtmlView extends BaseHtmlView
 		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
-		ToolbarHelper::back();
+		$customBack = new NxdCustomToolbarButton(
+			"COM_JOOMET_LIST_BTN_TXT",
+			"/administrator/index.php?option=com_joomet&view=localextensions",
+			"_self",
+			"btn-primary",
+			"fas fa-chevron-left"
+		);
+
+		$toolbar->appendButton('Custom', $customBack->getHtml(), Text::_('COM_JOOMET_LIST_BTN_TXT'));
 
 		$dashboardBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_DASHBOARD_BTN_TXT",
@@ -106,7 +123,7 @@ class HtmlView extends BaseHtmlView
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
-		ToolbarHelper::title(Text::sprintf('COM_JOOMET_TOOLBAR_TITLE_LOCALEXTENSION', $this->ext), 'fas fa-language');
+		ToolbarHelper::title(Text::sprintf('COM_JOOMET_TOOLBAR_TITLE_LOCALEXTENSION', $this->extension->element), 'fas fa-language');
 
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_joomet');

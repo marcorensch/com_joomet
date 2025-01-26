@@ -91,6 +91,8 @@ class HtmlView extends BaseHtmlView
 		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
+		ToolbarHelper::back();
+
 		$dashboardBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_DASHBOARD_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=dashboard",

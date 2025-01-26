@@ -28,13 +28,16 @@ $this->useCoreUI = true;
 
 $input  = $app->input;
 $target = $input->get('target', '', 'string');
+$targetQueryString = $this->escape($target) ? "&target=" . $this->escape($target) : '';
+
 $layout = 'default';
 $tmpl   = $input->get('tmpl', '', 'CMD') === 'component' ? '&tmpl=component' : '';
 $view   = $input->get('view', '', 'CMD');
-$action = Route::_('index.php?option=com_joomet&view='.$view.'&layout=' . $layout);
+$action = Route::_('index.php?option=com_joomet&view=localextensions' . $targetQueryString);
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
+
 
 $params = ComponentHelper::getParams('com_joomet');
 if($params->get('show_filters_by_default', 0)){
@@ -52,7 +55,7 @@ if($params->get('show_filters_by_default', 0)){
 
 
 
-<form action="<?php echo Route::_('index.php?option=com_joomet&view=localextensions'); ?>" method="post" name="adminForm" id="adminForm" class="form-vertical">
+<form action="<?php echo $action ?>" method="post" name="adminForm" id="adminForm" class="form-vertical">
 
     <div class="row">
         <div class="col-md-12">
@@ -77,7 +80,7 @@ if($params->get('show_filters_by_default', 0)){
                         <tr>
                             <td><?php echo $ext->extension_id; ?></td>
                             <td><?php
-                                echo '<a href="' . Route::_('index.php?option=com_joomet&view=localextension&ext=' . $ext->element) . '&target="'.$target.'">' . $ext->name . '</a>'
+                                echo '<a href="' . Route::_('index.php?option=com_joomet&view=localextension&element=' . $ext->element . $targetQueryString) . '">' . Text::_($ext->name) . '</a>'
                                 ?>
                             </td>
                             <td><?php echo $ext->element; ?></td>

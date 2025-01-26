@@ -54,6 +54,9 @@ class HtmlView extends BaseHtmlView
 		$this->extensions    = $this->get("Items");
 		$this->state         = $this->get('State');
 
+		$input        = Factory::getApplication()->input;
+		$this->target = $input->get('target', '', 'string');
+
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
 

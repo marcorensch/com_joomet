@@ -60,30 +60,51 @@ class CheckModel extends ListModel
 
 	public function processFile(): array
 	{
-		$app      = Factory::getApplication();
-		$fileName = $app->getUserState('com_joomet.upload.file');
+		$app              = Factory::getApplication();
+		$uploadedFileName = $app->getUserState('com_joomet.upload.file');
+		$localFileData    = $app->getUserState('com_joomet.local.file');
 
-		if (!$fileName)
+		if (!$uploadedFileName && !$localFileData)
 		{
 			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
 
 			return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "No file selected.");
 		}
 
-		if (!$path = JoometHelper::checkIfLocalFileExists($fileName))
+		if ($uploadedFileName)
 		{
-			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_ERROR_FILE_NOT_FOUND");
 
-			return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "File not found.");
+			$fileNameArr = JoometHelper::processFileName($uploadedFileName);
+			$uploaded = $fileNameArr['uploaded'];
+			$name = $fileNameArr['name'];
+
+			if (!$path = JoometHelper::checkIfLocalFileExists($uploadedFileName))
+			{
+				$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_ERROR_FILE_NOT_FOUND");
+				return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "File not found.");
+			}
+		}
+		elseif ($localFileData)
+		{
+			$data = unserialize(base64_decode($localFileData));
+			$path = $data->path;
+			$uploaded = 0;
+			$name = $data->name;
+		}
+		else
+		{
+			error_log("No file selected");
+			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
+
+			return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "No file selected.");
 		}
 
 		$fileRows    = JoometHelper::getFileContents($path);
 		$checkedRows = array();
 		$rowNum      = 1;
 
-		$fileNameArr = JoometHelper::processFileName($fileName);
-		$this->statistics['uploaded'] = $fileNameArr['uploaded'];
-		$this->statistics['file_name'] = $fileNameArr['name'];
+		$this->statistics['uploaded']    = $uploaded;
+		$this->statistics['file_name']   = $name;
 		$this->statistics['total']       = count($fileRows);
 		$this->statistics['empty']       = 0;
 		$this->statistics['translation'] = 0;
@@ -145,7 +166,7 @@ class CheckModel extends ListModel
 		return array("statistics" => $this->statistics, "data" => $checkedRows, "filenameChecks" => $filenameChecks);
 	}
 
-	private function prepareReportData($rows, $statistics, $fileNameChecks):void
+	private function prepareReportData($rows, $statistics, $fileNameChecks): void
 	{
 		$app = Factory::getApplication();
 
