@@ -21,8 +21,21 @@
         <field name="max_execution_time"
                type="number"
                default="60"
+               filter="integer"
                label="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_LABEL"
                description="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_DESCRIPTION"
+        />
+    </fieldset>
+
+    <fieldset name="translate" label="COM_JOOMET_PARAMS_TRANSLATOR_LABEL"
+              addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+    >
+        <field name="api_key_deepl"
+               type="nxdsecured"
+               autocomplete="new-password"
+               default=""
+               label="COM_JOOMET_PARAMS_TRANSLATOR_DEEPL_KEY_LABEL"
+               description="COM_JOOMET_PARAMS_TRANSLATOR_DEEPL_KEY_DESCRIPTION"
         />
     </fieldset>
 
