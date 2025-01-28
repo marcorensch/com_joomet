@@ -9,6 +9,8 @@
 
 namespace NXD\Component\Joomet\Administrator\Field;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Form\Field\PasswordField;
 use Joomla\Registry\Registry;
 use NXD\Module\NCE\Site\Helper\PasswordHelper;
