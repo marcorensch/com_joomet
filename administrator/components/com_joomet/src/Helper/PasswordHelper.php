@@ -26,11 +26,13 @@ class PasswordHelper
 
 	public function encrypt(string $password_plain): string
 	{
-		return openssl_encrypt($password_plain, $this->cipher, $this->key, $this->options, $this->crypt_iv);
+		$encrypted = openssl_encrypt($password_plain, $this->cipher, $this->key, $this->options, $this->crypt_iv);
+		return base64_encode($encrypted);
 	}
 
 	public function decrypt(string $encrypted_password): string
 	{
+		$encrypted_password = base64_decode($encrypted_password);
 		return openssl_decrypt($encrypted_password, $this->cipher, $this->key, $this->options, $this->crypt_iv);
 	}
 

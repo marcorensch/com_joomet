@@ -64,14 +64,14 @@ class HtmlView extends BaseHtmlView
 			$languageString = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_CHECKER');
 			$switchButton   = new NxdCustomToolbarButton(
 				"COM_JOOMET_SOURCE_SWITCH_TO_TRANSLATION",
-				"/administrator/index.php?option=com_joomet&view=source&target=translate",
+				"/administrator/index.php?option=com_joomet&view=source&target=translations",
 				"_self",
 				"btn-primary",
 				"fas fa-shuffle"
 			);
 			$switchAlt      = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_TRANSLATION');
 		}
-		elseif ($this->target === "translate")
+		elseif ($this->target === "translations")
 		{
 			$languageString = Text::_('COM_JOOMET_TOOLBAR_TITLE_SOURCE_FOR_TRANSLATION');
 			$switchButton   = new NxdCustomToolbarButton(

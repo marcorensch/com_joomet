@@ -39,7 +39,7 @@
 		<submenu>
 			<menu link="option=com_joomet&amp;view=dashboard">COM_JOOMET_MENU_DASHBOARD</menu>
 			<menu link="option=com_joomet&amp;view=source&amp;target=check">COM_JOOMET_MENU_CHECK</menu>
-			<menu link="option=com_joomet&amp;view=source&amp;target=translate">COM_JOOMET_MENU_TRANSLATE</menu>
+			<menu link="option=com_joomet&amp;view=source&amp;target=translations">COM_JOOMET_MENU_TRANSLATE</menu>
 			<menu link="option=com_joomet&amp;view=sponsor">COM_JOOMET_MENU_SPONSOR</menu>
 			<submenu>
 			<menu link="option=com_categories&amp;extension=com_joomet"

@@ -71,7 +71,7 @@ $wa->addInlineScript('
                 <th><?php
                     if($this->targetView === 'check' && $user->authorise("com_joomet.check", "com_joomet")){
                         echo '<a href="'. Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . $file['original_name']).'">' . $file['name'] . "</a>";
-                    }elseif ($this->targetView === 'translate' && $user->authorise("com_joomet.translate", "com_joomet")){
+                    }elseif ($this->targetView === 'translations' && $user->authorise("com_joomet.translate", "com_joomet")){
 	                    echo '<a href="'. Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&file=' . $file['original_name']).'">' . $file['name'] . "</a>";
                     }else{
                         echo $file['name'];

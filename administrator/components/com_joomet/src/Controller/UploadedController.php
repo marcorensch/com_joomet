@@ -61,7 +61,7 @@ class UploadedController extends BaseController
 	{
 		$fileName = Factory::getApplication()->input->get('file', "", 'string');
 		Factory::getApplication()->setUserState('com_joomet.upload.file', $fileName);
-		$this->setRedirect('index.php?option=com_joomet&view=translate');
+		$this->setRedirect('index.php?option=com_joomet&view=translations');
 	}
 
 	/**

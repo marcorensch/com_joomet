@@ -37,6 +37,13 @@
                label="COM_JOOMET_PARAMS_TRANSLATOR_DEEPL_KEY_LABEL"
                description="COM_JOOMET_PARAMS_TRANSLATOR_DEEPL_KEY_DESCRIPTION"
         />
+        <field name="deepl_key_check"
+               type="deeplkeycheck"
+               label="COM_JOOMET_PARAMS_DEEPL_USAGE_LABEL"
+               description="COM_JOOMET_PARAMS_DEEPL_USAGE_DESCRIPTION"
+               keyField="api_key_deepl"
+               showon="api_key_deepl!:"
+        />
     </fieldset>
 
     <fieldset

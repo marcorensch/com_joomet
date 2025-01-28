@@ -163,6 +163,10 @@ class CheckModel extends ListModel
 		// Prepare Report Data
 		$this->prepareReportData($checkedRows, $this->statistics, $filenameChecks);
 
+		// Reset User State
+		$app->setUserState('com_joomet.upload.file', null);
+		$app->setUserState('com_joomet.local.file', null);
+
 		return array("statistics" => $this->statistics, "data" => $checkedRows, "filenameChecks" => $filenameChecks);
 	}
 

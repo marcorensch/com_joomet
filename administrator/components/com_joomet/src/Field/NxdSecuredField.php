@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Field\PasswordField;
 use Joomla\Registry\Registry;
-use NXD\Module\NCE\Site\Helper\PasswordHelper;
+use NXD\Component\Joomet\Administrator\Helper\PasswordHelper;
 
 class NxdSecuredField extends PasswordField
 {
