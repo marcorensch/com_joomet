@@ -55,6 +55,7 @@
 			<folder>sql</folder>
 			<folder>src</folder>
 			<folder>tmpl</folder>
+			<folder>vendor</folder>
 		</files>
 	</administration>
 	<changelogurl>https://raw.githubusercontent.com/astridx/boilerplate/tutorial/changelog.xml</changelogurl>

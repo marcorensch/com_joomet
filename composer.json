@@ -1,0 +1,11 @@
+{
+  "name": "nxd/component-joomet",
+  "description": "Joomet Extension for Joomla! 5.x",
+  "require": {
+    "php": "^8.3",
+    "deeplcom/deepl-php": "^v1.11.1"
+  },
+  "config": {
+    "vendor-dir": "administrator/components/com_joomet/vendor"
+  }
+}
