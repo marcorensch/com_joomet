@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class EditModel extends BaseModel
 {
@@ -25,7 +25,7 @@ class EditModel extends BaseModel
 		parent::__construct($config);
 	}
 
-	public function getFile(): false | LocalExtensionLanguageFileItem
+	public function getFile(): false | LanguageFileItem
 	{
 		$encodedFilePath = Factory::getApplication()->getUserState('com_joomet.edit.file');
 		if(!$encodedFilePath){
@@ -33,7 +33,7 @@ class EditModel extends BaseModel
 			return false;
 		}
 		$path = base64_decode($encodedFilePath);
-		return new LocalExtensionLanguageFileItem($path, "");
+		return new LanguageFileItem($path, "");
 	}
 
 }

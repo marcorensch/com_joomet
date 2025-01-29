@@ -17,7 +17,7 @@ use Joomla\CMS\Filesystem\Folder;
 //@ToDo Check Compatibility 6.0
 use Joomla\Filesystem\Path;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class LocalExtensionModel extends BaseModel
 {
@@ -81,7 +81,7 @@ class LocalExtensionModel extends BaseModel
 				$preparedFileElements = array();
 				foreach ($iniFiles as $iniFile)
 				{
-					$preparedFileElements[] = new LocalExtensionLanguageFileItem($iniFile, $src);
+					$preparedFileElements[] = new LanguageFileItem($iniFile, $src);
 				}
 
 				$files = array_merge($files, $preparedFileElements);

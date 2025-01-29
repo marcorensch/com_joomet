@@ -22,7 +22,7 @@ use NXD\Component\Joomet\Administrator\Helper\JoometErrorType;
 use NXD\Component\Joomet\Administrator\Helper\JoometMessageSource;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\JoometMessageType;
-use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 use NXD\Component\Joomet\Administrator\Helper\RowObject;
 use NXD\Component\Joomet\Administrator\Helper\RowType;
 
@@ -73,7 +73,7 @@ class CheckModel extends ListModel
 
 		$pathToFile = base64_decode($pathToFile);
 
-		$file = new LocalExtensionLanguageFileItem($pathToFile, '');
+		$file = new LanguageFileItem($pathToFile, '');
 
 		$fileRows    = JoometHelper::getFileContents($pathToFile);
 		$checkedRows = array();

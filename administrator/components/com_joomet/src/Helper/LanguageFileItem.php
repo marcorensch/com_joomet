@@ -14,7 +14,7 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
-class LocalExtensionLanguageFileItem
+class LanguageFileItem
 {
 	public string $name;
 	public string $label;
