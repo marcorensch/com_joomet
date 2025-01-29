@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
+use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
 
 class EditModel extends BaseModel
 {
@@ -24,14 +25,15 @@ class EditModel extends BaseModel
 		parent::__construct($config);
 	}
 
-	public function getFile(): array
+	public function getFile(): false | LocalExtensionLanguageFileItem
 	{
-		$fileName = Factory::getApplication()->getUserState('com_joomet.edit.file');
-		if(!$fileName){
+		$encodedFilePath = Factory::getApplication()->getUserState('com_joomet.edit.file');
+		if(!$encodedFilePath){
 			Factory::getApplication()->enqueueMessage(Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED"), "error");
-			return array();
+			return false;
 		}
-		return JoometHelper::processFileName($fileName);
+		$path = base64_decode($encodedFilePath);
+		return new LocalExtensionLanguageFileItem($path, "");
 	}
 
 }

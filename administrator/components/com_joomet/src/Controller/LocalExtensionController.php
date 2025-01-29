@@ -39,16 +39,15 @@ class LocalExtensionController extends BaseController {
 
 	public function handleCheckFileClicked(): void
 	{
-		$data = Factory::getApplication()->input->get('data', "", 'string');
-		error_log($data);
-		Factory::getApplication()->setUserState('com_joomet.local.file', $data);
+		$encodedPath = Factory::getApplication()->input->get('file', "", 'string');
+		Factory::getApplication()->setUserState('com_joomet.file', $encodedPath);
 		$this->setRedirect('index.php?option=com_joomet&view=check');
 	}
 
 	public function handleTranslateFileClicked(): void
 	{
-		$fileName = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.local.file', $fileName);
+		$encodedPath = Factory::getApplication()->input->get('file', "", 'string');
+		Factory::getApplication()->setUserState('com_joomet.file', $encodedPath);
 		$this->setRedirect('index.php?option=com_joomet&view=translations');
 	}
 }

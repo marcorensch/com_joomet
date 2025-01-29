@@ -53,14 +53,14 @@ class UploadedController extends BaseController
 	public function handleCheckFileClicked(): void
 	{
 		$fileName = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.upload.file', $fileName);
+		Factory::getApplication()->setUserState('com_joomet.file', $fileName);
 		$this->setRedirect('index.php?option=com_joomet&view=check');
 	}
 
 	public function handleTranslateFileClicked(): void
 	{
 		$fileName = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.upload.file', $fileName);
+		Factory::getApplication()->setUserState('com_joomet.file', $fileName);
 		$this->setRedirect('index.php?option=com_joomet&view=translations');
 	}
 
@@ -113,15 +113,14 @@ class UploadedController extends BaseController
 		$app   = Factory::getApplication();
 		$input = $app->input;
 
-		$fileName = $input->get('file', "", 'string');
+		$filePath = base64_decode($input->get('file', "", 'string'));
 
-		if($fileName){
-			$pathToFile = $this->getFullPath($fileName);
-			if (File::exists($pathToFile))
+		if($filePath){
+			if (File::exists($filePath))
 			{
-				if(!File::delete($pathToFile))
+				if(!File::delete($filePath))
 				{
-					$app->enqueueMessage(Text::sprintf('COM_JOOMET_FILE_NOT_DELETED', $fileName), 'error');
+					$app->enqueueMessage(Text::sprintf('COM_JOOMET_FILE_NOT_DELETED', $filePath), 'error');
 				}
 			}
 		}
@@ -132,13 +131,13 @@ class UploadedController extends BaseController
 
 	public function handleEditFileClicked():void
 	{
-		if (!Session::checkToken())
+		if (!Session::checkToken('get'))
 		{
 			throw new \Exception(Text::_('JINVALID_TOKEN_NOTICE'), 403);
 		}
 
-		$fileName = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.edit.file', $fileName);
+		$encodedFilePath = Factory::getApplication()->input->get('file', "", 'string');
+		Factory::getApplication()->setUserState('com_joomet.edit.file', $encodedFilePath);
 		$this->setRedirect('index.php?option=com_joomet&view=edit');
 	}
 

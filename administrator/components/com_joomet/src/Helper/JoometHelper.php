@@ -93,23 +93,9 @@ class JoometHelper extends ComponentHelper
 
 	}
 
-	public static function processFileName($fileName): array
-	{
-		$parts     = explode('.', $fileName);
-		$timestamp = $parts[0];
-		$name      = implode('.', array_slice($parts, 1));
-
-		return ["uploaded"      => $timestamp,
-		        "name"          => $name,
-		        "original_name" => $fileName,
-		        "full_path"     => JPATH_ROOT . '/media/com_joomet/uploads/' . $fileName,
-		        "url"           => URI::root() . 'media/com_joomet/uploads/' . $fileName,
-		];
-	}
-
 	public static function prepareExtensionData($element)
 	{
-		$element->ini_name = strtolower($element->name);
+		$element->ini_name = str_contains($element->name, ' ') ? strtolower($element->element) : strtolower($element->name);
 
 		$requiredPrefixes = ['component' => 'com_', 'module' => 'mod_', 'plugin' => 'plg_', 'template' => 'tpl_', 'library' => 'lib_'];
 		foreach ($requiredPrefixes as $prefix){

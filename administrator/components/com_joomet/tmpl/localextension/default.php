@@ -25,6 +25,8 @@ $wa  = $doc->getWebAssetManager();
 $description_key = strtoupper($this->extension->ini_name) . '_XML_DESCRIPTION';
 $hideDescription = $description_key === Text::_($description_key);
 
+$targetView = $app->input->getCmd('target');
+
 if($this->extension->locked){
 	$l_cls = "bg-danger";
 	$l_txt = Text::_('JYES');
@@ -105,13 +107,13 @@ if($this->extension->protected){
 					foreach ($this->languageFiles['site'] as $file)
 					{
 						$rowTemplate = new FileLayout('row', __DIR__ . '/table');
-						echo $rowTemplate->render(['file' => $file, 'extension' => $this->extension, 'location' => "JSITE"]);
+						echo $rowTemplate->render(['file' => $file, 'extension' => $this->extension, 'location' => "JSITE", 'targetView' => $targetView]);
 
 					}
 					foreach ($this->languageFiles['administration'] as $file)
 					{
 						$rowTemplate = new FileLayout('row', __DIR__ . '/table');
-						echo $rowTemplate->render(['file' => $file, 'extension' => $this->extension, 'location' => "JADMINISTRATION"]);
+						echo $rowTemplate->render(['file' => $file, 'extension' => $this->extension, 'location' => "JADMINISTRATION", 'targetView' => $targetView]);
 
 					}
 					?>

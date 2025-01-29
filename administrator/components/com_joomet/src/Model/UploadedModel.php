@@ -13,7 +13,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use Joomla\CMS\Filesystem\Folder; //@ToDo Compatibility 6.0
+use Joomla\CMS\Filesystem\Folder;
+use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
+
+//@ToDo Compatibility 6.0
 
 
 class UploadedModel extends AdminModel
@@ -55,8 +58,9 @@ class UploadedModel extends AdminModel
 		$items = array();
 		$files = scandir($this->sourceFolder);
 		foreach($files as $file){
-			if(is_file($this->sourceFolder . $file)){
-				$items[] = JoometHelper::processFileName($file);
+			$path = $this->sourceFolder . $file;
+			if(is_file($path)){
+				$items[] = new LocalExtensionLanguageFileItem($path, 'uploaded');
 			}
 		}
 		return $items;

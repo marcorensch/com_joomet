@@ -9,6 +9,7 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
@@ -19,6 +20,9 @@ class DashboardModel extends BaseModel
 
 	public function getItems():array
 	{
+
+		// Reset User State
+		Factory::getApplication()->setUserState('com_joomet.file', null);
 
 		$items = array();
 

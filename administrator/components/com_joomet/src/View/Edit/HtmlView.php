@@ -51,17 +51,17 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		if (!is_readable($this->file['full_path']))
+		if (!is_readable($this->file->path))
 		{
-			throw new Exception('Die Datei ist nicht lesbar: ' . $this->file['full_path']);
+			throw new Exception('Die Datei ist nicht lesbar: ' . $this->file->path);
 		}
 
 		// Dateiinhalt sicher laden
-		$this->fileContent = @file_get_contents($this->file['full_path']);
+		$this->fileContent = @file_get_contents($this->file->path);
 
 		if ($this->fileContent === false)
 		{
-			throw new Exception(Text::sprintf('COM_JOOMET_FILE_NOT_READABLE', $this->file['full_path']));
+			throw new Exception(Text::sprintf('COM_JOOMET_FILE_NOT_READABLE', $this->file->path));
 		}
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();

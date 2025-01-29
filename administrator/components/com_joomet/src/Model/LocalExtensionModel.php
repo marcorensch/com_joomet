@@ -67,6 +67,7 @@ class LocalExtensionModel extends BaseModel
 		{
 			$subPath = Path::clean($path . '/' . $languageSubDir);
 
+
 			if (!Folder::exists($subPath))
 			{
 				continue;
@@ -74,6 +75,7 @@ class LocalExtensionModel extends BaseModel
 			$folders = Folder::folders($subPath);
 			foreach ($folders as $folder)
 			{
+
 				$folderPath           = Folder::makeSafe($subPath . '/' . $folder);
 				$iniFiles             = Folder::files($folderPath, '^' . preg_quote($extension->ini_name, '/') . '.*\.ini$', false, true);
 				$preparedFileElements = array();

@@ -144,6 +144,5 @@ class CheckController extends AdminController
 		// Redirect
 		$app->redirect(Route::_('index.php?option=com_joomet&view=check', false));
 
-
 	}
 }
