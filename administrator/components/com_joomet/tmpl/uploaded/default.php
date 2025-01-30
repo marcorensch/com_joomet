@@ -50,9 +50,9 @@ $wa->addInlineScript('
             <td style="width: 1%" class="text-center">
 				<?php echo HTMLHelper::_('grid.checkall'); ?>
             </td>
-            <th scope="col">Name</th>
-            <th scope="col">Uploaded</th>
-            <th scope="col" class="text-center" style="width:20%">Actions</th>
+            <th scope="col"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_NAME');?></th>
+            <th scope="col"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_UPLOADED');?></th>
+            <th scope="col" class="text-center" style="width:20%"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ACTIONS');?></th>
         </tr>
         </thead>
         <tbody>

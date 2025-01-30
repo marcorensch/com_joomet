@@ -108,7 +108,7 @@ class HtmlView extends BaseHtmlView
 			$hasMSAutoSet = true;
 		}
 
-		$alt        = "Support Joomet";
+		$alt        = Text::_('COM_JOOMET_SUPPORT_PROJECT_TXT');
 		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
@@ -119,7 +119,7 @@ class HtmlView extends BaseHtmlView
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt   = "Joomet Help";
+		$alt   = Text::_('COM_JOOMET_HELP_TXT');
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 

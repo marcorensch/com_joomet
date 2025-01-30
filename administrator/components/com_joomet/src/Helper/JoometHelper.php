@@ -74,15 +74,10 @@ class JoometHelper extends ComponentHelper
 
 		$lines = [];
 
-		// Datei Zeile für Zeile lesen
+		// Read File row
 		while (($line = fgets($file)) !== false)
 		{
 			$line = trim($line); // Leerzeichen und Zeilenumbrüche entfernen
-
-//			// Leere Zeilen und Kommentare ignorieren
-//			if ($line === '' || str_starts_with($line, '#') || str_starts_with($line, ';')) {
-//				continue;
-//			}
 
 			$lines[] = $line;
 		}

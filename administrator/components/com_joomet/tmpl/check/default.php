@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use NXD\Component\Joomet\Administrator\View\Check\HtmlView;
 
@@ -52,10 +53,10 @@ $badge = new FileLayout('badge', __DIR__);
         <thead>
         <tr>
             <th class="status-col"></th>
-            <th class="text-center" style="width: 2%">Line</th>
-            <th style="width: 25%">Key</th>
-            <th style="width: 25%">Value</th>
-            <th>Errors</th>
+            <th class="text-center" style="width: 2%"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_LINE');?></th>
+            <th style="width: 25%"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_CONSTANT');?></th>
+            <th style="width: 25%"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_VALUE');?></th>
+            <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ERRORS_WARNINGS');?></th>
         </tr>
         </thead>
         <tbody>
