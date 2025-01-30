@@ -21,6 +21,7 @@ use NXD\Component\Joomet\Administrator\Helper\RowType;
 class TranslationsModel extends BaseModel
 {
 	private array $errors;
+
 	public function __construct($config = [])
 	{
 		$this->params = ComponentHelper::getParams('com_joomet');
@@ -29,21 +30,28 @@ class TranslationsModel extends BaseModel
 
 	public function getFileContents(): array
 	{
-		$app           = Factory::getApplication();
-		$pathToFile    = $app->getUserState('com_joomet.file');
+		$app               = Factory::getApplication();
+		$pathToFileEncoded = $app->getUserState('com_joomet.file');
 
 
-		echo '<pre>' . var_export($pathToFile, 1) . '</pre>';
+		echo '<pre>' . var_export($pathToFileEncoded, 1) . '</pre>';
 
-		if (!$pathToFile)
+		if (!$pathToFileEncoded)
 		{
 			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
 
 			return array("data" => [], "error" => "No file selected.");
 		}
 
-		if(!File::exists($pathToFile)){
+		$pathToFile = base64_decode($pathToFileEncoded);
+
+		echo '<pre>' . var_export($pathToFile, 1) . '</pre>';
+
+
+		if (!File::exists($pathToFile))
+		{
 			$this->errors[] = Text::_("COM_JOOMET_MSG_FILE_DOES_NOT_EXIST");
+
 			return array("data" => [], "error" => "No file selected.");
 		}
 
@@ -59,8 +67,7 @@ class TranslationsModel extends BaseModel
 		}
 
 		// Reset User State
-		$app->setUserState('com_joomet.upload.file', null);
-		$app->setUserState('com_joomet.local.file', null);
+		$app->setUserState('com_joomet.file', null);
 
 		return array("data" => $translations, "error" => "");
 	}
