@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
 
 /** @var HtmlView $this */
@@ -25,10 +26,10 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 <table class="table">
     <thead>
     <tr>
-        <th>Row</th>
-        <th>Constant</th>
-        <th>String</th>
-        <th>Translation</th>
+        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_LINE');?></th>
+        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_CONSTANT');?></th>
+        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ORIGINAL_VALUE');?></th>
+        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_TRANSLATION');?></th>
     </tr>
     </thead>
     <tbody>
