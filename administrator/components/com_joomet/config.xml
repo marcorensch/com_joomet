@@ -44,6 +44,29 @@
                keyField="api_key_deepl"
                showon="api_key_deepl!:"
         />
+        <field name="sp_translation" type="spacer" hr="true" />
+        <field name="ignore_empty_rows"
+               label="COM_JOOMET_PARAMS_IGNORE_EMPTY_ROWS_LABEL"
+               description="COM_JOOMET_PARAMS_IGNORE_EMPTY_ROWS_DESCRIPTION"
+               type="radio"
+               default="1"
+               filter="integer"
+               class="btn-group btn-group-yesno"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="ignore_comments"
+               label="COM_JOOMET_PARAMS_IGNORE_COMMENTS_LABEL"
+               description="COM_JOOMET_PARAMS_IGNORE_COMMENTS_DESCRIPTION"
+               type="radio"
+               default="0"
+               filter="integer"
+               class="btn-group btn-group-yesno"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fieldset>
 
     <fieldset

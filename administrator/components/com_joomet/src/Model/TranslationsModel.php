@@ -33,9 +33,6 @@ class TranslationsModel extends BaseModel
 		$app               = Factory::getApplication();
 		$pathToFileEncoded = $app->getUserState('com_joomet.file');
 
-
-		echo '<pre>' . var_export($pathToFileEncoded, 1) . '</pre>';
-
 		if (!$pathToFileEncoded)
 		{
 			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
@@ -44,9 +41,6 @@ class TranslationsModel extends BaseModel
 		}
 
 		$pathToFile = base64_decode($pathToFileEncoded);
-
-		echo '<pre>' . var_export($pathToFile, 1) . '</pre>';
-
 
 		if (!File::exists($pathToFile))
 		{
@@ -60,14 +54,19 @@ class TranslationsModel extends BaseModel
 		foreach ($fileRows as $rowNum => $originalString)
 		{
 			$row = new RowObject($originalString, $rowNum + 1);
-			if ($row->recognisedRowType === RowType::TRANSLATION)
-			{
-				$translations[] = $row;
+			if($this->params->get('ignore_empty_rows', 1) && $row->recognisedRowType === RowType::EMPTY){
+				continue;
 			}
+
+			if($this->params->get('ignore_comments', 0) && $row->recognisedRowType === RowType::COMMENT){
+				continue;
+			}
+
+			$translations[] = $row;
 		}
 
 		// Reset User State
-		$app->setUserState('com_joomet.file', null);
+		//$app->setUserState('com_joomet.file', null);
 
 		return array("data" => $translations, "error" => "");
 	}

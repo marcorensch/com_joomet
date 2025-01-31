@@ -48,6 +48,11 @@ a.bmc-btn::before {
     margin-left: auto; /* Platz zwischen linken Elementen und dem Button */
 }
 
+/* File Content */
+code.constant {
+    color: #393939;
+}
+
 /* Joomla! Error */
 .modal .btn.btn-danger {
     background: #c52827;
@@ -61,5 +66,13 @@ a.bmc-btn::before {
     &:active{
         background: #9e201f;
         border-color: var(--btn-active-border-color);
+    }
+}
+
+/* Dark Mode */
+
+[data-color-scheme="dark"] {
+    code.constant {
+        color: #b3b3b3;
     }
 }
