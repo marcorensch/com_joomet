@@ -17,6 +17,17 @@
       }
     },
     {
+      "name": "com_joomet.admin.ajax",
+      "type": "script",
+      "uri": "com_joomet/admin-joomet-ajax.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
       "name": "com_joomet.admin.editor.util",
       "type": "script",
       "uri": "com_joomet/admin-joomet-editor.js",

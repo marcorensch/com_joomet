@@ -105,4 +105,11 @@ class JoometHelper extends ComponentHelper
 		return $element;
 	}
 
+	public static function getDeeplApiKey():string
+	{
+		$securedKey = ComponentHelper::getParams('com_joomet')->get('api_key_deepl', '');
+		if(!$securedKey) return "";
+		return (new PasswordHelper)->decrypt($securedKey);
+	}
+
 }

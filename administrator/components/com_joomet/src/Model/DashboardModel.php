@@ -23,6 +23,7 @@ class DashboardModel extends BaseModel
 
 		// Reset User State
 		Factory::getApplication()->setUserState('com_joomet.file', null);
+		Factory::getApplication()->setUserState('com_joomet.context', null);
 
 		$items = array();
 

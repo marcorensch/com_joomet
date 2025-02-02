@@ -64,12 +64,17 @@ $wa->addInlineScript('
                 <th><?php
 					if ($this->targetView === 'check' && $user->authorise("com_joomet.check", "com_joomet"))
 					{
-						echo '<a href="' . Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . $file->name) . '">' . $file->label . "</a>";
+						$url = Route::_('index.php?option=com_joomet&task=uploaded.handleCheckFileClicked&file=' . base64_encode($file->path));
 					}
                     elseif ($this->targetView === 'translations' && $user->authorise("com_joomet.translate", "com_joomet"))
 					{
-						echo '<a href="' . Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&file=' . base64_encode($file->path)) . '">' . $file->label . "</a>";
+						$url = Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked&file=' . base64_encode($file->path));
+					}else{
+                        $url = false;
 					}
+                    if($url){
+	                    echo '<a target="_self" title="'.$file->label.'" href="'.$url.'">' . $file->label . "</a>";
+                    }
 					else
 					{
 						echo $file->label;

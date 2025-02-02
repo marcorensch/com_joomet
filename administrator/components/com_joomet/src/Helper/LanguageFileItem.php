@@ -27,6 +27,8 @@ class LanguageFileItem
 
 	public string $languageTag;
 
+	public int $size;
+
 	public function __construct(string $path, string $src)
 	{
 		$this->name = $this->setName($path);
@@ -36,6 +38,7 @@ class LanguageFileItem
 		$this->url = $this->setUrl($path);
 		$this->src = $src;
 		$this->languageTag = $this->setLanguageTag($path);
+		$this->size = filesize($path);
 	}
 
 	private function setLabelAndTimestampFromName(string $fileName):array

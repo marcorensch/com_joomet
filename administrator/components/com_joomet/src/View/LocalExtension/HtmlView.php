@@ -77,6 +77,7 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar()
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
+		Factory::getApplication()->setUserState('com_joomet.context', "joomla");
 
 		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -115,6 +116,8 @@ class HtmlView extends BaseHtmlView
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_EDIT'), 'fas fa-file-edit');
+
+		HTMLHelper::_('sidebar.setAction', '/administrator/index.php?option=com_joomet&view=dashboard');
 
 
 	}

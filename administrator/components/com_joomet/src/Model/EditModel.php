@@ -13,6 +13,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\Session\Session;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
@@ -27,7 +28,14 @@ class EditModel extends BaseModel
 
 	public function getFile(): false | LanguageFileItem
 	{
-		$encodedFilePath = Factory::getApplication()->getUserState('com_joomet.edit.file');
+		if (!Session::checkToken('get'))
+		{
+			throw new \Exception(Text::_('JINVALID_TOKEN_NOTICE'), 403);
+		}
+
+		$input = Factory::getApplication()->input;
+		$encodedFilePath = $input->get('file', '', 'string');
+
 		if(!$encodedFilePath){
 			Factory::getApplication()->enqueueMessage(Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED"), "error");
 			return false;

@@ -44,6 +44,13 @@
                keyField="api_key_deepl"
                showon="api_key_deepl!:"
         />
+        <field name="deepl_language_cache"
+               type="deepllanguagecache"
+               label="COM_JOOMET_PARAMS_DEEPL_LANGUAGE_CACHE_LABEL"
+               description="COM_JOOMET_PARAMS_DEEPL_LANGUAGE_CACHE_DESCRIPTION"
+               keyField="api_key_deepl"
+               showon="api_key_deepl!:"
+        />
         <field name="sp_translation" type="spacer" hr="true" />
         <field name="ignore_empty_rows"
                label="COM_JOOMET_PARAMS_IGNORE_EMPTY_ROWS_LABEL"

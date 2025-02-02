@@ -54,6 +54,7 @@ class UploadedController extends BaseController
 	{
 		$fileName = Factory::getApplication()->input->get('file', "", 'string');
 		Factory::getApplication()->setUserState('com_joomet.file', $fileName);
+		Factory::getApplication()->setUserState('com_joomet.context', "custom");
 		$this->setRedirect('index.php?option=com_joomet&view=check');
 	}
 
@@ -131,14 +132,8 @@ class UploadedController extends BaseController
 
 	public function handleEditFileClicked():void
 	{
-		if (!Session::checkToken('get'))
-		{
-			throw new \Exception(Text::_('JINVALID_TOKEN_NOTICE'), 403);
-		}
-
 		$encodedFilePath = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.edit.file', $encodedFilePath);
-		$this->setRedirect('index.php?option=com_joomet&view=edit');
+		$this->setRedirect('index.php?option=com_joomet&view=edit&'.Session::getFormToken().'=1&file='.$encodedFilePath);
 	}
 
 	private function getFullPath(string $fileName):string {

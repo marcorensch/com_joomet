@@ -16,6 +16,7 @@ use Joomla\CMS\Filesystem\File;     // @ToDo: Check Compatibilty 6.0
 use Joomla\CMS\Filesystem\Folder;   // @ToDo: Check Compatibilty 6.0
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\Filesystem\Path;
 
 /**
  * Joomet Check controller class.
@@ -67,12 +68,12 @@ class UploadController extends AdminController
 		$file['ext'] = pathinfo($file['name'], PATHINFO_EXTENSION);
 		if($file['ext'] !== 'ini'){
 			$app->enqueueMessage(Text::_("COM_JOOMET_MSG_FILE_EXTENSION_NOT_SUPPORTED"), 'error');
-			$this->setRedirect('index.php?option=com_joomet');
+			$this->setRedirect('index.php?option=com_joomet&view=upload');
 			return;
 		}
 		$file['storedName'] = time() . "." . $file['name'];
 
-		if($this->storeFile($file)){
+		if($pathToFile = $this->storeFile($file)){
 			$app->enqueueMessage(
 				Text::sprintf('COM_JOOMET_MSG_FILE_UPLOAD_SUCCESS', $file['name']),
 				'message'
@@ -83,14 +84,15 @@ class UploadController extends AdminController
 			return;
 		}
 
-		$app->setUserState('com_joomet.upload.file', $file['storedName']);
+		Factory::getApplication()->setUserState('com_joomet.file', base64_encode($pathToFile));
+		Factory::getApplication()->setUserState('com_joomet.context', "custom");
 
 		// Weiterleitung an einen anderen Controller
 		$this->setRedirect('index.php?option=com_joomet&view='.$targetView);
 
 	}
 
-	private function storeFile(array $file): bool
+	private function storeFile(array $file): false | string
 	{
 		// Überprüfen, ob das Zielverzeichnis existiert, andernfalls erstellen
 		if (!Folder::exists($this->destination)) {
@@ -101,7 +103,7 @@ class UploadController extends AdminController
 		}
 
 		// Bestimme den Zielpfad für die Datei
-		$targetPath = $this->destination . $file['storedName'];
+		$targetPath = Path::clean($this->destination . $file['storedName']);
 
 		// Datei verschieben
 		if (!File::upload($file['tmp_name'], $targetPath)) {
@@ -110,7 +112,7 @@ class UploadController extends AdminController
 		}
 
 		// Datei erfolgreich gespeichert
-		return true;
+		return $targetPath;
 	}
 
 	private function storeFileOld(array $file): bool
