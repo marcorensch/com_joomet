@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use NXD\Component\Joomet\Administrator\View\Dashboard\HtmlView;
 
 /** @var HtmlView $this */
@@ -41,9 +42,17 @@ use NXD\Component\Joomet\Administrator\View\Dashboard\HtmlView;
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title"><?php echo Text::_('COM_JOOMET')?></h3>
-					<hr>
 				</div>
 				<div class="card-body">
+					<?php if(!$this->apiKeyIsSet):?>
+                        <div class="alert alert-warning" role="alert">
+                            <?php
+                            $configLink = Route::_('index.php?option=com_config&view=component&component=com_joomet&path=&active=translate');
+                            ?>
+                            <span><?php echo Text::sprintf('COM_JOOMET_DASHBOARD_WARNING_API_KEY_NOT_SET',$configLink);?></span>
+                        </div>
+					<?php endif; ?>
+
 					<h4><?php echo Text::_('COM_JOOMET_DASHBOARD_VERSION_TITLE')?></h4>
 					<div class="component-version"><?php echo $this->componentVersion; ?></div>
 					<hr>

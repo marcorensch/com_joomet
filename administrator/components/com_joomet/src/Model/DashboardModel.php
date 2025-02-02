@@ -39,4 +39,9 @@ class DashboardModel extends BaseModel
 	public function getComponentVersion(){
 		return JoometHelper::getComponentVersion();
 	}
+
+	public function apiKeyIsSet(): bool
+	{
+		return JoometHelper::getDeeplApiKey() !== null;
+	}
 }

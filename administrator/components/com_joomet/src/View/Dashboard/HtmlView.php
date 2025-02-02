@@ -35,8 +35,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0.0
 	 * @throws  Exception
+	 * @since   1.0.0
 	 */
 	public function display($tpl = null): void
 	{
@@ -45,6 +45,7 @@ class HtmlView extends BaseHtmlView
 		$this->items            = $model->getItems();
 		$this->componentVersion = $model->getComponentVersion();
 		$errors                 = $this->get('Errors');
+		$this->apiKeyIsSet      = $model->apiKeyIsSet();
 
 		if (count($errors))
 		{
@@ -63,8 +64,8 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user = Factory::getApplication()->getIdentity();
-		$toolbar = $this->getDocument()->getToolbar();
+		$user         = Factory::getApplication()->getIdentity();
+		$toolbar      = $this->getDocument()->getToolbar();
 		$hasMSAutoSet = false;
 
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
@@ -73,8 +74,8 @@ class HtmlView extends BaseHtmlView
 			$hasMSAutoSet = true;
 		}
 
-		$alt = "Support Joomet";
-		$classes = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
+		$alt        = "Support Joomet";
+		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
@@ -84,7 +85,7 @@ class HtmlView extends BaseHtmlView
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt = "Joomet Help";
+		$alt   = "Joomet Help";
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
