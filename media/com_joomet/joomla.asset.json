@@ -39,6 +39,22 @@
       }
     },
     {
+      "name": "com_joomet.admin.translation",
+      "type": "script",
+      "uri": "com_joomet/admin-joomet-translation.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    {
+      "name": "com_joomet.admin.css",
+      "type": "style",
+      "uri": "com_joomet/admin.css"
+    },
+    {
       "name": "com_joomet.admin.css",
       "type": "style",
       "uri": "com_joomet/admin.css"

@@ -51,4 +51,68 @@ class DeeplAgentController extends BaseController
 
 		Factory::getApplication()->close();
 	}
+
+	/**
+	 * Ajax Method to get a Translation from DeepL
+	 * Data will be transfered by Factory::getInput()
+	 *
+	 * @throws DeepLException
+	 *
+	 * @since 1.0.0
+	 */
+	public function doTranslation():void
+	{
+		Session::checkToken('post') or die('Invalid Session Token');
+
+		// get Params Settings
+		$apiKey = JoometHelper::getDeeplApiKey();
+		if (!$apiKey)
+		{
+			echo json_encode(['success' => false, 'message' => 'No API Key set']);
+			Factory::getApplication()->close();
+		}
+
+		$input = Factory::getApplication()->input;
+		$rowData = $input->post->get('rowData', "", 'string');
+
+		if( empty( $rowData )){
+			echo json_encode(['success' => false, 'message' => 'No Data to Translate']);
+			Factory::getApplication()->close();
+		}
+
+		try{
+			// '{"sourceLanguage":"auto","targetLanguage":"BG","formality":false,"content":"\"foo content\"","rowNum":1}',
+			$rowData = json_decode($rowData, false);
+		}catch (\Exception $e){
+			echo json_encode(['success' => false, 'message' => 'Invalid Data to Translate']);
+			Factory::getApplication()->close();
+		}
+
+		error_log(var_export($rowData, true));
+
+		$deeplClient = new DeepLClient($apiKey);
+		$srcLang = $rowData->sourceLanguage === 'auto' ? null : $rowData->sourceLanguage;
+		$formality = $rowData->formality ? ['formality' => 'more'] : ['formality' => 'less'];
+		$preservedFormatting = ['' => true];
+		$options = array();
+		$options['preserve_formatting'] = true;
+		$options['tag_handling'] = "html";
+		if($rowData->formality)
+		{
+			$options['formality'] = 'more';
+		}
+
+		$translationResult = $deeplClient->translateText(
+			$rowData->content,
+			$srcLang,
+			$rowData->targetLanguage,
+			$options
+		);
+
+		error_log(var_export($translationResult->text, true));
+
+		echo json_encode(['success' => true, 'translation' => $translationResult->text]);
+
+		Factory::getApplication()->close();
+	}
 }

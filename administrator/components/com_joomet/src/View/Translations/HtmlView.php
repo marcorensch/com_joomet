@@ -42,6 +42,7 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var TranslationsModel $model */
 		$model          = $this->getModel();
+		$this->form     = $this->get('Form');
 		$errors         = $this->get('Errors');
 		$this->fileData = $model->getFileContents();
 
@@ -52,6 +53,7 @@ class HtmlView extends BaseHtmlView
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
+		$wa->useScript('com_joomet.admin.translation');
 
 		$this->addToolbar();
 
@@ -62,23 +64,10 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user    = Factory::getApplication()->getIdentity();
-		$toolbar = $this->getDocument()->getToolbar();
-
 		ToolbarHelper::back();
 
-		$hasMsAutoSet = false;
-
-		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
-		{
-			$toolbar->preferences('com_joomet');
-			$hasMsAutoSet = true;
-		}
-
-		$alt     = "Joomet Help";
-		$classes = (!$hasMsAutoSet ? 'ms-auto ' : '') . "btn-primary nxd-ext-btn nxd-help-btn";
-		$dhtml   = (new NxdCustomToolbarButton("", "", "_blank", $classes))->getHtml();
-		$toolbar->appendButton('Custom', $dhtml, $alt);
+		ToolbarHelper::inlinehelp();
+		ToolbarHelper::help('', false, "https://manuals.nx-designs.com/docs/intro");
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_TRANSLATIONS'), 'fas fa-language');
 

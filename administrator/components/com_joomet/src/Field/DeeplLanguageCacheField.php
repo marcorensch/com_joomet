@@ -11,15 +11,10 @@ namespace NXD\Component\Joomet\Administrator\Field;
 
 defined('_JEXEC') or die;
 
-use DeepL\DeepLClient;
-use DeepL\DeepLException;
-use DeepL\Usage;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
-use NXD\Component\Joomet\Administrator\Helper\PasswordHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 

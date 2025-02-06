@@ -12,20 +12,34 @@ namespace NXD\Component\Joomet\Administrator\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\MVC\Model\AdminModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\RowObject;
 use NXD\Component\Joomet\Administrator\Helper\RowType;
 
-class TranslationsModel extends BaseModel
+class TranslationsModel extends AdminModel
 {
+	public $typeAlias = 'com_joomet.translations';
+
 	private array $errors;
 
 	public function __construct($config = [])
 	{
 		$this->params = ComponentHelper::getParams('com_joomet');
 		parent::__construct($config);
+	}
+
+	public function getForm($data = [], $loadData = true): false | Form
+	{
+		$form = $this->loadForm($this->typeAlias, 'translation', ['control' => 'jform', 'load_data' => $loadData]);
+
+		if(empty($form)){
+			return false;
+		}
+
+		return $form;
 	}
 
 	public function getFileContents(): array
@@ -70,4 +84,6 @@ class TranslationsModel extends BaseModel
 
 		return array("data" => $translations, "error" => "");
 	}
+
+
 }

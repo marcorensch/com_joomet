@@ -3,8 +3,6 @@
         $('#get-languages-btn').on('click', function (e) {
             e.preventDefault();
 
-            console.log("Btn clicked")
-
             // AJAX-Aufruf
             $.ajax({
                 url: 'index.php',
