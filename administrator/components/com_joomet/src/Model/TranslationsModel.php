@@ -64,7 +64,7 @@ class TranslationsModel extends AdminModel
 		}
 
 		$fileRows     = JoometHelper::getFileContents($pathToFile);
-		$translations = array();
+		$rows = array();
 		foreach ($fileRows as $rowNum => $originalString)
 		{
 			$row = new RowObject($originalString, $rowNum + 1);
@@ -76,14 +76,12 @@ class TranslationsModel extends AdminModel
 				continue;
 			}
 
-			$translations[] = $row;
+			$rows[] = $row;
 		}
 
 		// Reset User State
 		//$app->setUserState('com_joomet.file', null);
 
-		return array("data" => $translations, "error" => "");
+		return array("data" => $rows, "error" => "");
 	}
-
-
 }

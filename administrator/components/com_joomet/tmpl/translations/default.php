@@ -12,7 +12,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\EditorField;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
 
 /** @var HtmlView $this */
@@ -77,68 +79,78 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
 
 </div>
 
-<table class="table align-middle">
-    <thead>
-    <tr class="align-middle">
-        <th style="min-width:1%;"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_LINE'); ?></th>
-        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_CONSTANT'); ?></th>
-        <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ORIGINAL_VALUE'); ?></th>
-        <th id="skip-header" class="d-flex flex-row align-items-center" style="min-width:10%;">
+<form action="<?php echo Route::_('index.php?option=com_joomet&view=translations'); ?>" enctype="multipart/form-data" method="post"  class="form-vertical">
+    <table class="table align-middle">
+        <thead>
+        <tr class="align-middle">
+            <th style="min-width:1%;"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_LINE'); ?></th>
+            <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_CONSTANT'); ?></th>
+            <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ORIGINAL_VALUE'); ?></th>
+            <th id="skip-header" class="d-flex flex-row align-items-center" style="min-width:10%;">
 
-            <span><?php echo Text::_('COM_JOOMET_TABLE_HEADER_SKIP'); ?></span>
+                <span><?php echo Text::_('COM_JOOMET_TABLE_HEADER_SKIP'); ?></span>
 
-	        <?php
-	        $skipField = $this->getForm()->getField('skip_element');
-	        $skipField->name =  'skip_all_toggler';
-	        $skipField->id =  'skip_all_toggler';
-            $skipField->class = 'nxd-skip-all-toggler';
-	        echo $skipField->renderField();
-	        ?>
-
-
-        </th>
-        <th class="w-40"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_TRANSLATION'); ?></th>
-    </tr>
-    </thead>
-    <tbody id="joomet-translation-table-body">
-	<?php foreach ($this->fileData['data'] as $row) : ?>
-        <tr>
-            <td class="text-center"><?php echo $row->rowNum; ?></td>
-            <td><code class="constant"><?php echo $row->constant; ?></code></td>
-            <td><?php
-				echo '<span data-row-num="' . $row->rowNum . '" id="row-' . $row->rowNum . '-source" class="joomet-translation-source-value">';
-				echo htmlspecialchars($row->content);
-				echo '</span>';
+				<?php
+				$skipField        = $this->getForm()->getField('skip_element');
+				$skipField->name  = 'skip_all_toggler';
+				$skipField->id    = 'skip_all_toggler';
+				$skipField->class = 'nxd-skip-all-toggler';
+				echo $skipField->renderField();
 				?>
-            </td>
-            <td>
-	            <?php
-	            $skipField = $this->getForm()->getField('skip_element');
-                $skipField->name =  'skip_element[' . $row->rowNum . ']';
-                $skipField->id =  'skip_element_' . $row->rowNum . '_';
-                $skipField->class = 'nxd-skip-element-checkbox';
-                echo $skipField->renderField();
-                ?>
-            </td>
-            <td>
-                <label class="hidden row-translation-label"
-                       for="row-<?php echo $row->rowNum; ?>-translation-textarea"
-                >
-                    Translation
-                </label>
 
-	            <?php
-	            /** @var EditorField $translationField */
-	            $translationField = $this->getForm()->getField('translation_editor');
-	            $translationField->name =  'translation_editor[' . $row->rowNum . ']';
-	            $translationField->id =  'translation_editor_' . $row->rowNum;
-	            $translationField->class = 'nxd-translation-editor-field';
-	            $translationField->__set('data-row-num',$row->rowNum);
 
-	            echo $translationField->renderField();
-	            ?>
-            </td>
+            </th>
+            <th class="w-40"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_TRANSLATION'); ?></th>
         </tr>
-	<?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody id="joomet-translation-table-body">
+		<?php foreach ($this->fileData['data'] as $row) : ?>
+            <tr>
+                <td class="text-center"><?php echo $row->rowNum; ?></td>
+                <td><input readonly
+                           id="jform_translation_constant_<?php echo $row->rowNum; ?>"
+                           name="jform[translation_constant_<?php echo $row->rowNum; ?>]"
+                           class="constant form-control" value="<?php echo $row->constant; ?>"
+                    />
+                </td>
+                <td><?php
+					echo '<span data-row-num="' . $row->rowNum . '" id="row-' . $row->rowNum . '-source" class="joomet-translation-source-value">';
+					echo htmlspecialchars($row->content);
+					echo '</span>';
+					?>
+                </td>
+                <td>
+					<?php
+					$skipField        = $this->getForm()->getField('skip_element');
+					$skipField->name  = "skip_element_{$row->rowNum}";
+					$skipField->id    = 'skip_element_' . $row->rowNum . '_';
+					$skipField->class = 'nxd-skip-element-checkbox';
+					echo $skipField->renderField();
+					?>
+                </td>
+                <td>
+                    <label class="hidden row-translation-label"
+                           for="row-<?php echo $row->rowNum; ?>-translation-textarea"
+                    >
+                        Translation
+                    </label>
+
+					<?php
+					/** @var EditorField $translationField */
+					$translationField        = $this->getForm()->getField('translation_editor');
+					$translationField->name  = "translation_editor_{$row->rowNum}";
+					$translationField->id    = 'translation_editor_' . $row->rowNum;
+					$translationField->class = 'nxd-translation-editor-field';
+					$translationField->__set('data-row-num', $row->rowNum);
+
+					echo $translationField->renderField();
+					?>
+                </td>
+            </tr>
+		<?php endforeach; ?>
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Download</button>
+    <input type="hidden" name="task" value="translations.generateTranslatedFile">
+    <?php echo HTMLHelper::_('form.token'); ?>
+</form>
