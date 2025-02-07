@@ -81,8 +81,13 @@ async function handleStartTranslationClicked(event) {
         $currentStringPreview.textContent = row.content;
 
         try {
-            const status = await translateRow(data)
-            if (!status || translationStopped) {
+            const res = await translateRow(data)
+            if (!res.success || translationStopped) {
+                if(res.message){
+                    Joomla.renderMessages({
+                        error: ["Translation failed", `Details: ${res.message || res}`]
+                    });
+                }
                 break;
             }
         }catch (error){
@@ -133,14 +138,14 @@ function translateRow(rowData) {
             if(response.success){
                 if(response.translation) {
                     placeTranslation(rowData, response.translation);
-                    return true;
+                    return response;
                 } else {
                     console.log('No translation found', response);
-                    return false;
+                    return response;
                 }
             } else {
                 console.error('Translation failed');
-                return false;
+                return response;
             }
         },
         error: function (xhr, status, error) {
