@@ -105,7 +105,7 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
         </thead>
         <tbody id="joomet-translation-table-body">
 		<?php foreach ($this->fileData['data'] as $row) : ?>
-            <tr>
+            <tr id="jform_row_<?php echo $row->rowNum; ?>">
                 <td class="text-center"><?php echo $row->rowNum; ?></td>
                 <td><input readonly
                            id="jform_translation_constant_<?php echo $row->rowNum; ?>"

@@ -118,9 +118,50 @@ class DeeplAgentController extends BaseController
 			$options
 		);
 
+		// Bugfixing for misplaced double-quotes after translation
+		list($translationResult->text, $changesMade) = $this->fixTranslationValidity($rowData->content, $translationResult->text);
 
-		echo json_encode(['success' => true, 'translation' => $translationResult->text]);
+		echo json_encode(['success' => true, 'translation' => $translationResult->text, 'changesMade' => $changesMade]);
 
 		Factory::getApplication()->close();
+	}
+
+	private function fixTranslationValidity(string $original, string $translation):array
+	{
+		list($translation, $changesMade) = $this->fixMisplacedDoubleQuotes($original, $translation);
+		list($translation, $changesMade) = $this->fixUnescapedDoubleQuotes($translation);
+		return [$translation, $changesMade];
+	}
+
+	private function fixMisplacedDoubleQuotes(string $original, string $translation):array
+	{
+		$changesMade = false;
+		if(str_starts_with($original, '"') && !str_starts_with($translation, '"')){
+			$changesMade = true;
+			$translation = '"' . $translation;
+		}
+		return [$translation, $changesMade];
+	}
+
+	private function fixUnescapedDoubleQuotes(string $translation):array
+	{
+		// Check whether the string is less than two characters long, as escaping would not be necessary
+		if (strlen($translation) <= 2) {
+			return [$translation, false];
+		}
+
+		$changesMade = false;
+
+		// Use a regular expression to find all inverted commas that are NOT at the beginning or end
+		$result = preg_replace_callback(
+			'/(?<!\\\\)(?<!^)"(?!$)/',
+			function ($matches) use (&$changesMade) {
+				$changesMade = true;
+				return '\\"'; // Escaping the inverted commas found
+			},
+			$translation
+		);
+
+		return [$result, $changesMade];
 	}
 }

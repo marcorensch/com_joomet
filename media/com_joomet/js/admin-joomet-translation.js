@@ -138,6 +138,11 @@ function translateRow(rowData) {
             if(response.success){
                 if(response.translation) {
                     placeTranslation(rowData, response.translation);
+                    // Handle changes made (there was an error which has been fixed by this process)
+                    if(response.changesMade){
+                        console.log("Changes has been made!")
+                        createNoticeChangesMade(rowData)
+                    }
                     return response;
                 } else {
                     console.log('No translation found', response);
@@ -167,6 +172,11 @@ function placeTranslation(rowData, translation) {
         console.error("No textarea found for row", rowData.rowNum);
         $textareaElement.value = translation;
     }
+}
+
+function createNoticeChangesMade(rowData){
+    const $tr = document.querySelector(`tr#jform_row_${rowData.rowNum}`);
+    $tr.classList.add('changes-made');
 }
 
 function setUseFormalityState(formalityFieldset) {

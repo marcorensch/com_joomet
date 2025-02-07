@@ -82,6 +82,10 @@ th#skip-header {
     }
 }
 
+tr.changes-made, tr.changes-made >td {
+    background:red;
+}
+
 /* Joomla! Error */
 .modal .btn.btn-danger {
     background: #c52827;
