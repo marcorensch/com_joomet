@@ -192,15 +192,14 @@ function setUseFormalityState(formalityFieldset) {
     formalityFieldset.disabled = true;
 }
 
+// Checks all nxd-skip-element-checkbox boxes (active and inactive status) and sets the checked attr for the requested
+// status defined by the main checkbox in the th
 function handleMutateAllFields(enabled)
 {
+    const to = enabled ? "1" : "0";
     const elementsToSkip = document.querySelectorAll('.nxd-skip-element-checkbox');
     for (const el of elementsToSkip) {
-        if(el.value == enabled) {
-            el.checked = true;
-        }else{
-            el.checked = false;
-        }
+        el.checked = el.value === to
     }
 }
 
