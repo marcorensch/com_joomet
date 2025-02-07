@@ -208,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTranslationButton = document.querySelector('button#nxd-start-translation-btn');
     const stopTranslationButton = document.querySelector('button#nxd-stop-translation-btn');
     const formalityFieldset = document.querySelector('fieldset#jform_use_formality');
-    const $skipAllToggler = document.querySelector('#jform_skip_all_toggler');
     const $skipAllTogglerActive = document.querySelector('#jform_skip_all_toggler1');
     const $skipAllTogglerInactive = document.querySelector('#jform_skip_all_toggler0');
 
