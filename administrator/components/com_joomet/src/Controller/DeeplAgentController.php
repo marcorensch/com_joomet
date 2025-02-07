@@ -73,7 +73,7 @@ class DeeplAgentController extends BaseController
 		}
 
 		$input = Factory::getApplication()->input;
-		$rowData = $input->post->get('rowData', "", 'string');
+		$rowData = $input->post->get('rowData', "", 'raw'); // RAW required for HTML Support
 
 		if( empty( $rowData )){
 			echo json_encode(['success' => false, 'message' => 'No Data to Translate']);
@@ -88,12 +88,8 @@ class DeeplAgentController extends BaseController
 			Factory::getApplication()->close();
 		}
 
-		error_log(var_export($rowData, true));
-
 		$deeplClient = new DeepLClient($apiKey);
 		$srcLang = $rowData->sourceLanguage === 'auto' ? null : $rowData->sourceLanguage;
-		$formality = $rowData->formality ? ['formality' => 'more'] : ['formality' => 'less'];
-		$preservedFormatting = ['' => true];
 		$options = array();
 		$options['preserve_formatting'] = true;
 		$options['tag_handling'] = "html";
@@ -108,8 +104,6 @@ class DeeplAgentController extends BaseController
 			$rowData->targetLanguage,
 			$options
 		);
-
-		error_log(var_export($translationResult->text, true));
 
 		echo json_encode(['success' => true, 'translation' => $translationResult->text]);
 

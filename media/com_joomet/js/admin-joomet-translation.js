@@ -67,6 +67,7 @@ async function handleStartTranslationClicked(event) {
         if ($skipCheckbox && $skipCheckbox.checked) {
             console.log("Skip element", row.rowNum);
             placeTranslation(row, row.content);
+            updateProgressBar(progressBar, i);
             continue;
         }
 
@@ -93,17 +94,19 @@ async function handleStartTranslationClicked(event) {
             break;
         }
 
-        // Update Progressbar
-        const percentages = Math.ceil(i / rowsToTranslate.length * 100);
-        console.log(percentages);
-        progressBar.textContent = percentages + "%";
-        progressBar.style.width = percentages + "%";
+        updateProgressBar(progressBar, i);
     }
 
     startTranslationBtn.disabled = false;
     stopTranslationButton.disabled = true;
     $currentStringPreview.textContent = "";
 
+}
+
+function updateProgressBar(progressBar, i) {
+    const percentages = Math.ceil(i / rowsToTranslate.length * 100);
+    progressBar.textContent = percentages + "%";
+    progressBar.style.width = percentages + "%";
 }
 
 function handleStopTranslationClicked(event) {
@@ -150,12 +153,18 @@ function translateRow(rowData) {
 }
 
 function placeTranslation(rowData, translation) {
-    const $textareaElement = document.querySelector(`textarea[data-row-num="${rowData.rowNum}"]`);
+    const $textareaElement = document.querySelector(`textarea#jform_translation_editor_${rowData.rowNum}`);
+    const editor = Joomla.editors.instances['jform_translation_editor_' + rowData.rowNum];
+    if(editor) {
+        console.log("Editor found, updating content");
+        editor.setValue(translation);
+    }
     if($textareaElement) {
-        $textareaElement.value = translation;
+
         $textareaElement.dispatchEvent(new Event('change'));
     }else {
         console.error("No textarea found for row", rowData.rowNum);
+        $textareaElement.value = translation;
     }
 }
 

@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\EditorField;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
 
@@ -83,6 +85,8 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
         <th><?php echo Text::_('COM_JOOMET_TABLE_HEADER_ORIGINAL_VALUE'); ?></th>
         <th id="skip-header" class="d-flex flex-row align-items-center" style="min-width:10%;">
 
+            <span><?php echo Text::_('COM_JOOMET_TABLE_HEADER_SKIP'); ?></span>
+
 	        <?php
 	        $skipField = $this->getForm()->getField('skip_element');
 	        $skipField->name =  'skip_all_toggler';
@@ -91,7 +95,7 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
 	        echo $skipField->renderField();
 	        ?>
 
-            <span><?php echo Text::_('COM_JOOMET_TABLE_HEADER_SKIP'); ?></span>
+
         </th>
         <th class="w-40"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_TRANSLATION'); ?></th>
     </tr>
@@ -122,12 +126,17 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
                 >
                     Translation
                 </label>
-                <textarea
-                        data-row-num="<?php echo $row->rowNum; ?>"
-                        name="row-<?php echo $row->rowNum; ?>-translation-textarea"
-                        class="form-control w-100"
-                        id="row-<?php echo $row->rowNum; ?>-translation" cols="30" rows="2">
-                </textarea>
+
+	            <?php
+	            /** @var EditorField $translationField */
+	            $translationField = $this->getForm()->getField('translation_editor');
+	            $translationField->name =  'translation_editor[' . $row->rowNum . ']';
+	            $translationField->id =  'translation_editor_' . $row->rowNum;
+	            $translationField->class = 'nxd-translation-editor-field';
+	            $translationField->__set('data-row-num',$row->rowNum);
+
+	            echo $translationField->renderField();
+	            ?>
             </td>
         </tr>
 	<?php endforeach; ?>

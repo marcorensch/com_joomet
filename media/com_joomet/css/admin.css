@@ -64,7 +64,6 @@ th#skip-header {
         .controls {
             width: auto;
             min-width: 4rem;
-            margin-left: -10px;
             padding: 0;
 
             #jform_skip_all_toggler {
