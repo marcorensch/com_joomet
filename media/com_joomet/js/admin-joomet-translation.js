@@ -65,7 +65,6 @@ async function handleStartTranslationClicked(event) {
         // check if skip is enabled
         $skipCheckbox = document.querySelector(`input#jform_skip_element_${row.rowNum}_1`);
         if ($skipCheckbox && $skipCheckbox.checked) {
-            console.log("Skip element", row.rowNum);
             placeTranslation(row, row.content);
             updateProgressBar(progressBar, i);
             continue;
@@ -131,18 +130,16 @@ function translateRow(rowData) {
         type: 'POST',
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             if(response.success){
-                console.log('Translation successful');
                 if(response.translation) {
                     placeTranslation(rowData, response.translation);
                     return true;
-                }else {
+                } else {
                     console.log('No translation found', response);
                     return false;
                 }
             } else {
-                console.log('Translation failed');
+                console.error('Translation failed');
                 return false;
             }
         },
@@ -156,7 +153,6 @@ function placeTranslation(rowData, translation) {
     const $textareaElement = document.querySelector(`textarea#jform_translation_editor_${rowData.rowNum}`);
     const editor = Joomla.editors.instances['jform_translation_editor_' + rowData.rowNum];
     if(editor) {
-        console.log("Editor found, updating content");
         editor.setValue(translation);
     }
     if($textareaElement) {
@@ -194,7 +190,6 @@ function setUseFormalityState(formalityFieldset) {
 function handleMutateAllFields(enabled)
 {
     const elementsToSkip = document.querySelectorAll('.nxd-skip-element-checkbox');
-    console.log(elementsToSkip)
     for (const el of elementsToSkip) {
         if(el.value == enabled) {
             el.checked = true;
