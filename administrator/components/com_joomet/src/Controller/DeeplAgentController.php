@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use DeepL\DeepLClient;
 use DeepL\DeepLException;
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Session\Session;
@@ -83,8 +84,19 @@ class DeeplAgentController extends BaseController
 		try{
 			// '{"sourceLanguage":"auto","targetLanguage":"BG","formality":false,"content":"\"foo content\"","rowNum":1}',
 			$rowData = json_decode($rowData, false);
-		}catch (\Exception $e){
-			echo json_encode(['success' => false, 'message' => 'Invalid Data to Translate']);
+
+			if (!is_object($rowData)) {
+				throw new \InvalidArgumentException("Invalid data format. Expected an object.");
+			}
+
+			$requiredFields = ['sourceLanguage', 'targetLanguage', 'content', 'rowNum'];
+			foreach ($requiredFields as $field) {
+				if (empty($rowData->{$field})) {
+					throw new Exception("Missing required field: $field");
+				}
+			}
+		}catch (Exception $e){
+			echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 			Factory::getApplication()->close();
 		}
 
@@ -93,6 +105,7 @@ class DeeplAgentController extends BaseController
 		$options = array();
 		$options['preserve_formatting'] = true;
 		$options['tag_handling'] = "html";
+		$options['split_sentences'] = 'nonewlines';
 		if($rowData->formality)
 		{
 			$options['formality'] = 'more';
@@ -104,6 +117,7 @@ class DeeplAgentController extends BaseController
 			$rowData->targetLanguage,
 			$options
 		);
+
 
 		echo json_encode(['success' => true, 'translation' => $translationResult->text]);
 
