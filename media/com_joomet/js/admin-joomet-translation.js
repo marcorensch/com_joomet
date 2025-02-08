@@ -177,6 +177,10 @@ function placeTranslation(rowData, translation) {
 function createNoticeChangesMade(rowData){
     const $tr = document.querySelector(`tr#jform_row_${rowData.rowNum}`);
     $tr.classList.add('changes-made');
+    const $notice = document.getElementById('nxd-check-translation-note');
+    if($notice){
+        $notice.classList.remove('hidden');
+    }
 }
 
 function setUseFormalityState(formalityFieldset) {
@@ -242,3 +246,11 @@ document.addEventListener('DOMContentLoaded', () => {
     startTranslationButton.addEventListener('click', handleStartTranslationClicked);
     stopTranslationButton.addEventListener('click', handleStopTranslationClicked);
 });
+
+function updateSelectedLanguageField()
+{
+    const $inputElement = document.querySelector('input#selected-language-field');
+    if($inputElement){
+        $inputElement.value = document.querySelector('select#jform_target_language').value;
+    }
+}

@@ -82,8 +82,16 @@ th#skip-header {
     }
 }
 
-tr.changes-made, tr.changes-made >td {
-    background:red;
+/* Code Mirror Press F10 Note */
+
+joomla-editor-codemirror > p.small{
+    display: none;
+    margin: 0;
+}
+
+tr.changes-made, tr.changes-made {
+    box-sizing: border-box;
+    border-left: 6px solid var(--warning);
 }
 
 /* Joomla! Error */

@@ -45,6 +45,7 @@ class HtmlView extends BaseHtmlView
 		$this->form     = $this->get('Form');
 		$errors         = $this->get('Errors');
 		$this->fileData = $model->getFileContents();
+		$this->fileName = $model->getFileName();
 
 		if (count($errors))
 		{

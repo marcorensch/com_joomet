@@ -28,6 +28,7 @@
                 layout="joomla.form.field.list-fancy-select"
                 required="true"
                 default=""
+                onchange="updateSelectedLanguageField()"
         >
             <option value="">COM_JOOMET_FIELD_SOURCE_LANGUAGE_OPT_PLEASE_SELECT</option>
         </field>

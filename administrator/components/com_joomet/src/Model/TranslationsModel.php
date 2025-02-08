@@ -16,6 +16,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 use NXD\Component\Joomet\Administrator\Helper\RowObject;
 use NXD\Component\Joomet\Administrator\Helper\RowType;
 
@@ -64,24 +65,36 @@ class TranslationsModel extends AdminModel
 		}
 
 		$fileRows     = JoometHelper::getFileContents($pathToFile);
-		$rows = array();
+		$rowsToTranslate = array();
+		$rowsToSkip = array();
 		foreach ($fileRows as $rowNum => $originalString)
 		{
 			$row = new RowObject($originalString, $rowNum + 1);
 			if($this->params->get('ignore_empty_rows', 1) && $row->recognisedRowType === RowType::EMPTY){
+				$rowsToSkip[] = $row;
 				continue;
 			}
 
 			if($this->params->get('ignore_comments', 0) && $row->recognisedRowType === RowType::COMMENT){
+				$rowsToSkip[] = $row;
 				continue;
 			}
 
-			$rows[] = $row;
+			$rowsToTranslate[] = $row;
 		}
 
 		// Reset User State
 		//$app->setUserState('com_joomet.file', null);
 
-		return array("data" => $rows, "error" => "");
+		return array("data" => array("rowsToTranslate" => $rowsToTranslate, "rowsToSkip" => $rowsToSkip), "error" => "");
+	}
+
+	public function getFileName()
+	{
+		$app = Factory::getApplication();
+		$file = $app->getUserState('com_joomet.file');
+		$file_path_decoded = base64_decode($file);
+		$joometFile = new LanguageFileItem($file_path_decoded, "");
+		return $joometFile->label;
 	}
 }

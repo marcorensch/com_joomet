@@ -32,18 +32,24 @@ class TranslationsController extends BaseController
 		$app   = Factory::getApplication();
 		$input = $app->input;
 		$data  = $input->post->get('jform', array(), 'array');
+		$fileName = $input->post->get('filename', "", 'string');
+		$language = $input->post->get('language', "", 'string');
+		if(empty($fileName)){
+			$fileName = "translated.ini";
+		}
+
+		if(!empty($language)){
+			$fileName = strtolower($language) . "_" . $fileName;
+		}
 
 		$data = $this->cleanupTranslationData($data);
 		$rows = $this->buildRows($data);
 
-		error_log(var_export($data,1));
-
-		$fileName    = "test.ini";
 		$fileContent = "";
 		foreach ($rows as $row){
-			error_log($row);
 			$fileContent .= $row . "\n";
 		}
+
 		// Create an ini file
 		$this->createFile($fileName, $fileContent);
 
@@ -51,7 +57,7 @@ class TranslationsController extends BaseController
 		$app->close();
 	}
 
-	private function createFile($fileName, $fileContent)
+	private function createFile($fileName, $fileContent): void
 	{
 		// Headers setzen, um die Datei als Download bereitzustellen
 		$app = Factory::getApplication();
@@ -101,14 +107,25 @@ class TranslationsController extends BaseController
 	private function buildRows(array $data):array
 	{
 		$rows = [];
-		foreach ($data as $key => $value)
+		foreach ($data as $key => $constant)
 		{
 			if(str_starts_with($key, 'translation_constant_')){
-				// get the number from the $value by removing translation_constant_
+				// get the number from the $constant by removing translation_constant_
 				$rowNumber = intval(substr($key, 21));
-				$rows[$rowNumber] = $value . "=" . $data['translation_editor_' . $rowNumber] ?? "";
+				if(trim($constant) === ""){
+					// Build an empty row or a comment row:
+					$rows[$rowNumber] = $data['translation_editor_' . $rowNumber] ?? "";
+				}else
+				{
+					// Build a default CONSTANT="Translation" row:
+					$rows[$rowNumber] = $constant . "=" . $data['translation_editor_' . $rowNumber] ?? "";
+				}
 			}
 		}
+
+		// Sort the array by key to maintain order of $rowNumber
+		ksort($rows);
+
 		return $rows;
 
 	}

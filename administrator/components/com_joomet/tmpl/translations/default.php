@@ -10,16 +10,21 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Field\EditorField;
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Router\Route;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
 
 /** @var HtmlView $this */
 
-$rows     = $this->fileData['data'];
+$fileData    = $this->fileData['data'];
+$rows        = $fileData['rowsToTranslate'] ?? [];
+$skippedRows = $fileData['rowsToSkip'] ?? [];
+$form        = $this->getForm();
+
+$rowTemplate = new FileLayout('row', __DIR__ . '/table');
+
 $jsonRows = json_encode($rows, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -79,7 +84,8 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
 
 </div>
 
-<form action="<?php echo Route::_('index.php?option=com_joomet&view=translations'); ?>" enctype="multipart/form-data" method="post"  class="form-vertical">
+<form id="translation-form" action="<?php echo Route::_('index.php?option=com_joomet&view=translations'); ?>" enctype="multipart/form-data"
+      method="post" class="form-vertical">
     <table class="table align-middle">
         <thead>
         <tr class="align-middle">
@@ -104,53 +110,39 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
         </tr>
         </thead>
         <tbody id="joomet-translation-table-body">
-		<?php foreach ($this->fileData['data'] as $row) : ?>
-            <tr id="jform_row_<?php echo $row->rowNum; ?>">
-                <td class="text-center"><?php echo $row->rowNum; ?></td>
-                <td><input readonly
-                           id="jform_translation_constant_<?php echo $row->rowNum; ?>"
-                           name="jform[translation_constant_<?php echo $row->rowNum; ?>]"
-                           class="constant form-control" value="<?php echo $row->constant; ?>"
-                    />
-                </td>
-                <td><?php
-					echo '<span data-row-num="' . $row->rowNum . '" id="row-' . $row->rowNum . '-source" class="joomet-translation-source-value">';
-					echo htmlspecialchars($row->content);
-					echo '</span>';
-					?>
-                </td>
-                <td>
-					<?php
-					$skipField        = $this->getForm()->getField('skip_element');
-					$skipField->name  = "skip_element_{$row->rowNum}";
-					$skipField->id    = 'skip_element_' . $row->rowNum . '_';
-					$skipField->class = 'nxd-skip-element-checkbox';
-					echo $skipField->renderField();
-					?>
-                </td>
-                <td>
-                    <label class="hidden row-translation-label"
-                           for="row-<?php echo $row->rowNum; ?>-translation-textarea"
-                    >
-                        Translation
-                    </label>
-
-					<?php
-					/** @var EditorField $translationField */
-					$translationField        = $this->getForm()->getField('translation_editor');
-					$translationField->name  = "translation_editor_{$row->rowNum}";
-					$translationField->id    = 'translation_editor_' . $row->rowNum;
-					$translationField->class = 'nxd-translation-editor-field';
-					$translationField->__set('data-row-num', $row->rowNum);
-
-					echo $translationField->renderField();
-					?>
-                </td>
-            </tr>
-		<?php endforeach; ?>
+		<?php
+		foreach ($rows as $row)
+		{
+			echo $rowTemplate->render(["row" => $row, "form" => $form, "hidden" => false]);
+		}
+		foreach ($skippedRows as $row)
+		{
+			echo $rowTemplate->render(["row" => $row, "form" => $form, "hidden" => true]);
+		}
+		?>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-success">Download</button>
+
     <input type="hidden" name="task" value="translations.generateTranslatedFile">
-    <?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="filename" value="<?php echo $this->fileName ?? ""; ?>">
+    <input type="hidden" id="selected-language-field" name="language" value="">
+	<?php echo HTMLHelper::_('form.token'); ?>
+
+    <div class="card card-default card-body mt-2 mb-2">
+        <div class="d-flex flex-row align-items-center gap-2">
+            <div id="nxd-check-translation-note" class="hidden">
+                <div class="alert alert-warning mt-0 mb-0">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>
+                    <?php echo Text::_('COM_JOOMET_TRANSLATIONS_WARNING_MESSAGE'); ?>
+                </span>
+                </div>
+            </div>
+            <div class="ms-auto">
+                <button type="submit" class="btn btn-success"><i class="fas fa-download"></i> <?php echo Text::_("COM_JOOMET_DOWNLOAD_FILE_BTN_TXT");?></button>
+            </div>
+        </div>
+    </div>
+
 </form>
+
