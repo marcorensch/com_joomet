@@ -9,10 +9,10 @@
 
 namespace NXD\Component\Joomet\Administrator\Helper;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-
-defined('_JEXEC') or die;
 
 class LanguageFileItem
 {

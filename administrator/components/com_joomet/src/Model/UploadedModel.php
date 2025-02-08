@@ -9,6 +9,8 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;

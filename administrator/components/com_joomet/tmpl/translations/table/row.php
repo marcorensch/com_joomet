@@ -11,11 +11,11 @@
  *
  */
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Form\Field\EditorField;
 use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
-
-defined('_JEXEC') or die;
 
 $row    = $displayData['row'];
 $hidden = $displayData['hidden'];

@@ -12,8 +12,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Date\Date;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $stats     = $displayData['stats'];

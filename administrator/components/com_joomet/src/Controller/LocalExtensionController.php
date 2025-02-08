@@ -9,12 +9,13 @@
 
 namespace NXD\Component\Joomet\Administrator\Controller;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\User\CurrentUserInterface;
 
-defined('_JEXEC') or die;
 
 
 class LocalExtensionController extends BaseController {

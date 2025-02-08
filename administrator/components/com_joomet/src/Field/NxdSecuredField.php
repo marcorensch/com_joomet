@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     NXD\Module\NCE\Site\Field
- * @subpackage
+ * @package     Joomla.Administrator
+ * @subpackage  com_joomet
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
+ * @copyright   Copyright (C) 2025 NXD nx-designs, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace NXD\Component\Joomet\Administrator\Field;

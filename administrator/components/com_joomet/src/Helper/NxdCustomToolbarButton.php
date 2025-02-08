@@ -11,7 +11,6 @@ namespace NXD\Component\Joomet\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-
 // URL Fallback Const
 use Joomla\CMS\Language\Text;
 

@@ -1,21 +1,21 @@
 <?php
 /**
- * @package     NXD\Component\Joomet\Administrator\Field
- * @subpackage
+ * @package     Joomla.Administrator
+ * @subpackage  com_joomet
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
+ * @copyright   Copyright (C) 2025 NXD nx-designs, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace NXD\Component\Joomet\Administrator\Field;
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
-defined('_JEXEC') or die;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 

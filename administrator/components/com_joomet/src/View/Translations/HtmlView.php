@@ -17,7 +17,6 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
 use NXD\Component\Joomet\Administrator\Model\TranslationsModel;
 
 /**

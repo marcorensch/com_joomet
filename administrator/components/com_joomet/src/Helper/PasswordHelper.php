@@ -12,6 +12,8 @@
 
 namespace NXD\Component\Joomet\Administrator\Helper;
 
+defined('_JEXEC') or die;
+
 class PasswordHelper
 {
 	private string $cipher = "AES-128-CTR";
