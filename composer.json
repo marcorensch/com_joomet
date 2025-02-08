@@ -5,6 +5,13 @@
     "php": "^8.3",
     "deeplcom/deepl-php": "^v1.11.1"
   },
+  "scripts": {
+    "post-install-deploy": [
+      "rm -rf vendor",
+      "composer clear-cache",
+      "composer install --no-dev --optimize-autoloader"
+    ]
+  },
   "config": {
     "vendor-dir": "administrator/components/com_joomet/vendor"
   }
