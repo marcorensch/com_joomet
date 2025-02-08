@@ -104,7 +104,6 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
 				echo $skipField->renderField();
 				?>
 
-
             </th>
             <th class="w-40"><?php echo Text::_('COM_JOOMET_TABLE_HEADER_TRANSLATION'); ?></th>
         </tr>

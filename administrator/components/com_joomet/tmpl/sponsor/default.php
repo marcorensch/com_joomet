@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\View\Dashboard\HtmlView;
 
 /** @var HtmlView $this */
@@ -25,7 +26,7 @@ $wa->addInlineStyle('
     <div class="col-lg-6 d-flex">
         <div class="card card-default w-100">
             <div class="card-header">
-                <h3 class="card-title">PayPal</h3>
+                <h3 class="card-title"><?php echo Text::_("COM_JOOMET_SPONSOR_PAYPAL_TITLE");?></h3>
                 <hr>
             </div>
             <div class="card-body">
@@ -43,7 +44,7 @@ $wa->addInlineStyle('
     <div class="col-lg-6 d-flex">
         <div class="card card-default w-100">
             <div class="card-header">
-                <h3 class="card-title">Buy me a Coffee</h3>
+                <h3 class="card-title"><?php echo Text::_("COM_JOOMET_SPONSOR_BUY_ME_A_COFFEE_TITLE");?></h3>
                 <hr>
             </div>
             <div class="card-body">
@@ -51,6 +52,20 @@ $wa->addInlineStyle('
                         data-name="bmc-button" data-slug="nxdesigns" data-color="#FFDD00" data-emoji=""
                         data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000"
                         data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="col d-flex">
+        <div class="card card-default w-100">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-star"></i> <?php echo Text::_("COM_JOOMET_SPONSOR_WALL_OF_FAME_TITLE");?></h3>
+                <hr>
+            </div>
+            <div class="card-body">
+                <span>
+                    <?php echo Text::_('COM_JOOMET_SPONSOR_WALL_OF_FAME_TEXT'); ?>
+                </span>
             </div>
         </div>
     </div>

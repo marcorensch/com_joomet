@@ -12,6 +12,7 @@
  */
 
 use Joomla\CMS\Form\Field\EditorField;
+use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\View\Translations\HtmlView;
 
 defined('_JEXEC') or die;
@@ -24,7 +25,7 @@ $form   = $displayData['form'];
 
 <tr id="jform_row_<?php echo $row->rowNum; ?>" class="<?php echo $hidden ? "hidden" : ""; ?>">
     <td class="text-center"><?php echo $row->rowNum; ?></td>
-    <td><label for="jform[translation_constant_<?php echo $row->rowNum; ?>]" class="hidden">Constant</label>
+    <td><label for="jform[translation_constant_<?php echo $row->rowNum; ?>]" class="hidden"><?php echo Text::_("COM_JOOMET_TABLE_HEADER_CONSTANT");?></label>
         <input readonly
                id="jform_translation_constant_<?php echo $row->rowNum; ?>"
                name="jform[translation_constant_<?php echo $row->rowNum; ?>]"
