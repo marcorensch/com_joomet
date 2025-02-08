@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -51,17 +52,17 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		if (!is_readable($this->file['full_path']))
+		if (!is_readable($this->file->path))
 		{
-			throw new Exception('Die Datei ist nicht lesbar: ' . $this->file['full_path']);
+			throw new Exception('Die Datei ist nicht lesbar: ' . $this->file->path);
 		}
 
 		// Dateiinhalt sicher laden
-		$this->fileContent = @file_get_contents($this->file['full_path']);
+		$this->fileContent = @file_get_contents($this->file->path);
 
 		if ($this->fileContent === false)
 		{
-			throw new Exception(Text::sprintf('COM_JOOMET_FILE_NOT_READABLE', $this->file['full_path']));
+			throw new Exception(Text::sprintf('COM_JOOMET_FILE_NOT_READABLE', $this->file->path));
 		}
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -98,7 +99,7 @@ class HtmlView extends BaseHtmlView
 			$hasMSAutoSet = true;
 		}
 
-		$alt        = "Support Joomet";
+		$alt        = Text::_('COM_JOOMET_SUPPORT_PROJECT_TXT');
 		$classes = ($hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
@@ -110,11 +111,13 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt   = "Joomet Help";
+		$alt   = Text::_('COM_JOOMET_HELP_TXT');
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_EDIT'), 'fas fa-file-edit');
+
+		HTMLHelper::_('sidebar.setAction', '/administrator/index.php?option=com_joomet&view=dashboard');
 
 
 	}

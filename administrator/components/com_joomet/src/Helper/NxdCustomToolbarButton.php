@@ -11,7 +11,6 @@ namespace NXD\Component\Joomet\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-
 // URL Fallback Const
 use Joomla\CMS\Language\Text;
 
@@ -28,12 +27,15 @@ class NxdCustomToolbarButton
 
 	private string $toolbarBtnMsCls;
 
+	private string $onClick;
+
 	public function __construct(
 		string $text= "",
 		string $url = "",
 		string $target = "_blank",
 		string $classes="btn-primary nxd-ext-btn nxd-help-btn",
-		string $iconClasses = "fas fa-question"
+		string $iconClasses = "fas fa-question",
+		string $onClick = ""
 	)
 	{
 		$this->text   = $text ? Text::_($text) : Text::_("JHELP");
@@ -42,11 +44,17 @@ class NxdCustomToolbarButton
 		$this->classes = $classes;
 		$this->iconClasses = $iconClasses;
 		$this->toolbarBtnMsCls = str_contains( $classes, "ms-auto") ? "ms-auto" : "";
+		$this->onClick = $onClick;
 	}
 
 	public function getHtml(): string
 	{
-		return '<joomla-toolbar-button class="'.$this->toolbarBtnMsCls.'"><a title="'.$this->text.'" href="' . $this->url . '" class="btn '.$this->classes.'" target="' . $this->target . '"><span class="'.$this->iconClasses.'"></span>' . $this->text . '</a></joomla-toolbar-button>';
+		if($this->onClick) {
+			$onClick = 'onclick="'.$this->onClick.'"';
+		}else{
+			$onClick = "";
+		}
+		return '<joomla-toolbar-button class="'.$this->toolbarBtnMsCls.'"><a '.$onClick.' title="'.$this->text.'" href="' . $this->url . '" class="btn '.$this->classes.'" target="' . $this->target . '"><span class="'.$this->iconClasses.'"></span>' . $this->text . '</a></joomla-toolbar-button>';
 	}
 
 }

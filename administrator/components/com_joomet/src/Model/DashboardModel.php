@@ -9,6 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
@@ -20,10 +23,14 @@ class DashboardModel extends BaseModel
 	public function getItems():array
 	{
 
+		// Reset User State
+		Factory::getApplication()->setUserState('com_joomet.file', null);
+		Factory::getApplication()->setUserState('com_joomet.context', null);
+
 		$items = array();
 
 		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_CHECK"), "fas fa-file-circle-check", "index.php?option=com_joomet&view=source&target=check");
-		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_TRANSLATE"), "fas fa-file", "index.php?option=com_joomet&view=source&target=translate");
+		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_TRANSLATE"), "fas fa-file", "index.php?option=com_joomet&view=source&target=translations");
 		$items[] = new DashboardItem(Text::_("COM_JOOMET_SOURCE_UPLOADED_TXT"), "fas fa-folder-open", "index.php?option=com_joomet&view=uploaded");
 		$items[] = new DashboardItem(Text::_("COM_JOOMET_DASHBOARD_SPONSOR"), "fas fa-heart", "index.php?option=com_joomet&view=sponsor");
 
@@ -33,5 +40,10 @@ class DashboardModel extends BaseModel
 
 	public function getComponentVersion(){
 		return JoometHelper::getComponentVersion();
+	}
+
+	public function apiKeyIsSet(): bool
+	{
+		return JoometHelper::getDeeplApiKey() !== null;
 	}
 }

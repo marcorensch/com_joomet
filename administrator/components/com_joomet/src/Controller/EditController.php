@@ -59,9 +59,9 @@ class EditController extends BaseController
 			$app->enqueueMessage(Text::_('JINVALID_TOKEN_NOTICE'), 403);
 		}
 		$data = $app->input->get('file_content', '', 'RAW');
-		$fileName = $app->input->get('file_name', '', 'string');
+		$filePath = $app->input->get('file_path', '', 'string');
 
-		$result = $this->storeContentToFile($data, $fileName);
+		$result = $this->storeContentToFile($data, $filePath);
 		if($result){
 			$app->enqueueMessage(Text::_('COM_JOOMET_MSG_FILE_SAVED'), 'message');
 			$app->redirect('index.php?option=com_joomet&view=edit');
@@ -80,9 +80,9 @@ class EditController extends BaseController
 		}
 
 		$data = $app->input->get('file_content', '', 'RAW');
-		$fileName = $app->input->get('file_name', '', 'string');
+		$filePath = $app->input->get('file_path', '', 'string');
 
-		$result = $this->storeContentToFile($data, $fileName);
+		$result = $this->storeContentToFile($data, $filePath);
 		if($result){
 			$app->enqueueMessage(Text::_('COM_JOOMET_MSG_FILE_SAVED'), 'message');
 			$app->redirect('index.php?option=com_joomet&view=uploaded');
@@ -98,20 +98,17 @@ class EditController extends BaseController
 		$app->redirect('index.php?option=com_joomet&view=uploaded');
 	}
 
-	private function storeContentToFile(string $content, string $fileName):bool
+	private function storeContentToFile(string $content, string $filePath):bool
 	{
-		if (empty($fileName)) {
+		if (empty($filePath)) {
 			throw new InvalidArgumentException("Filename cannot be empty.");
 		}
 
-		$file = JoometHelper::processFileName($fileName);
-		$path = $file['full_path'];
-
-		if (!is_writable(dirname($path))) {
-			Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_FILE_NOT_WRITABLE', dirname($path) ), 'error');
+		if (!is_writable(dirname($filePath))) {
+			Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_FILE_NOT_WRITABLE', dirname($filePath) ), 'error');
 			return false;
 		}
 
-		return file_put_contents($path, $content) !== false;
+		return file_put_contents($filePath, $content) !== false;
 	}
 }

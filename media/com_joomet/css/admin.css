@@ -48,6 +48,52 @@ a.bmc-btn::before {
     margin-left: auto; /* Platz zwischen linken Elementen und dem Button */
 }
 
+/* File Content */
+code.constant {
+    color: #393939;
+}
+
+/* Translations */
+
+th#skip-header {
+    .control-group {
+        margin: 0;
+        padding: 0;
+        scale: 0.7;
+
+        .controls {
+            width: auto;
+            min-width: 4rem;
+            padding: 0;
+
+            #jform_skip_all_toggler {
+                width: 0;
+
+                label {
+                    display: none;
+                    width: 0;
+                }
+
+                div.switcher {
+                    width: 5rem;
+                }
+            }
+        }
+    }
+}
+
+/* Code Mirror Press F10 Note */
+
+joomla-editor-codemirror > p.small{
+    display: none;
+    margin: 0;
+}
+
+tr.changes-made, tr.changes-made {
+    box-sizing: border-box;
+    border-left: 6px solid var(--warning);
+}
+
 /* Joomla! Error */
 .modal .btn.btn-danger {
     background: #c52827;
@@ -61,5 +107,13 @@ a.bmc-btn::before {
     &:active{
         background: #9e201f;
         border-color: var(--btn-active-border-color);
+    }
+}
+
+/* Dark Mode */
+
+[data-color-scheme="dark"] {
+    code.constant {
+        color: #b3b3b3;
     }
 }

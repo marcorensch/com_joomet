@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<form
+        addruleprefix="NXD\Component\Joomet\Administrator\Rule"
+        addformprefix="NXD\Component\Joomet\Administrator\Form"
+        addfieldprefix="NXD\Component\Joomet\Administrator\Field"
+>
+    <config>
+        <inlinehelp button="show" />
+    </config>
+    <fieldset name="translation_setup">
+        <field
+                name="source_language"
+                type="DeeplLanguageSelection"
+                label="COM_JOOMET_FIELD_SOURCE_LANGUAGE_LABEL"
+                description="COM_JOOMET_FIELD_SOURCE_LANGUAGE_DESCRIPTION"
+                context="source"
+                layout="joomla.form.field.list-fancy-select"
+                required="true"
+                default=""
+        />
+        <field
+                name="target_language"
+                type="DeeplLanguageSelection"
+                label="COM_JOOMET_FIELD_TARGET_LANGUAGE_LABEL"
+                description="COM_JOOMET_FIELD_TARGET_LANGUAGE_DESCRIPTION"
+                context="target"
+                addScript="true"
+                layout="joomla.form.field.list-fancy-select"
+                required="true"
+                default=""
+                onchange="updateSelectedLanguageField()"
+        >
+            <option value="">COM_JOOMET_FIELD_SOURCE_LANGUAGE_OPT_PLEASE_SELECT</option>
+        </field>
+        <field name="use_formality"
+               type="radio"
+               default="0"
+               layout="joomla.form.field.radio.switcher"
+               label="COM_JOOMET_FIELD_USE_FORMALITY_LABEL"
+               description="COM_JOOMET_FIELD_USE_FORMALITY_DESCRIPTION"
+        >
+            <option value="0">JNo</option>
+            <option value="1">JYes</option>
+        </field>
+        <field name="skip_element"
+               layout="joomla.form.field.radio.switcher"
+               default="0"
+               label=""
+               hiddenLabel="true"
+        >
+            <option value="0">JNo</option>
+            <option value="1">JYes</option>
+        </field>
+        <field name="translation_editor"
+               type="editor"
+               editor="codemirror|none"
+               buttons="false"
+               hiddenLabel="true"
+               height="100px"
+        />
+    </fieldset>
+</form>

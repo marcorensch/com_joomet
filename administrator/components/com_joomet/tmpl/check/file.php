@@ -35,14 +35,17 @@ $uploaded = $displayData['uploaded'];
 					<?php echo $name; ?>
                 </td>
             </tr>
+            <?php if($uploaded):?>
             <tr>
                 <th>
                     <?php echo Text::_('COM_JOOMET_FIELD_UPLOADED'); ?>:
                 </th>
+
                 <td>
 					<?php echo HTMLHelper::date(new Date($uploaded), "DATE_FORMAT_LC5"); ?>
                 </td>
             </tr>
+            <?php endif;?>
             <tr>
                 <th>
                     <?php echo Text::_('COM_JOOMET_FIELD_PREFIXED'); ?>:

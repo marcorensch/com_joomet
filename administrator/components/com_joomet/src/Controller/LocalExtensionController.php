@@ -9,12 +9,13 @@
 
 namespace NXD\Component\Joomet\Administrator\Controller;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\User\CurrentUserInterface;
 
-defined('_JEXEC') or die;
 
 
 class LocalExtensionController extends BaseController {
@@ -39,16 +40,15 @@ class LocalExtensionController extends BaseController {
 
 	public function handleCheckFileClicked(): void
 	{
-		$data = Factory::getApplication()->input->get('data', "", 'string');
-		error_log($data);
-		Factory::getApplication()->setUserState('com_joomet.local.file', $data);
+		$encodedPath = Factory::getApplication()->input->get('file', "", 'string');
+		Factory::getApplication()->setUserState('com_joomet.file', $encodedPath);
 		$this->setRedirect('index.php?option=com_joomet&view=check');
 	}
 
 	public function handleTranslateFileClicked(): void
 	{
-		$fileName = Factory::getApplication()->input->get('file', "", 'string');
-		Factory::getApplication()->setUserState('com_joomet.local.file', $fileName);
-		$this->setRedirect('index.php?option=com_joomet&view=translate');
+		$encodedPath = Factory::getApplication()->input->get('file', "", 'string');
+		Factory::getApplication()->setUserState('com_joomet.file', $encodedPath);
+		$this->setRedirect('index.php?option=com_joomet&view=translations');
 	}
 }

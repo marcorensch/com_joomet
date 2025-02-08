@@ -33,7 +33,7 @@ HTMLHelper::_('bootstrap.modal');       // Lädt das Bootstrap-CSS
 				<?php echo Text::_('COM_JOOMET_ARE_YOU_SURE_TRANSLATE'); ?>
 
 				<form id="translateConfirmForm"
-				      action="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleDeleteFileClicked'); ?>"
+				      action="<?php echo Route::_('index.php?option=com_joomet&task=uploaded.handleTranslateFileClicked'); ?>"
 				      method="post">
 					<input type="hidden" id="file-to-translate" name="file"
 					       value="<?php echo htmlspecialchars("", ENT_QUOTES, 'UTF-8'); ?>">

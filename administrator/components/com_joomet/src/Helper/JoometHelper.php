@@ -74,15 +74,10 @@ class JoometHelper extends ComponentHelper
 
 		$lines = [];
 
-		// Datei Zeile für Zeile lesen
+		// Read File row
 		while (($line = fgets($file)) !== false)
 		{
 			$line = trim($line); // Leerzeichen und Zeilenumbrüche entfernen
-
-//			// Leere Zeilen und Kommentare ignorieren
-//			if ($line === '' || str_starts_with($line, '#') || str_starts_with($line, ';')) {
-//				continue;
-//			}
 
 			$lines[] = $line;
 		}
@@ -93,23 +88,9 @@ class JoometHelper extends ComponentHelper
 
 	}
 
-	public static function processFileName($fileName): array
-	{
-		$parts     = explode('.', $fileName);
-		$timestamp = $parts[0];
-		$name      = implode('.', array_slice($parts, 1));
-
-		return ["uploaded"      => $timestamp,
-		        "name"          => $name,
-		        "original_name" => $fileName,
-		        "full_path"     => JPATH_ROOT . '/media/com_joomet/uploads/' . $fileName,
-		        "url"           => URI::root() . 'media/com_joomet/uploads/' . $fileName,
-		];
-	}
-
 	public static function prepareExtensionData($element)
 	{
-		$element->ini_name = strtolower($element->name);
+		$element->ini_name = str_contains($element->name, ' ') ? strtolower($element->element) : strtolower($element->name);
 
 		$requiredPrefixes = ['component' => 'com_', 'module' => 'mod_', 'plugin' => 'plg_', 'template' => 'tpl_', 'library' => 'lib_'];
 		foreach ($requiredPrefixes as $prefix){
@@ -122,6 +103,13 @@ class JoometHelper extends ComponentHelper
 		$element->ini_name = $requiredPrefixes[$element->type] . $element->name;
 
 		return $element;
+	}
+
+	public static function getDeeplApiKey():string
+	{
+		$securedKey = ComponentHelper::getParams('com_joomet')->get('api_key_deepl', '');
+		if(!$securedKey) return "";
+		return (new PasswordHelper)->decrypt($securedKey);
 	}
 
 }

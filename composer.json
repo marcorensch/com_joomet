@@ -1,0 +1,22 @@
+{
+  "name": "nxd/component-joomet",
+  "description": "Joomet Extension for Joomla! 5.x",
+  "require": {
+    "php": "^8.3",
+    "deeplcom/deepl-php": "^v1.11.1"
+  },
+  "scripts": {
+    "post-install-deploy": [
+      "rm -rf vendor",
+      "composer clear-cache",
+      "composer install --no-dev --optimize-autoloader"
+    ],
+    "deploy-zip": [
+      "mkdir -p deployment",
+      "zip -r deployment/com_joomet.zip . -x '*.DS_Store' -x '*.git*' -x 'Thumbs.db' -x 'node_modules/*' -x 'vendor/bin/*' -x '.idea' -x '.idea/*' -x '*/.idea' -x '*/.idea/*' '*/.gitignore' -x 'deployment/*' -x '*.zip'"
+    ]
+  },
+  "config": {
+    "vendor-dir": "administrator/components/com_joomet/vendor"
+  }
+}

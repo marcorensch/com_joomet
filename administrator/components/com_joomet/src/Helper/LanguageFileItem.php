@@ -9,14 +9,17 @@
 
 namespace NXD\Component\Joomet\Administrator\Helper;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-defined('_JEXEC') or die;
-
-class LocalExtensionLanguageFileItem
+class LanguageFileItem
 {
 	public string $name;
+	public string $label;
+	public string|null $timestamp;
+
 	public string $path;
 	public string $relative_path;
 	public string $url;
@@ -24,14 +27,27 @@ class LocalExtensionLanguageFileItem
 
 	public string $languageTag;
 
+	public int $size;
+
 	public function __construct(string $path, string $src)
 	{
 		$this->name = $this->setName($path);
+		[$this->label, $this->timestamp] = $this->setLabelAndTimestampFromName($this->name);
 		$this->path = $path;
 		$this->relative_path = $this->setRelativePath($path);
 		$this->url = $this->setUrl($path);
 		$this->src = $src;
 		$this->languageTag = $this->setLanguageTag($path);
+		$this->size = filesize($path);
+	}
+
+	private function setLabelAndTimestampFromName(string $fileName):array
+	{
+		$parts     = explode('.', $fileName);
+		$timestamp = intval($parts[0]) === 0 ? null : $parts[0];
+		$name      = implode('.', array_slice($parts, 1));
+
+		return [$name, $timestamp];
 	}
 
 	private function setName(string $path):string

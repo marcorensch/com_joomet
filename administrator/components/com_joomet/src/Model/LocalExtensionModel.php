@@ -1,13 +1,15 @@
 <?php
 /**
- * @package     NXD\Component\Joomet\Administrator\Model
- * @subpackage
+ * @package     Joomla.Administrator
+ * @subpackage  com_joomet
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
+ * @copyright   Copyright (C) 2025 NXD nx-designs, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace NXD\Component\Joomet\Administrator\Model;
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
@@ -17,7 +19,7 @@ use Joomla\CMS\Filesystem\Folder;
 //@ToDo Check Compatibility 6.0
 use Joomla\Filesystem\Path;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use NXD\Component\Joomet\Administrator\Helper\LocalExtensionLanguageFileItem;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class LocalExtensionModel extends BaseModel
 {
@@ -67,6 +69,7 @@ class LocalExtensionModel extends BaseModel
 		{
 			$subPath = Path::clean($path . '/' . $languageSubDir);
 
+
 			if (!Folder::exists($subPath))
 			{
 				continue;
@@ -74,12 +77,13 @@ class LocalExtensionModel extends BaseModel
 			$folders = Folder::folders($subPath);
 			foreach ($folders as $folder)
 			{
+
 				$folderPath           = Folder::makeSafe($subPath . '/' . $folder);
 				$iniFiles             = Folder::files($folderPath, '^' . preg_quote($extension->ini_name, '/') . '.*\.ini$', false, true);
 				$preparedFileElements = array();
 				foreach ($iniFiles as $iniFile)
 				{
-					$preparedFileElements[] = new LocalExtensionLanguageFileItem($iniFile, $src);
+					$preparedFileElements[] = new LanguageFileItem($iniFile, $src);
 				}
 
 				$files = array_merge($files, $preparedFileElements);

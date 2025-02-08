@@ -22,6 +22,7 @@ use NXD\Component\Joomet\Administrator\Helper\JoometErrorType;
 use NXD\Component\Joomet\Administrator\Helper\JoometMessageSource;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\JoometMessageType;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 use NXD\Component\Joomet\Administrator\Helper\RowObject;
 use NXD\Component\Joomet\Administrator\Helper\RowType;
 
@@ -60,51 +61,26 @@ class CheckModel extends ListModel
 
 	public function processFile(): array
 	{
-		$app              = Factory::getApplication();
-		$uploadedFileName = $app->getUserState('com_joomet.upload.file');
-		$localFileData    = $app->getUserState('com_joomet.local.file');
+		$app           = Factory::getApplication();
+		$pathToFile    = $app->getUserState('com_joomet.file');
 
-		if (!$uploadedFileName && !$localFileData)
+		if (!$pathToFile)
 		{
 			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
 
 			return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "No file selected.");
 		}
 
-		if ($uploadedFileName)
-		{
+		$pathToFile = base64_decode($pathToFile);
 
-			$fileNameArr = JoometHelper::processFileName($uploadedFileName);
-			$uploaded = $fileNameArr['uploaded'];
-			$name = $fileNameArr['name'];
+		$file = new LanguageFileItem($pathToFile, '');
 
-			if (!$path = JoometHelper::checkIfLocalFileExists($uploadedFileName))
-			{
-				$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_ERROR_FILE_NOT_FOUND");
-				return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "File not found.");
-			}
-		}
-		elseif ($localFileData)
-		{
-			$data = unserialize(base64_decode($localFileData));
-			$path = $data->path;
-			$uploaded = 0;
-			$name = $data->name;
-		}
-		else
-		{
-			error_log("No file selected");
-			$this->errors[] = Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED");
-
-			return array("statistics" => [], "data" => [], "filenameChecks" => array(), "error" => "No file selected.");
-		}
-
-		$fileRows    = JoometHelper::getFileContents($path);
+		$fileRows    = JoometHelper::getFileContents($pathToFile);
 		$checkedRows = array();
 		$rowNum      = 1;
 
-		$this->statistics['uploaded']    = $uploaded;
-		$this->statistics['file_name']   = $name;
+		$this->statistics['uploaded']    = $file->timestamp;
+		$this->statistics['file_name']   = $file->name;
 		$this->statistics['total']       = count($fileRows);
 		$this->statistics['empty']       = 0;
 		$this->statistics['translation'] = 0;

@@ -11,7 +11,6 @@ namespace NXD\Component\Joomet\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-
 enum RowType: string
 {
 	case TRANSLATION = 'TRANSLATION';

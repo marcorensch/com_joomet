@@ -44,13 +44,13 @@ try {
 
 ?>
 
-<h2><?php echo Text::sprintf("COM_JOOMET_EDIT_FILENAME", $this->file['name']);?></h2>
+<h2><?php echo Text::sprintf("COM_JOOMET_EDIT_FILENAME", $this->file->label);?></h2>
 <form action="<?php echo "" ?>" method="post" id="adminForm" name="adminForm">
     <div class="editor-container">
 		<?php
             echo $editorHtml;
 		?>
-        <input type="hidden" name="file_name" value="<?php echo $this->file['original_name'];?>" />
+        <input type="hidden" name="file_path" value="<?php echo $this->file->path;?>" />
     </div>
 
     <!-- Optional: Submit-Button -->

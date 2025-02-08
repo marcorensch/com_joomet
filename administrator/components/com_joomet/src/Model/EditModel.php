@@ -9,11 +9,15 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\Session\Session;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
+use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class EditModel extends BaseModel
 {
@@ -24,14 +28,22 @@ class EditModel extends BaseModel
 		parent::__construct($config);
 	}
 
-	public function getFile(): array
+	public function getFile(): false | LanguageFileItem
 	{
-		$fileName = Factory::getApplication()->getUserState('com_joomet.edit.file');
-		if(!$fileName){
-			Factory::getApplication()->enqueueMessage(Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED"), "error");
-			return array();
+		if (!Session::checkToken('get'))
+		{
+			throw new \Exception(Text::_('JINVALID_TOKEN_NOTICE'), 403);
 		}
-		return JoometHelper::processFileName($fileName);
+
+		$input = Factory::getApplication()->input;
+		$encodedFilePath = $input->get('file', '', 'string');
+
+		if(!$encodedFilePath){
+			Factory::getApplication()->enqueueMessage(Text::_("COM_JOOMET_MSG_SESSION_NO_FILE_SELECTED"), "error");
+			return false;
+		}
+		$path = base64_decode($encodedFilePath);
+		return new LanguageFileItem($path, "");
 	}
 
 }
