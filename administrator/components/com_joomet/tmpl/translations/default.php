@@ -137,8 +137,8 @@ $wa->addInlineScript('const rowsToTranslate = ' . $jsonRows . ';');
                 </span>
                 </div>
             </div>
-            <div class="ms-auto">
-                <button type="submit" class="btn btn-success"><i class="fas fa-download"></i> <?php echo Text::_("COM_JOOMET_DOWNLOAD_FILE_BTN_TXT");?></button>
+            <div class="ms-auto col-12 col-sm-3 col-lg-2">
+                <button type="submit" class="btn btn-success w-100"><i class="fas fa-download"></i> <?php echo Text::_("COM_JOOMET_DOWNLOAD_FILE_BTN_TXT");?></button>
             </div>
         </div>
     </div>

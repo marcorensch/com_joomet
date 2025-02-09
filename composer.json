@@ -17,6 +17,9 @@
     ]
   },
   "config": {
-    "vendor-dir": "administrator/components/com_joomet/vendor"
+    "vendor-dir": "administrator/components/com_joomet/vendor",
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }
