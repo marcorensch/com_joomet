@@ -23,11 +23,13 @@
 | Select locally installed language files | done   | :white_check_mark: |
 | Translation Service                     | done   | :white_check_mark: |
 
-
 ## Deployment
 
 1. Run `composer post-install-deploy` to install DeepL package for deployment
 2. Run `composer deploy-zip` to create a ZIP File ready for installation
 3. Install the created ZIP like any other extension
 
-##
+## Download
+
+You can get the latest installation-ready version from the releases
+page [here](https://github.com/marcorensch/com_joomet/releases)
