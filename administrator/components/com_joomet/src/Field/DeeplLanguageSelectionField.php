@@ -34,10 +34,6 @@ class DeeplLanguageSelectionField extends ListField
 		$this->addScript = $this->getAttribute('addScript') === "true";
 		$languageOptions = $this->getLanguagesFromConfig();
 
-		if($this->addScript){
-			$this->addScriptOptions();
-		}
-
 		if($this->context === "source")
 		{
 			$options[] = HTMLHelper::_('select.option', 'auto', Text::_('COM_JOOMET_FIELD_SOURCE_LANGUAGE_OPT_AUTO'));
@@ -60,6 +56,11 @@ class DeeplLanguageSelectionField extends ListField
 		//check if the property exists
 		if(property_exists($languagesCache, $this->context)){
 			$this->languages = $languagesCache->{$this->context};
+
+			if($this->addScript){
+				$this->addScriptOptions();
+			}
+
 			foreach($this->languages as $language){
 				$options[] = HTMLHelper::_('select.option', $language->code, $language->name . " (".$language->code.")");
 			}
