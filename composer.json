@@ -12,8 +12,8 @@
       "composer install --no-dev --optimize-autoloader"
     ],
     "deploy-zip": [
-      "mkdir -p deployment",
-      "zip -r deployment/com_joomet.zip . -x '*.DS_Store' -x '*.git*' -x 'Thumbs.db' -x 'node_modules/*' -x 'vendor/bin/*' -x '.idea' -x '.idea/*' -x '*/.idea' -x '*/.idea/*' '*/.gitignore' -x 'deployment/*' -x '*.zip'"
+      "mkdir -p dist",
+      "zip -r dist/com_joomet.zip . -x '*.DS_Store' -x '*.git*' -x 'Thumbs.db' -x 'node_modules/*' -x 'vendor/bin/*' -x '.idea' -x '.idea/*' -x '*/.idea' -x '*/.idea/*' '*/.gitignore' -x 'dist/*' -x '*.zip'"
     ]
   },
   "config": {
