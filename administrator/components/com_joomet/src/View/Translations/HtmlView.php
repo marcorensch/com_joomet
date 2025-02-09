@@ -45,6 +45,7 @@ class HtmlView extends BaseHtmlView
 		$errors         = $this->get('Errors');
 		$this->fileData = $model->getFileContents();
 		$this->fileName = $model->getFileName();
+		$configValid    = $model->checkComponentConfig();
 
 		if (count($errors))
 		{

@@ -99,4 +99,19 @@ class TranslationsModel extends AdminModel
 		$joometFile = new LanguageFileItem($file_path_decoded, "");
 		return $joometFile->label;
 	}
+
+	public function checkComponentConfig()
+	{
+		$status = true;
+		$params = ComponentHelper::getParams('com_joomet');
+		if(!$params->get('api_key_deepl', '')){
+			Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_DEEPL_API_KEY_MISSING'), 'error');
+			$status = false;
+		}
+		if(!$params->get('deepl_language_cache', '')){
+			Factory::getApplication()->enqueueMessage(Text::_('COM_JOOMET_MSG_DEEPL_LANGUAGE_CACHE_EMPTY'), 'error');
+			$status = false;
+		}
+		return $status;
+	}
 }
