@@ -1,0 +1,39 @@
+name: Build and Deploy Release ZIP
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-zip:
+    name: Generate the ZIP and attach to release
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up PHP (incl. Composer)
+      - name: Setup PHP with Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3' # Verwenden Sie die PHP-Version Ihrer Wahl
+          tools: composer
+
+      # Install Composer dependencies
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # Execute the deploy-zip script
+      - name: Generate ZIP file
+        run: composer deploy-zip
+
+      # Upload the ZIP file (as a release attachment)
+      - name: Upload ZIP to release
+        uses: actions/upload-release-asset@v2
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./dist/com_joomet.zip # Path to the generated zip file
+          asset_name: com_joomet.zip
+          asset_content_type: application/zip
