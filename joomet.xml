@@ -60,6 +60,6 @@
 	</administration>
 	<changelogurl>https://raw.githubusercontent.com/astridx/boilerplate/tutorial/changelog.xml</changelogurl>
 	<updateservers>
-		<server type="extension" name="Joomet Updates">https://raw.githubusercontent.com/astridx/boilerplate/tutorial/joomet_update.xml</server>
+		<server type="extension" name="Joomet Updates">https://update.nx-designs.ch/extensions/com_joomet.xml</server>
 	</updateservers>
 </extension>
