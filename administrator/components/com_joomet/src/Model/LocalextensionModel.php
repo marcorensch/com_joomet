@@ -21,7 +21,7 @@ use Joomla\Filesystem\Path;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
-class LocalExtensionModel extends BaseModel
+class LocalextensionModel extends BaseModel
 {
 	public $typeAlias = 'com_joomet.localextension';
 

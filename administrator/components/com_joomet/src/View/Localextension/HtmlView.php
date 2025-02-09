@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace NXD\Component\Joomet\Administrator\View\LocalExtensions;
+namespace NXD\Component\Joomet\Administrator\View\LocalExtension;
 
 defined('_JEXEC') or die;
 
@@ -15,13 +15,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use NXD\Component\Joomet\Administrator\Model\CheckModel;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
-use NXD\Component\Joomet\Administrator\Model\LocalExtensionsModel;
-use NXD\Component\Joomet\Administrator\Model\UploadedModel;
+use NXD\Component\Joomet\Administrator\Model\LocalextensionModel;
 
 /**
  * View class Joomet Check.
@@ -45,17 +42,21 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null): void
 	{
-		/** @var LocalExtensionsModel $model */
+		/** @var LocalextensionModel $model */
 		$model               = $this->getModel();
 		$this->targetView    = $this->get('TargetView');
-		$this->pagination    = $this->get('Pagination');
-		$this->filterForm    = $this->get('FilterForm');
-		$this->activeFilters = $this->get('ActiveFilters');
-		$this->extensions    = $this->get("Items");
-		$this->state         = $this->get('State');
+		$element             = Factory::getApplication()->input->get('element', '', 'string');
+		$this->extension     = $model->getExtension($element);
+		$this->languageFiles = array();
 
-		$input        = Factory::getApplication()->input;
-		$this->target = $input->get('target', '', 'string');
+		if (!$this->extension)
+		{
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_JOOMET_EXTENSION_NOT_FOUND_IN_DB', $element), 'error');
+
+			return;
+		}
+
+		$this->languageFiles = $model->getLanguageFilesForExtension($this->extension);
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
@@ -76,9 +77,20 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar()
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
+		Factory::getApplication()->setUserState('com_joomet.context', "joomla");
 
 		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
+
+		$customBack = new NxdCustomToolbarButton(
+			"COM_JOOMET_LIST_BTN_TXT",
+			"/administrator/index.php?option=com_joomet&view=localextensions",
+			"_self",
+			"btn-primary",
+			"fas fa-chevron-left"
+		);
+
+		$toolbar->appendButton('Custom', $customBack->getHtml(), Text::_('COM_JOOMET_LIST_BTN_TXT'));
 
 		$dashboardBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_DASHBOARD_BTN_TXT",
@@ -97,7 +109,7 @@ class HtmlView extends BaseHtmlView
 			$hasMSAutoSet = true;
 		}
 
-		$alt        = "Support Joomet";
+		$alt        = Text::_('COM_JOOMET_SUPPORT_PROJECT_TXT');
 		$classes    = (!$hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
@@ -108,11 +120,11 @@ class HtmlView extends BaseHtmlView
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt   = "Joomet Help";
+		$alt   = Text::_('COM_JOOMET_HELP_TXT');
 		$dhtml = (new NxdCustomToolbarButton())->getHtml();
 		$toolbar->appendButton('Custom', $dhtml, $alt);
 
-		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_LOCALEXTENSIONS'), 'fas fa-language');
+		ToolbarHelper::title(Text::sprintf('COM_JOOMET_TOOLBAR_TITLE_LOCALEXTENSION', $this->extension->element), 'fas fa-language');
 
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_joomet');

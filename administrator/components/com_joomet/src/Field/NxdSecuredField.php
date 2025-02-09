@@ -18,7 +18,7 @@ use NXD\Component\Joomet\Administrator\Helper\PasswordHelper;
 class NxdSecuredField extends PasswordField
 {
 
-	protected $type = 'nxdsecured';
+	protected $type = 'nxdSecured';
 
 	public function getInput(): string
 	{

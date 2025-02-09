@@ -20,7 +20,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 
 class DeeplLanguageCacheField extends FormField
 {
-	protected $type = 'deepllanguagecache';
+	protected $type = 'deeplLanguageCache';
 
 	protected $value;
 

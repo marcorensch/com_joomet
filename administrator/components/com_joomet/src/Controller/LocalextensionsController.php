@@ -11,12 +11,13 @@ namespace NXD\Component\Joomet\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\User\CurrentUserInterface;
 
 
-class LocalExtensionsController extends BaseController {
+class LocalextensionsController extends BaseController {
 
 	protected $text_prefix = 'COM_JOOMET_LOCALEXTENSIONS';
 
@@ -31,7 +32,7 @@ class LocalExtensionsController extends BaseController {
 	 *
 	 * @since   1.0.0
 	 */
-	public function getModel($name = 'LocalExtensions', $prefix = 'Administrator', $config = ['ignore_request' => true]): bool|BaseDatabaseModel|CurrentUserInterface
+	public function getModel($name = 'Localextensions', $prefix = 'Administrator', $config = ['ignore_request' => true]): bool|BaseDatabaseModel|CurrentUserInterface
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

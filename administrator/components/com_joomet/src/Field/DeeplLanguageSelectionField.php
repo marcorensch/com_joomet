@@ -21,7 +21,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 
 class DeeplLanguageSelectionField extends ListField
 {
-	protected $type = 'DeeplLanguageSelection';
+	protected $type = 'deeplLanguageSelection';
 	protected $context = "";
 	private bool $addScript;
 

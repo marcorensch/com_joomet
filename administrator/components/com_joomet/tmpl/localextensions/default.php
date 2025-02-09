@@ -15,7 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-use NXD\Component\Joomet\Administrator\View\Source\HtmlView;
+use NXD\Component\Joomet\Administrator\View\Localextensions\HtmlView;
 
 /** @var HtmlView $this */
 

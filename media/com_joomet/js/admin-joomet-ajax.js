@@ -8,7 +8,7 @@
                 url: 'index.php',
                 data: {
                     option: 'com_joomet',
-                    task: 'deeplagent.getLanguagesFromDeepl',
+                    task: 'deepl.getLanguagesFromDeepl',
                     format: 'json',
                     [Joomla.getOptions('csrf.token')]: 1
                 },

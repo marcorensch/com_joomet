@@ -18,7 +18,7 @@ use Joomla\CMS\User\CurrentUserInterface;
 
 
 
-class LocalExtensionController extends BaseController {
+class LocalextensionController extends BaseController {
 
 	protected $text_prefix = 'COM_JOOMET_LOCALEXTENSION';
 
@@ -33,7 +33,7 @@ class LocalExtensionController extends BaseController {
 	 *
 	 * @since   1.0.0
 	 */
-	public function getModel($name = 'LocalExtension', $prefix = 'Administrator', $config = ['ignore_request' => true]): bool|BaseDatabaseModel|CurrentUserInterface
+	public function getModel($name = 'Localextension', $prefix = 'Administrator', $config = ['ignore_request' => true]): bool|BaseDatabaseModel|CurrentUserInterface
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

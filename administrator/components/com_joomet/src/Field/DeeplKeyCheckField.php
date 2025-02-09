@@ -24,7 +24,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 class DeeplKeyCheckField extends FormField
 {
 
-	protected $type = 'deeplkeycheck';
+	protected $type = 'deeplKeyCheck';
 
 	public function getInput():string
 	{

@@ -21,7 +21,7 @@ use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
 
-class DeeplAgentController extends BaseController
+class DeeplController extends BaseController
 {
 	/**
 	 * Method to get the Source and Target Languages from the DeepL API

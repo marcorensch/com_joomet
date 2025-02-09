@@ -16,7 +16,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseQuery;
 use Joomla\Database\QueryInterface;
 
-class LocalExtensionsModel extends ListModel
+class LocalextensionsModel extends ListModel
 {
 	public $typeAlias = 'com_joomet.localextensions';
 

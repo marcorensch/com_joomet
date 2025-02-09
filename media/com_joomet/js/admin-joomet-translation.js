@@ -127,7 +127,7 @@ function translateRow(rowData) {
         url: 'index.php',
         data: {
             option: 'com_joomet',
-            task: 'deeplagent.doTranslation',
+            task: 'deepl.doTranslation',
             format: 'json',
             [Joomla.getOptions('csrf.token')]: 1,
             rowData: JSON.stringify(rowData)
