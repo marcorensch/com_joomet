@@ -68,7 +68,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::back();
 
 		ToolbarHelper::inlinehelp();
-		ToolbarHelper::help('', false, "https://manuals.nx-designs.com/docs/intro");
+		ToolbarHelper::help('', false, "https://manuals.nx-designs.com/docs/com_joomet/translator/do_translation");
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_TRANSLATIONS'), 'fas fa-language');
 

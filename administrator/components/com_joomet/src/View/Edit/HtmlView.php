@@ -91,16 +91,8 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::save("edit.save");
 		ToolbarHelper::cancel("edit.cancel");
 
-		$hasMSAutoSet = false;
-
-		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
-		{
-			$toolbar->preferences('com_joomet');
-			$hasMSAutoSet = true;
-		}
-
 		$alt        = Text::_('COM_JOOMET_SUPPORT_PROJECT_TXT');
-		$classes = ($hasMSAutoSet ? 'ms-auto ' : '') . "btn-success nxd-support-btn";
+		$classes    = "ms-auto btn-success nxd-support-btn";
 		$supportBtn = new NxdCustomToolbarButton(
 			"COM_JOOMET_SUPPORT_US_BTN_TXT",
 			"/administrator/index.php?option=com_joomet&view=sponsor",
@@ -111,9 +103,7 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt   = Text::_('COM_JOOMET_HELP_TXT');
-		$dhtml = (new NxdCustomToolbarButton())->getHtml();
-		$toolbar->appendButton('Custom', $dhtml, $alt);
+		ToolbarHelper::help('', false, "https://manuals.nx-designs.com/docs/com_joomet/editor");
 
 		ToolbarHelper::title(Text::_('COM_JOOMET_TOOLBAR_TITLE_EDIT'), 'fas fa-file-edit');
 

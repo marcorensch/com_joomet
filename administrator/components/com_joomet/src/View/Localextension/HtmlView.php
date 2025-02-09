@@ -120,9 +120,7 @@ class HtmlView extends BaseHtmlView
 		);
 		$toolbar->appendButton('Custom', $supportBtn->getHtml(), $alt);
 
-		$alt   = Text::_('COM_JOOMET_HELP_TXT');
-		$dhtml = (new NxdCustomToolbarButton())->getHtml();
-		$toolbar->appendButton('Custom', $dhtml, $alt);
+		ToolbarHelper::help('', false, "https://manuals.nx-designs.com/docs/com_joomet/local_extensions");
 
 		ToolbarHelper::title(Text::sprintf('COM_JOOMET_TOOLBAR_TITLE_LOCALEXTENSION', $this->extension->element), 'fas fa-language');
 
