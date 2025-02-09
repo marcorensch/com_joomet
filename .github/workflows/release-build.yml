@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-zip:
-    name: Generate the ZIP and attach to release
+    name: Generate the ZIP for Release
     runs-on: ubuntu-latest
 
     steps:
