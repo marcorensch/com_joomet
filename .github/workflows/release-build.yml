@@ -31,7 +31,7 @@ jobs:
 
       # Upload the ZIP file (as a release attachment)
       - name: Upload ZIP to release
-        uses: actions/upload-release-asset@v2
+        uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./dist/com_joomet.zip # Path to the generated zip file
