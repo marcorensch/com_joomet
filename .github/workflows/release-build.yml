@@ -1,4 +1,4 @@
-name: Build and Deploy Release ZIP
+name: Build and Deploy Release
 
 on:
   release:
