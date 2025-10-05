@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\Controller;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +22,6 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 /**

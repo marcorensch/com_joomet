@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\Extension;
 
-defined('JPATH_PLATFORM') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceTrait;
@@ -43,7 +45,7 @@ implements BootableExtensionInterface, CategoryServiceInterface
 	 *
 	 * @since   1.0.0
 	 */
-	public function boot(ContainerInterface $container)
+	public function boot(ContainerInterface $container): void
 	{
 		$this->getRegistry()->register('joometadministrator', new AdministratorService);
 	}

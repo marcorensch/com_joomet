@@ -9,12 +9,13 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use Joomla\CMS\Filesystem\Folder;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 

@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\Controller;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;     // @ToDo: Check Compatibilty 6.0

@@ -7,7 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
@@ -27,7 +29,7 @@ use Joomla\DI\ServiceProviderInterface;
  *
  * @since  1.0.0
  */
-return new class implements ServiceProviderInterface
+return new class () implements ServiceProviderInterface
 {
 	/**
 	 * Registers the service provider with a DI container.
@@ -38,7 +40,7 @@ return new class implements ServiceProviderInterface
 	 *
 	 * @since   1.0.0
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->registerServiceProvider(new CategoryFactory('\\NXD\\Component\\Joomet'));
 		$container->registerServiceProvider(new MVCFactory('\\NXD\\Component\\Joomet'));

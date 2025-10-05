@@ -9,14 +9,15 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Session\Session;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class EditModel extends BaseModel

@@ -7,7 +7,7 @@
 	<authorUrl>https://nx-designs.ch</authorUrl>
 	<copyright>Copyright ©2025 by NXD | nx-designs</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<description>COM_JOOMET_XML_DESCRIPTION</description>
 	<namespace path="src">NXD\Component\Joomet</namespace>
 	<scriptfile>script.php</scriptfile>

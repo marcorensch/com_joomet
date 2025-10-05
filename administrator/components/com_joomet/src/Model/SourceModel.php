@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\Model;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -17,13 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Registry\Registry;
-use NXD\Component\Joomet\Administrator\Helper\CheckerMessage;
-use NXD\Component\Joomet\Administrator\Helper\JoometErrorType;
-use NXD\Component\Joomet\Administrator\Helper\JoometMessageSource;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use NXD\Component\Joomet\Administrator\Helper\JoometMessageType;
-use NXD\Component\Joomet\Administrator\Helper\RowObject;
-use NXD\Component\Joomet\Administrator\Helper\RowType;
 use NXD\Component\Joomet\Administrator\Helper\SourceItem;
 
 /**
