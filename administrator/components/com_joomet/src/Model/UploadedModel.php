@@ -16,11 +16,8 @@ namespace NXD\Component\Joomet\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
-
-//@ToDo Compatibility 6.0
-
 
 class UploadedModel extends AdminModel
 {

@@ -57,7 +57,7 @@ class HtmlView extends BaseHtmlView
 		$this->rows           = $processed['data'];
 		$this->statistics     = $processed['statistics'];
 		$this->filenameChecks = $processed['filenameChecks'];
-		$errors               = $this->get('Errors');
+		$errors               = $model->getErrors();
 		$this->context        = Factory::getApplication()->getUserState('com_joomet.context');
 
 
