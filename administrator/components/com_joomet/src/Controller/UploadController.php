@@ -14,8 +14,8 @@ namespace NXD\Component\Joomet\Administrator\Controller;
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;     // @ToDo: Check Compatibilty 6.0
-use Joomla\CMS\Filesystem\Folder;   // @ToDo: Check Compatibilty 6.0
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Path;

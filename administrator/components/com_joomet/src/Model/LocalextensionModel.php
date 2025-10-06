@@ -16,9 +16,7 @@ namespace NXD\Component\Joomet\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
-use Joomla\CMS\Filesystem\Folder;
-
-//@ToDo Check Compatibility 6.0
+use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
