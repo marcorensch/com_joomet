@@ -26,7 +26,7 @@ class Com_JoometInstallerScript
 	 * @var    string
 	 * @since  1.0.0
 	 */
-	private $minimumJoomlaVersion = '5.0';
+	private $minimumJoomlaVersion = '5.4';
 
 	/**
 	 * Minimum PHP version to check

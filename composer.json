@@ -1,6 +1,6 @@
 {
   "name": "nxd/component-joomet",
-  "description": "Joomet Extension for Joomla! 5.x",
+  "description": "Joomet Extension for Joomla! 5.4",
   "require": {
     "php": "^8.3",
     "deeplcom/deepl-php": "^v1.11.1"

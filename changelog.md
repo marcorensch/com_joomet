@@ -10,9 +10,10 @@
 - Visual Filter for comment rows in Checker
 
 ### Changed
+- Raised Minimum Joomla Version to 5.4
 - Updated JEXEC statements (phpcs:disable PSR1.Files.SideEffects)
 - Checker shows the original filename without an upload timestamp in UI
-- PHP Minimum Version is now 7.3
+- PHP Minimum Version is now 8.3
 
 ### Fixed
 - Fixed false Filename Prefix error
