@@ -13,10 +13,7 @@ namespace NXD\Component\Joomet\Administrator\Model;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
-use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
-use NXD\Component\Joomet\Administrator\Helper\DashboardItem;
 
 class SponsorModel extends BaseModel
 {

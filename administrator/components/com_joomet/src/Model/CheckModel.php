@@ -11,6 +11,7 @@ namespace NXD\Component\Joomet\Administrator\Model;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Exception;
@@ -37,8 +38,6 @@ class CheckModel extends ListModel
 {
 	private Registry $params;
 	private array $errors;
-	private array $warnings;
-	private array $infos;
 
 	private array $statistics;
 
@@ -63,8 +62,19 @@ class CheckModel extends ListModel
 
 	public function processFile(): array
 	{
-		$app           = Factory::getApplication();
-		$pathToFile    = $app->getUserState('com_joomet.file');
+		try
+		{
+			$app = Factory::getApplication();
+		}
+		catch (Exception $e)
+		{
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			$this->errors[] = Text::_("Error retrieving application data");
+
+			return [];
+		}
+
+		$pathToFile = $app->getUserState('com_joomet.file');
 
 		if (!$pathToFile)
 		{
@@ -81,13 +91,14 @@ class CheckModel extends ListModel
 		$checkedRows = array();
 		$rowNum      = 1;
 
-		$this->statistics['uploaded']    = $file->timestamp;
-		$this->statistics['file_name']   = $file->name;
-		$this->statistics['total']       = count($fileRows);
-		$this->statistics['empty']       = 0;
-		$this->statistics['translation'] = 0;
-		$this->statistics['comment']     = 0;
-		$this->statistics['valid']       = 0;
+		$this->statistics['uploaded']      = $file->timestamp;
+		$this->statistics['file_name']     = $file->name;
+		$this->statistics['original_name'] = $this->cleanFileName($file->name);
+		$this->statistics['total']         = count($fileRows);
+		$this->statistics['empty']         = 0;
+		$this->statistics['translation']   = 0;
+		$this->statistics['comment']       = 0;
+		$this->statistics['valid']         = 0;
 
 		$this->statistics['invalid_rows'] = array();
 
@@ -97,8 +108,8 @@ class CheckModel extends ListModel
 		ini_set('max_execution_time', $maxExecutionTime);
 
 		$filenameChecks              = [];
-		$filenameChecks['prefixed']  = $this->filenamePrefixed($this->statistics['file_name']);
-		$filenameChecks['structure'] = $this->filenameHasCorrectStructure($this->statistics['file_name']);
+		$filenameChecks['prefixed']  = $this->filenamePrefixed($this->statistics['original_name']);
+		$filenameChecks['structure'] = $this->filenameHasCorrectStructure($this->statistics['original_name']);
 
 		foreach ($fileRows as $originalString)
 		{
@@ -146,7 +157,17 @@ class CheckModel extends ListModel
 
 	private function prepareReportData($rows, $statistics, $fileNameChecks): void
 	{
-		$app = Factory::getApplication();
+		try
+		{
+			$app = Factory::getApplication();
+		}
+		catch (Exception $e)
+		{
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			$this->errors[] = Text::_("Error retrieving application data");
+
+			return;
+		}
 
 		// Session speichern
 		$app->getSession()->set('rowsReportData', $rows);
@@ -403,10 +424,6 @@ class CheckModel extends ListModel
 	 */
 	private function filenamePrefixed(string $fileName): bool
 	{
-//		$acceptable = array('mod','com','plg','tpl');
-//		$parts = explode('_', $fileName);
-//		$prefix = $parts[0];
-//		return in_array($prefix, $acceptable);
 		return preg_match('/^(mod|com|plg|tpl)_/', $fileName);
 	}
 
@@ -423,5 +440,25 @@ class CheckModel extends ListModel
 	private function filenameHasCorrectStructure(string $fileName): bool
 	{
 		return preg_match('/^(mod|com|plg|tpl)(_[a-z]+)+(\.sys)?\.ini$/', $fileName);
+	}
+
+	/**
+	 * The file gets stored with a timestamp prefix.
+	 * This method removes the timestamp prefix we have added and returns the original filename.
+	 *
+	 * @param   string  $fileNameWithTimestampPrefixed
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.1
+	 */
+	private function cleanFileName(string $fileNameWithTimestampPrefixed):string
+	{
+		// Since we have altered the filename, we need to remove our prefix first for this check to work.
+		$originalFileNameArray = explode('.', $fileNameWithTimestampPrefixed);
+		// Unlink our timestamp prefix (index 0):
+		array_shift($originalFileNameArray);
+		// rebuild the filename with the timestamp prefix removed:
+		return implode('.', $originalFileNameArray);
 	}
 }

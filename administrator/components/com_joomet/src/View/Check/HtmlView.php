@@ -53,7 +53,7 @@ class HtmlView extends BaseHtmlView
 		/** @var CheckModel $model */
 		$model                = $this->getModel();
 		$processed            = $model->processFile();
-		$this->params         = ComponentHelper::getParams('com_joomet');
+		$this->params = ComponentHelper::getParams('com_joomet');
 		$this->rows           = $processed['data'];
 		$this->statistics     = $processed['statistics'];
 		$this->filenameChecks = $processed['filenameChecks'];
@@ -63,6 +63,7 @@ class HtmlView extends BaseHtmlView
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
+		$wa->useScript('com_joomet.admin.check');
 
 		$this->addToolbar();
 
@@ -73,7 +74,6 @@ class HtmlView extends BaseHtmlView
 				Factory::getApplication()->enqueueMessage($error, 'error');
 			}
 		}
-
 
 		parent::display($tpl);
 	}
@@ -138,7 +138,8 @@ class HtmlView extends BaseHtmlView
 		$toolbar->appendButton('Custom', $refreshBtn->getHtml(), Text::_('COM_JOOMET_REFRESH_BTN_TXT'));
 
 		// Edit Button if in correct context (custom)
-		if($this->context === "custom"){
+		if ($this->context === "custom")
+		{
 			$refreshBtn = new NxdCustomToolbarButton(
 				"COM_JOOMET_EDIT_BTN_TXT",
 				"/administrator/index.php?option=com_joomet&task=check.handleEditFileClicked",

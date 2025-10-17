@@ -11,6 +11,7 @@ namespace NXD\Component\Joomet\Administrator\Field;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
@@ -48,7 +49,16 @@ class DeeplLanguageCacheField extends FormField
 
 	private function includeAssets(): void
 	{
-		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			$this->errors[] = Text::_("Error retrieving application data");
+
+			return;
+		}
+
+		$wa = $app->getDocument()->getWebAssetManager();
 		$wa->useScript('jquery');
 		$wa->registerAndUseScript('joomet.deepl.ajax.calls', Uri::root() . 'media/com_joomet/js/admin-joomet-ajax.js'); // useScript does not work here
 	}

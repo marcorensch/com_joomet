@@ -44,7 +44,7 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var LocalextensionModel $model */
 		$model               = $this->getModel();
-		$this->targetView    = $this->get('TargetView');
+		$this->targetView    = $model->getTargetView();
 		$element             = Factory::getApplication()->input->get('element', '', 'string');
 		$this->extension     = $model->getExtension($element);
 		$this->languageFiles = array();

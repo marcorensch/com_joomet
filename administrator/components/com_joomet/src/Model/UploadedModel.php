@@ -22,6 +22,8 @@ use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 class UploadedModel extends AdminModel
 {
 	public $typeAlias = 'com_joomet.uploaded';
+	public $errors = array();
+	protected $formSource = 'uploaded';
 
 	protected string $sourceFolder = JPATH_ROOT . '/media/com_joomet/uploads/';
 
@@ -29,7 +31,7 @@ class UploadedModel extends AdminModel
 	{
 		// Check if the $sourceFolder exists create if not
 		if(!Folder::exists($this->sourceFolder)){
-			Folder::create($this->sourceFolder, 0755);
+			Folder::create($this->sourceFolder);
 		}
 		parent::__construct();
 	}
@@ -37,20 +39,25 @@ class UploadedModel extends AdminModel
 
 	public function getForm($data = [], $loadData = true): false | Form
 	{
-		$form = $this->loadForm($this->typeAlias, 'uploaded', ['control' => 'jform', 'load_data' => $loadData]);
+		$form = $this->loadForm($this->typeAlias, $this->formSource, ['control' => 'jform', 'load_data' => $loadData]);
 
 		if(empty($form)){
+			$this->errors[] = "Form not found: " . $this->typeAlias . ' - ' . $this->formSource;
 			return false;
 		}
 
 		return $form;
 	}
 
+	public function getErrors():array
+	{
+		return $this->errors;
+	}
+
 	public function getTargetView():string
 	{
 		// Get the URL Parameter for the task
-		$vt = trim(Factory::getApplication()->input->get('target', '', 'string'));
-		return $vt;
+		return trim(Factory::getApplication()->input->get('target', '', 'string'));
 	}
 
 	public function getItems():array

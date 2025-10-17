@@ -55,9 +55,9 @@
       "uri": "com_joomet/admin.css"
     },
     {
-      "name": "com_joomet.admin.css",
-      "type": "style",
-      "uri": "com_joomet/admin.css"
+      "name": "com_joomet.admin.check",
+      "type": "script",
+      "uri": "com_joomet/admin-joomet-check.js"
     }
   ]
 }

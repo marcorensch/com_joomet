@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use DeepL\DeepLClient;
 use DeepL\DeepLException;
 use DeepL\Usage;
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Layout\FileLayout;
@@ -39,7 +40,7 @@ class DeeplKeyCheckField extends FormField
 		$usage = $this->getKeyUsage($decryptedKey);
 		if(!$usage){
 			return "";
-		};
+		}
 
 		$layout = new FileLayout('deepl_key_check_template', __DIR__ . '/layouts');
 		return $layout->render(['usage' => $usage]);
@@ -52,12 +53,19 @@ class DeeplKeyCheckField extends FormField
 
 	private function getKeyUsage(string $authKey):false | Usage
 	{
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			return false;
+		}
+
 		try
 		{
 			$deeplClient = new DeepLClient($authKey);
 			return $deeplClient->getUsage();
 		}catch (DeepLException $e){
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+			$app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		return false;

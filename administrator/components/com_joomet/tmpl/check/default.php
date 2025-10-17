@@ -17,13 +17,14 @@ use Joomla\CMS\Layout\FileLayout;
 use NXD\Component\Joomet\Administrator\View\Check\HtmlView;
 
 /** @var HtmlView $this */
-
+$params = $this->params;
 $user   = Factory::getApplication()->getIdentity();
 $userId = $user->id;
 $rows   = $this->rows;
 $stats  = $this->statistics;
 if (!$rows) return;
 $badge = new FileLayout('badge', __DIR__);
+
 ?>
 <div class="mb-4">
     <div class="row">
@@ -32,7 +33,7 @@ $badge = new FileLayout('badge', __DIR__);
 		    $filenameChecksView = new FileLayout('file', __DIR__);
 		    echo $filenameChecksView->render([
 			    'checks' => $this->filenameChecks,
-			    'name' => $stats['file_name'],
+			    'name' => $stats['original_name'],
 			    'uploaded' => $stats['uploaded']
 		    ]);
 		    ?>
@@ -48,6 +49,40 @@ $badge = new FileLayout('badge', __DIR__);
 			?>
         </div>
 
+    </div>
+</div>
+<div class="mb-4">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row-filters">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="show_empty_rows">
+                                <?php echo Text::_('COM_JOOMLET_FIELD_SHOW_EMPTY_ROWS'); ?>
+                            </label>
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="show_empty_rows"
+                                   <?php echo $params->get('show_empty_rows', 1) ? 'checked' : ''; ?>
+                            >
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="show_comment_rows">
+                                <?php echo Text::_('COM_JOOMLET_FIELD_SHOW_COMMENT_ROWS'); ?>
+                            </label>
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="show_comment_rows"
+                                   <?php echo $params->get('show_comment_rows', 1) ? 'checked' : ''; ?>
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="main-card">
@@ -70,9 +105,11 @@ $badge = new FileLayout('badge', __DIR__);
 			$isComment = $row->constant === null && str_starts_with($row->content, ';');
 			$isEmpty = $row->constant === null && $row->content === '';
 			$rowClass = $hasErrors ? '' : ($isComment ? 'info' : 'ok');
+            $rowClass = $isEmpty ? 'empty' : $rowClass;
 			$statusColClass = $hasInfos ? 'nxd-marked-info' : '';
 			$statusColClass = $hasWarnings ? 'nxd-marked-warning' : '';
 			$statusColClass = $hasErrors ? 'nxd-marked-danger' : '';
+
 			?>
             <tr class="<?php echo "row-" . ($i % 2) . " table-{$rowClass}"; ?>"
                 data-empty-row="<?php echo $isEmpty ? 1 : 0; ?>" data-comment-row="<?php echo $isComment ? 1 : 0; ?>">

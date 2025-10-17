@@ -17,7 +17,6 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
 use NXD\Component\Joomet\Administrator\Model\SponsorModel;
 
 /**
@@ -35,19 +34,13 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0.0
 	 * @throws  Exception
+	 * @since   1.0.0
 	 */
 	public function display($tpl = null): void
 	{
 		/** @var SponsorModel $model */
-		$model                  = $this->getModel();
-		$errors                 = $this->get('Errors');
-
-		if (count($errors))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
+		$model = $this->getModel();
 
 		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 		$wa->useStyle('com_joomet.admin.css');
@@ -61,7 +54,7 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user = Factory::getApplication()->getIdentity();
+		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
 		ToolbarHelper::back();
@@ -69,7 +62,9 @@ class HtmlView extends BaseHtmlView
 		if ($user->authorise('core.admin', 'com_joomet') || $user->authorise('core.options', 'com_joomet'))
 		{
 			$toolbar->preferences('com_joomet');
-		}else{
+		}
+		else
+		{
 			ToolbarHelper::divider();
 		}
 

@@ -20,7 +20,7 @@ use Joomla\Database\QueryInterface;
 
 class LocalextensionsModel extends ListModel
 {
-	public $typeAlias = 'com_joomet.localextensions';
+	public string $typeAlias = 'com_joomet.localextensions';
 
 	public function __construct($config = [])
 	{

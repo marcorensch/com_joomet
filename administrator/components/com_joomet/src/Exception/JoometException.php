@@ -7,18 +7,21 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace NXD\Component\Joomet\Administrator\Service\HTML;
+namespace NXD\Component\Joomet\Administrator\Exception;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-/**
- * Joomet HTML class.
- *
- * @since  1.0.0
- */
-class AdministratorService
-{
+use Exception;
 
+
+/**
+ * General Joomet Exceptions for errors
+ *
+ * @since 1.0
+ */
+class JoometException extends Exception
+{
+	// Add methods here if needed
 }

@@ -11,13 +11,10 @@ namespace NXD\Component\Joomet\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
-use JUri;
 
 class JoometHelper extends ComponentHelper
 {

@@ -60,8 +60,7 @@ class LanguageFileItem
 		// Remove JPATH_ROOT from string
 		$relPath = str_replace(JPATH_ROOT, "", $path);
 		// Build an URI
-		$uri = Uri::root() . ltrim(Route::_($relPath, false), '/');
-		return $uri;
+		return Uri::root() . ltrim(Route::_($relPath, false), '/');
 	}
 
 	private function setRelativePath(string $path):string
@@ -72,7 +71,6 @@ class LanguageFileItem
 	private function setLanguageTag(string $path)
 	{
 		$pathElements = explode("/", $path);
-		$languageTag = $pathElements[count($pathElements) - 2];
-		return $languageTag;
+		return $pathElements[count($pathElements) - 2];
 	}
 }

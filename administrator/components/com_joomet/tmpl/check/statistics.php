@@ -7,8 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @since       1.0.0
  *
- * @var $displayData stdClass                   The display data
+ * @var $displayData array                   The display data
  */
+
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -24,7 +26,7 @@ $cls = $stats['invalid_rows'] ? 'text-danger fw-bold' : '';
 ?>
 <div class="card card-default w-100">
     <div class="card-body">
-        <h3><?php echo Text::_('COM_JOOMET_TITLE_STATISTICS'); ?></h3>
+        <h3 class="mb-3"><?php echo Text::_('COM_JOOMET_TITLE_STATISTICS'); ?></h3>
         <table class="table table-striped">
             <tbody>
             <tr>

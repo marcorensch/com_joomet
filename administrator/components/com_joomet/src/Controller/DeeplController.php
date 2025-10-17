@@ -16,8 +16,10 @@ use DeepL\DeepLClient;
 use DeepL\DeepLException;
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Session\Session;
+use NXD\Component\Joomet\Administrator\Exception\JoometException;
 use NXD\Component\Joomet\Administrator\Helper\JoometHelper;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_joomet/vendor/autoload.php';
@@ -32,16 +34,23 @@ class DeeplController extends BaseController
 	 *
 	 * @since 1.0
 	 */
-	public function getLanguagesFromDeepl()
+	public function getLanguagesFromDeepl():void
 	{
 		Session::checkToken('get') or die('Invalid Session Token');
+
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			throw new JoometException('Error retrieving application data');
+		}
 
 		// get Params Settings
 		$apiKey = JoometHelper::getDeeplApiKey();
 		if (!$apiKey)
 		{
 			echo json_encode(['success' => false, 'message' => 'No API Key set']);
-			Factory::getApplication()->close();
+			$app->close();
 		}
 
 		$deeplClient = new DeepLClient($apiKey);
@@ -51,7 +60,7 @@ class DeeplController extends BaseController
 
 		echo json_encode(['success' => true, 'languages' => $languages]);
 
-		Factory::getApplication()->close();
+		$app->close();
 	}
 
 	/**
@@ -64,22 +73,29 @@ class DeeplController extends BaseController
 	 */
 	public function doTranslation():void
 	{
-		Session::checkToken('post') or die('Invalid Session Token');
+		Session::checkToken() or die('Invalid Session Token');
+
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			return;
+		}
 
 		// get Params Settings
 		$apiKey = JoometHelper::getDeeplApiKey();
 		if (!$apiKey)
 		{
 			echo json_encode(['success' => false, 'message' => 'No API Key set']);
-			Factory::getApplication()->close();
+			$app->close();
 		}
 
-		$input = Factory::getApplication()->input;
+		$input = $app->input;
 		$rowData = $input->post->get('rowData', "", 'raw'); // RAW required for HTML Support
 
 		if( empty( $rowData )){
 			echo json_encode(['success' => false, 'message' => 'No Data to Translate']);
-			Factory::getApplication()->close();
+			$app->close();
 		}
 
 		try{
@@ -98,7 +114,7 @@ class DeeplController extends BaseController
 			}
 		}catch (Exception $e){
 			echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-			Factory::getApplication()->close();
+			$app->close();
 		}
 
 		$deeplClient = new DeepLClient($apiKey);
@@ -124,7 +140,7 @@ class DeeplController extends BaseController
 
 		echo json_encode(['success' => true, 'translation' => $translationResult->text, 'changesMade' => $changesMade]);
 
-		Factory::getApplication()->close();
+		$app->close();
 	}
 
 	private function fixTranslationValidity(string $original, string $translation):array

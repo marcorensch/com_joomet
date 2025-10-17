@@ -15,7 +15,7 @@ namespace NXD\Component\Joomet\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -28,7 +28,7 @@ class TranslationsModel extends AdminModel
 {
 	public $typeAlias = 'com_joomet.translations';
 
-	private array $errors;
+	private array $errors = array();
 
 	public function __construct($config = [])
 	{
@@ -45,6 +45,11 @@ class TranslationsModel extends AdminModel
 		}
 
 		return $form;
+	}
+
+	public function getErrors(): array
+	{
+		return $this->errors;
 	}
 
 	public function getFileContents(): array
@@ -93,7 +98,7 @@ class TranslationsModel extends AdminModel
 		return array("data" => array("rowsToTranslate" => $rowsToTranslate, "rowsToSkip" => $rowsToSkip), "error" => "");
 	}
 
-	public function getFileName()
+	public function getFileName():string
 	{
 		$app = Factory::getApplication();
 		$file = $app->getUserState('com_joomet.file');
@@ -102,7 +107,7 @@ class TranslationsModel extends AdminModel
 		return $joometFile->label;
 	}
 
-	public function checkComponentConfig()
+	public function checkComponentConfig(): bool
 	{
 		$status = true;
 		$params = ComponentHelper::getParams('com_joomet');

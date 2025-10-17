@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\View\Edit;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +22,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
 use NXD\Component\Joomet\Administrator\Model\EditModel;
-use NXD\Component\Joomet\Administrator\Model\SponsorModel;
 
 /**
  * View class Joomet Dashboard.
@@ -44,8 +45,8 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var EditModel $model */
 		$model      = $this->getModel();
-		$errors     = $this->get('Errors');
-		$this->file = $this->get('File');
+		$errors     = $model->getErrors();
+		$this->file = $model->getFile();
 
 		if (count($errors))
 		{

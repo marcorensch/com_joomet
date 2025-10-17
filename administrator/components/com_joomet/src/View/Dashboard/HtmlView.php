@@ -9,7 +9,9 @@
 
 namespace NXD\Component\Joomet\Administrator\View\Dashboard;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -44,7 +46,7 @@ class HtmlView extends BaseHtmlView
 		$model                  = $this->getModel();
 		$this->items            = $model->getItems();
 		$this->componentVersion = $model->getComponentVersion();
-		$errors                 = $this->get('Errors');
+		$errors                 = $model->getErrors();
 		$this->apiKeyIsSet      = $model->apiKeyIsSet();
 
 		if (count($errors))

@@ -15,13 +15,20 @@ namespace NXD\Component\Joomet\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Session\Session;
+use Joomla\Filesystem\File;
 use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class EditModel extends BaseModel
 {
+	public array $errors = array();
+	public Registry $params;
+	public File $file;
+	public string $typeAlias = 'com_joomet.edit';
+
 	public function __construct($config = [])
 	{
 		$this->errors = array();
@@ -29,6 +36,16 @@ class EditModel extends BaseModel
 		parent::__construct($config);
 	}
 
+	public function getErrors(): array
+	{
+		return $this->errors;
+	}
+
+	/**
+	 * @throws \Exception
+	 * @since 1.1.0
+	 *
+	 */
 	public function getFile(): false | LanguageFileItem
 	{
 		if (!Session::checkToken('get'))

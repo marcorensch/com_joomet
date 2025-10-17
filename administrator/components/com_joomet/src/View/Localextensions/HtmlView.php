@@ -15,13 +15,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use NXD\Component\Joomet\Administrator\Model\CheckModel;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
 use NXD\Component\Joomet\Administrator\Model\LocalextensionsModel;
-use NXD\Component\Joomet\Administrator\Model\UploadedModel;
 
 /**
  * View class Joomet Check.
@@ -47,12 +44,12 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var LocalextensionsModel $model */
 		$model               = $this->getModel();
-		$this->targetView    = $this->get('TargetView');
-		$this->pagination    = $this->get('Pagination');
-		$this->filterForm    = $this->get('FilterForm');
-		$this->activeFilters = $this->get('ActiveFilters');
-		$this->extensions    = $this->get("Items");
-		$this->state         = $this->get('State');
+		$this->targetView    = $model->getTargetView();
+		$this->pagination    = $model->getPagination();
+		$this->filterForm    = $model->getFilterForm();
+		$this->activeFilters = $model->getActiveFilters();
+		$this->extensions    = $model->getItems();
+		$this->state         = $model->getState();
 
 		$input        = Factory::getApplication()->input;
 		$this->target = $input->get('target', '', 'string');

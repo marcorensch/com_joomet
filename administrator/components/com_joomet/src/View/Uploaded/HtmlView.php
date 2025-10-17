@@ -18,7 +18,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use NXD\Component\Joomet\Administrator\Model\CheckModel;
 use NXD\Component\Joomet\Administrator\Helper\NxdCustomToolbarButton;
 use NXD\Component\Joomet\Administrator\Model\UploadedModel;
 
@@ -46,9 +45,9 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var UploadedModel $model */
 		$model            = $this->getModel();
-		$this->form       = $this->get('Form');
-		$this->targetView = $this->get('TargetView');
-		$errors           = $this->get('Errors');
+		$this->form       = $model->getForm();
+		$this->targetView = $model->getTargetView();
+		$errors           = $model->getErrors();
 		$this->items      = $model->getItems();
 
 		if (count($errors))
@@ -103,7 +102,7 @@ class HtmlView extends BaseHtmlView
 
 		if($user->authorise("core.delete", "com_joomet"))
 		{
-			ToolbarHelper::deleteList(Text::_('COM_JOOMET_DELETE_ITEMS_TXT'), 'uploaded.handleTrashClicked', 'JTOOLBAR_DELETE');
+			ToolbarHelper::deleteList(Text::_('COM_JOOMET_DELETE_ITEMS_TXT'), 'uploaded.handleTrashClicked');
 		}
 
 		$hasMSAutoSet = false;

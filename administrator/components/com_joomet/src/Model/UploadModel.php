@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\AdminModel;
 class UploadModel extends AdminModel
 {
 	public $typeAlias = 'com_joomet.upload';
-
+	public $errors = array();
 
 	public function getForm($data = [], $loadData = true): false | Form
 	{
@@ -31,6 +31,11 @@ class UploadModel extends AdminModel
 		}
 
 		return $form;
+	}
+
+	public function getErrors():array
+	{
+		return $this->errors;
 	}
 
 	public function getTargetView():string

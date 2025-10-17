@@ -11,6 +11,7 @@ namespace NXD\Component\Joomet\Administrator\Field;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
@@ -38,10 +39,9 @@ class DeeplLanguageSelectionField extends ListField
 		{
 			$options[] = HTMLHelper::_('select.option', 'auto', Text::_('COM_JOOMET_FIELD_SOURCE_LANGUAGE_OPT_AUTO'));
 		}
-		$options = array_merge($options, parent::getOptions());
-		$options = array_merge($options, $languageOptions);
 
-		return $options;
+		return array_merge($options, parent::getOptions(), $languageOptions);
+
 	}
 
 	private function getLanguagesFromConfig():array
@@ -70,7 +70,14 @@ class DeeplLanguageSelectionField extends ListField
 
 	private function addScriptOptions():void
 	{
-		$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			return;
+		}
+
+		$wa = $app->getDocument()->getWebAssetManager();
 		$jsObject = array();
 		foreach ($this->languages as $lang){
 			$jsObject[$lang->code] = $lang->supportsFormality;

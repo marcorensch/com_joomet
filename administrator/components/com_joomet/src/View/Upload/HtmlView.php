@@ -44,10 +44,10 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null): void
 	{
 		/** @var UploadModel $model */
-		$model  = $this->getModel();
-		$this->form = $this->get('Form');
-		$this->targetView = $this->get('TargetView');
-		$errors = $this->get('Errors');
+		$model            = $this->getModel();
+		$this->form       = $model->getForm();
+		$this->targetView = $model->getTargetView();
+		$errors           = $model->getErrors();
 
 		if (count($errors))
 		{
@@ -74,10 +74,10 @@ class HtmlView extends BaseHtmlView
 	{
 		Factory::getApplication()->input->set('hidemainmenu', false);
 
-		$user = Factory::getApplication()->getIdentity();
+		$user    = Factory::getApplication()->getIdentity();
 		$toolbar = $this->getDocument()->getToolbar();
 
-		ToolbarHelper::back('JTOOLBAR_BACK');
+		ToolbarHelper::back();
 
 		$hasMSAutoSet = false;
 

@@ -25,6 +25,30 @@
                label="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_LABEL"
                description="COM_JOOMET_PARAMS_CHECKER_MAX_EXEC_DESCRIPTION"
         />
+
+        <field name="show_comment_rows"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="integer"
+               label="COM_JOOMET_PARAMS_CHECKER_SHOW_COMMENTS_LABEL"
+               description="COM_JOOMET_PARAMS_CHECKER_SHOW_COMMENTS_DESCRIPTION"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <field name="show_empty_rows"
+               type="radio"
+               class="btn-group btn-group-yesno"
+               default="1"
+               filter="integer"
+               label="COM_JOOMET_PARAMS_CHECKER_SHOW_EMPTY_LABEL"
+               description="COM_JOOMET_PARAMS_CHECKER_SHOW_EMPTY_DESCRIPTION"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fieldset>
 
     <fieldset name="translate" label="COM_JOOMET_PARAMS_TRANSLATOR_LABEL"

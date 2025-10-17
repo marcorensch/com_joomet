@@ -41,8 +41,8 @@ class HtmlView extends BaseHtmlView
 	{
 		/** @var TranslationsModel $model */
 		$model          = $this->getModel();
-		$this->form     = $this->get('Form');
-		$errors         = $this->get('Errors');
+		$this->form     = $model->getForm();
+		$errors         = $model->getErrors();
 		$this->fileData = $model->getFileContents();
 		$this->fileName = $model->getFileName();
 		$configValid    = $model->checkComponentConfig();

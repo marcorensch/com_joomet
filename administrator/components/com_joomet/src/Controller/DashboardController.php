@@ -13,7 +13,6 @@ namespace NXD\Component\Joomet\Administrator\Controller;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 
 /**

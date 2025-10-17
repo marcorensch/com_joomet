@@ -23,7 +23,7 @@ use NXD\Component\Joomet\Administrator\Helper\LanguageFileItem;
 
 class LocalextensionModel extends BaseModel
 {
-	public $typeAlias = 'com_joomet.localextension';
+	public string $typeAlias = 'com_joomet.localextension';
 
 	public function getTargetView(): string
 	{
@@ -46,9 +46,7 @@ class LocalextensionModel extends BaseModel
 		$extensionPath          = $this->buildPathToExtension(JPATH_ROOT, $extension);
 		$joomlaLocationFiles    = $this->scanLanguageFolders(JPATH_ROOT, $extension, 'joomla');
 		$extensionLocationFiles = $this->scanLanguageFolders($extensionPath, $extension, 'extension');
-		$files                  = array_merge($joomlaLocationFiles, $extensionLocationFiles);
-
-		return $files;
+		return array_merge($joomlaLocationFiles, $extensionLocationFiles);
 	}
 
 	private function getLanguageFilesBackend(\stdClass $extension): array
@@ -56,9 +54,7 @@ class LocalextensionModel extends BaseModel
 		$extensionPath          = $this->buildPathToExtension(JPATH_ADMINISTRATOR, $extension);
 		$joomlaLocationFiles    = $this->scanLanguageFolders(JPATH_ADMINISTRATOR, $extension, 'joomla');
 		$extensionLocationFiles = $this->scanLanguageFolders($extensionPath, $extension, 'extension');
-		$files                  = array_merge($joomlaLocationFiles, $extensionLocationFiles);
-
-		return $files;
+		return array_merge($joomlaLocationFiles, $extensionLocationFiles);
 	}
 
 	private function scanLanguageFolders(string $path, \stdClass $extension, string $src): array

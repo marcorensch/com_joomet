@@ -25,7 +25,7 @@ $uploaded = $displayData['uploaded'];
 
 <div class="card card-default w-100">
 	<div class="card-body">
-		<h3><?php echo Text::_('COM_JOOMET_TITLE_FILENAME_CHECKS');?></h3>
+		<h3 class="mb-3"><?php echo Text::_('COM_JOOMET_TITLE_FILENAME_CHECKS');?></h3>
 
         <table class="table table-striped">
             <tbody>

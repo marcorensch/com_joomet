@@ -5,6 +5,8 @@
  *
  * @copyright   Copyright (C) 2025 NXD nx-designs, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @var $displayData    array   The data to display
  */
 
 defined('_JEXEC') or die;

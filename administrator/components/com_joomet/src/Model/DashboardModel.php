@@ -13,6 +13,7 @@ namespace NXD\Component\Joomet\Administrator\Model;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
@@ -22,12 +23,21 @@ use NXD\Component\Joomet\Administrator\Helper\DashboardItem;
 class DashboardModel extends BaseModel
 {
 
+	public array $errors = array();
+
 	public function getItems():array
 	{
+		try{
+			$app = Factory::getApplication();
+		}catch (Exception $e) {
+			error_log('Error retrieving application data: ' . $e->getMessage());
+			$this->errors[] = Text::_("Error retrieving application data");
 
+			return [];
+		}
 		// Reset User State
-		Factory::getApplication()->setUserState('com_joomet.file', null);
-		Factory::getApplication()->setUserState('com_joomet.context', null);
+		$app->setUserState('com_joomet.file', null);
+		$app->setUserState('com_joomet.context', null);
 
 		$items = array();
 
@@ -38,6 +48,11 @@ class DashboardModel extends BaseModel
 
 		return $items;
 
+	}
+
+	public function getErrors()
+	{
+		return $this->errors;
 	}
 
 	public function getComponentVersion(){
